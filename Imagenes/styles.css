@@ -1,0 +1,124 @@
+/* ==========================================================================
+   1. VARIABLES GLOBALES (Custom Properties)
+   ========================================================================== */
+:root {
+  /* Paleta de Colores Extraída */
+  --color-bg-dark: #07091D;       /* Azul oscuro muy profundo para el fondo base */
+  --color-primary: #182C61;       /* Azul corporativo para contenedores/formularios */
+  --color-secondary: #4A148C;     /* Púrpura profundo para gradientes */
+  --color-accent: #00D2FF;        /* Cyan neón para detalles y botones */
+  --color-text-main: #FFFFFF;     /* Blanco puro para títulos y textos principales */
+  --color-text-muted: #E0E0E0;    /* Gris muy claro para textos secundarios */
+  
+  /* Tipografía (Google Fonts sugeridas) */
+  --font-headings: 'Playfair Display', serif; /* Títulos decorativos */
+  --font-body: 'Montserrat', sans-serif;      /* Textos limpios */
+  
+  /* Tamaños de fuente fluidos (Mobile First) */
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-md: 1.125rem;
+  --text-lg: 1.5rem;
+  --text-xl: 2rem;
+  --text-xxl: 2.5rem;
+  
+  /* Espaciado del sistema */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 2rem;
+  --spacing-lg: 4rem;
+  --spacing-xl: 6rem;
+  
+  /* Transiciones y bordes */
+  --transition-smooth: all 0.3s ease-in-out;
+  --border-radius-sm: 8px;
+  --border-radius-md: 16px;
+}
+
+/* ==========================================================================
+   2. RESET Y ESTILOS BASE
+   ========================================================================== */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth; /* Animación suave para anclas */
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-bg-dark);
+  color: var(--color-text-main);
+  line-height: 1.6;
+  overflow-x: hidden;
+  
+  /* Gradiente base similar a los mockups */
+  background: radial-gradient(circle at top left, var(--color-secondary) 0%, var(--color-bg-dark) 50%, var(--color-primary) 100%);
+  background-attachment: fixed;
+}
+
+/* Tipografía Base */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-headings);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-text-main);
+}
+
+p {
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-text-muted);
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-text-main);
+  transition: var(--transition-smooth);
+}
+
+a:hover {
+  color: var(--color-accent);
+}
+
+ul {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ==========================================================================
+   3. CLASES UTILITARIAS GLOBALES
+   ========================================================================== */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-sm);
+}
+
+/* Botón base */
+.btn-primary {
+  display: inline-block;
+  background-color: var(--color-accent); /* Ajustaremos esto según cada botón en el HTML */
+  color: var(--color-text-main);
+  padding: 12px 32px;
+  border-radius: 30px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  text-align: center;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 210, 255, 0.4);
+}

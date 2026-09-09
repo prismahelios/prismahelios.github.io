@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prisma Helios | Inicio</title>
+        <!-- FAVICON -->
+    <link rel="icon" type="image/png" href="../Editable/Imagenes/LOGO.png">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome para Iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- En un entorno real, enlaza tu styles.css global aquí. Para este paso, incluyo los estilos directamente -->
+    <style>
+        /* === IMPORTACIÓN DEL PASO 1 (Resumen para que funcione el archivo) === */
+        :root {
+            --color-bg-dark: #191e5a;
+            --color-primary: #182C61;
+            --color-secondary: #4A148C;
+            --color-accent: #00D2FF;
+            --color-button: #2B4C9B; /* Azul del botón de los mockups */
+            --color-text-main: #FFFFFF;
+            --color-text-muted: #E0E0E0;
+            --font-headings: 'Playfair Display', serif;
+            --font-body: 'Montserrat', sans-serif;
+            --transition-smooth: all 0.3s ease-in-out;
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-body);
+            background-color: var(--color-bg-dark);
+            color: var(--color-text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            /* Fondo base con líneas y gradientes inspirados en el mockup */
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(74, 20, 140, 0.4), transparent 50%),
+                radial-gradient(circle at 85% 30%, rgba(0, 210, 255, 0.15), transparent 50%);
+            background-attachment: fixed;
+        }
+        h1, h2, h3 { font-family: var(--font-headings); font-weight: 700; color: var(--color-text-main); margin-bottom: 1rem; }
+        p { color: var(--color-text-muted); margin-bottom: 1rem; font-weight: 300; }
+        a { text-decoration: none; color: var(--color-text-main); transition: var(--transition-smooth); }
+        img { max-width: 100%; height: auto; border-radius: 12px; display: block; }
+        .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--color-button);
+            color: var(--color-text-main);
+            padding: 10px 30px;
+            border-radius: 30px;
+            font-family: var(--font-body);
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+        .btn:hover { background-color: var(--color-accent); color: var(--color-bg-dark); transform: translateY(-2px); }
+
+        /* ===================================================================
+           HEADER Y NAVEGACIÓN
+           -------------------------------------------------------------------
+           Estructura:
+             .nav-container  -> flex, centra SIEMPRE a .nav-links (logo+enlaces)
+             .nav-links      -> único elemento dentro del flex -> queda centrado
+             .header-auth    -> position:absolute, anclado a la esquina derecha
+                                 del header. Al estar fuera del flujo del flex,
+                                 su ancho (botón corto vs. "Bienvenido, correo...")
+                                 nunca desplaza ni descentra el logo.
+        =================================================================== */
+        header {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            background: linear-gradient(
+                to top right,    
+            #1F4B9A 0%,
+            #3D3685 55%,
+            #5D4596 100%
+            );
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative; /* ancla de referencia para .header-auth */
+        }
+
+        .nav-links { display: flex; gap: 2rem; align-items: center; }
+        .nav-group { display: flex; gap: 2rem; align-items: center; }
+        .nav-links a:hover { color: var(--color-accent); }
+        .nav-links a.active { color: var(--color-accent); font-weight: 600; }
+
+        .menu-toggle { display: none; font-size: 1.5rem; cursor: pointer; color: var(--color-text-main); background: none; border: none; }
+
+        /* ================= LOGO CON EFECTO ZOOM Y DESTELLO ================= */
+        .logo { 
+            font-family: var(--font-headings); 
+            font-size: 2rem; 
+            font-weight: bold; 
+            letter-spacing: 2px;
+            display: inline-block;
+            cursor: pointer;
+            user-select: none;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                        color 0.3s ease, 
+                        text-shadow 0.3s ease;
+        }
+        .logo:hover {
+            transform: scale(1.35) rotate(-2deg);
+            color: var(--color-accent);
+            text-shadow: 
+                0 0 10px rgba(0, 210, 255, 0.8),
+                0 0 20px rgba(0, 210, 255, 0.5),
+                0 0 30px rgba(74, 20, 140, 0.8);
+        }
+        .logo:active { transform: scale(1.15); }
+
+        /* Botón Iniciar Sesión en Navbar */
+        .btn-login-nav {
+            background-color: transparent;
+            border: 1px solid var(--color-accent);
+            color: var(--color-accent);
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-family: var(--font-body);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+        .btn-login-nav:hover {
+            background-color: var(--color-accent);
+            color: var(--color-bg-dark);
+        }
+
+        /* Indicador de usuario registrado */
+        .user-profile-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 210, 255, 0.3);
+            font-size: 0.85rem;
+            white-space: nowrap;
+        }
+        .user-profile-badge i { color: var(--color-accent); font-size: 1.1rem; }
+
+        /* Contenedor de autenticación anclado a la esquina */
+        .header-auth {
+            position: absolute;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; }
+            .nav-links {
+                position: absolute; top: 100%; left: 0; width: 100%;
+                background: var(--color-primary);
+                flex-direction: column; gap: 0;
+                max-height: 0; overflow: hidden; transition: max-height 0.3s ease-in-out;
+            }
+            .nav-links.active { max-height: 400px; padding-bottom: 1rem; }
+            .nav-group { flex-direction: column; width: 100%; gap: 0; text-align: center; }
+            .nav-group a { display: block; padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); width: 100%; }
+            .logo { flex-grow: 1; text-align: left; }
+            .header-auth { right: 1rem; }
+            .btn-login-nav span.login-text { display: none; }
+        }
+
+        /* Espaciador para el header fijo */
+        main { margin-top: 160px; }
+        section { padding: 7rem 0; }
+
+        /* 1. Hero Section */
+        #inicio { margin-bottom: 7rem; }
+        .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+        .hero-title { font-size: clamp(2.5rem, 5vw, 4rem); font-style: italic; line-height: 1.1; margin-bottom: 1.5rem; }
+        .hero-img { box-shadow: 0 0 30px rgba(0, 212, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.1); }
+        
+        @media (max-width: 768px) { .hero-grid { grid-template-columns: 1fr; text-align: center; } }
+
+        /* 2. Nosotros Teaser */
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+        .about-text h2 { font-size: 2.5rem; }
+        @media (max-width: 768px) { 
+            .about-grid { grid-template-columns: 1fr; text-align: center; } 
+            .about-img-container { order: -1; }
+        }
+
+        #nosotros-teaser{ margin-bottom: 8rem; }
+
+        /* 3. Servicios Teaser */
+        #servicio-teaser { padding-top: 4rem; }
+        .services-section { text-align: center; }
+        .services-section h2 { font-size: 2.5rem; margin-bottom: 3rem; }
+        .services-grid { 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 2rem; margin-bottom: 3rem; 
+        }
+        .service-item i { font-size: 2.5rem; margin-bottom: 1rem; color: var(--color-text-main); }
+        .service-item h3 { font-family: var(--font-body); font-size: 1.1rem; font-weight: 600; }
+        #servicios-teaser{ margin-bottom: 4rem; }
+
+        /* === PREGUNTAS FRECUENTES (FAQ) === */
+        .faq-section { background: rgba(74, 20, 140, 0.1); text-align: center; padding-bottom: 6rem; }
+        .faq-section h2 { font-size: 2.5rem; margin-bottom: 3rem; }
+        .faq-container { max-width: 800px; margin: 0 auto; text-align: left; }
+        details {
+            background: rgba(255, 255, 255, 0.02);
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            transition: background 0.3s ease, border-color 0.3s ease;
+            overflow: hidden;
+        }
+        details:hover {
+            background: rgba(0, 210, 255, 0.05);
+            border-bottom-color: var(--color-accent);
+        }
+        summary {
+            padding: 1.5rem 1rem; font-size: 1.1rem; font-weight: 400; cursor: pointer;
+            list-style: none; display: flex; justify-content: space-between; align-items: center;
+            transition: color 0.3s ease;
+        }
+        summary:hover { color: var(--color-accent); }
+        summary::-webkit-details-marker { display: none; }
+        summary::after {
+            content: '\f107';
+            font-family: 'Font Awesome 6 Free'; font-weight: 900;
+            background-color: rgba(255,255,255,0.1); border-radius: 50%;
+            width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        details[open] summary::after { 
+            transform: rotate(180deg); 
+            background-color: var(--color-accent);
+            color: var(--color-bg-dark);
+        }
+        .faq-content { 
+            padding: 0 1rem 1.5rem 1rem; 
+            color: var(--color-text-muted); 
+            font-size: 0.95rem;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 5. Formulario de Contacto */
+        .contact-section { display: flex; justify-content: center; padding: 4rem 0 6rem 0; }
+        .contact-card {
+            background-color: #244186;
+            border-radius: 16px; padding: 3rem; width: 100%; max-width: 600px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+        .contact-card h2 { font-size: 2rem; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 1px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+        .form-group { display: flex; flex-direction: column; text-align: left; }
+        .form-group label { font-size: 0.85rem; margin-bottom: 0.5rem; font-weight: 600; }
+        .form-group input, .form-group textarea {
+            padding: 12px; border-radius: 8px; border: none; background: #F5F4F0;
+            font-family: var(--font-body); font-size: 1rem; color: #333; outline: none;
+        }
+        .form-group textarea { resize: vertical; min-height: 100px; }
+        .btn-submit { background-color: #2196F3; width: 100%; max-width: 200px; margin-top: 1rem; border-radius: 30px; padding: 12px; border: none; color: white; font-weight: bold; cursor: pointer;}
+        .btn-submit:hover { background-color: var(--color-accent); }
+
+        @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; gap: 1rem;} .contact-card { padding: 1.5rem; } }
+
+        /* === FOOTER === */
+        footer { border-top: 1px solid rgba(255,255,255,0.1); padding: 3rem 0; font-size: 0.9rem; }
+        .footer-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2rem; align-items: start; }
+        .footer-logo { font-family: var(--font-headings); font-size: 2.5rem; font-weight: bold; line-height: 1; margin-bottom: 1rem; }
+        .social-links { display: flex; gap: 1rem; font-size: 1.4rem; }
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            transition: var(--transition-smooth);
+        }
+        .social-links a:hover {
+            transform: scale(1.2) translateY(-3px);
+            color: var(--color-accent);
+            background: rgba(0, 210, 255, 0.15);
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
+        }
+
+        .footer-column h4 { margin-bottom: 1rem; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; }
+        .footer-column ul { display: flex; flex-direction: column; gap: 0.5rem; }
+        .footer-column ul li { display: flex; align-items: center; gap: 0.5rem; color: var(--color-text-muted); }
+        
+        @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr; text-align: center; gap: 3rem;} .social-links, .footer-column ul li { justify-content: center; } }
+    
+        /* === MODAL LOGIN === */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(7, 9, 29, 0.85);
+            backdrop-filter: blur(8px);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 2000;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .modal-overlay.active { opacity: 1; pointer-events: all; }
+        .modal-card {
+            background: #182C61;
+            border: 1px solid rgba(0, 210, 255, 0.3);
+            border-radius: 16px;
+            padding: 2.5rem;
+            width: 90%; max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative;
+        }
+        .modal-card h3 { text-align: center; margin-bottom: 1.5rem; font-size: 1.8rem; }
+        .modal-card input {
+            width: 100%; padding: 12px; margin-bottom: 1rem;
+            border-radius: 8px; border: none; background: #F5F4F0;
+            font-family: var(--font-body); outline: none;
+        }
+        .modal-actions { display: flex; flex-direction: column; gap: 0.8rem; margin-top: 1rem; }
+        .btn-modal-submit { background: var(--color-accent); color: var(--color-bg-dark); font-weight: bold; border: none; padding: 12px; border-radius: 25px; cursor: pointer; }
+        
+        .login-error-box {
+            display: none;
+            background: rgba(255, 75, 75, 0.15);
+            border: 1px solid #ff4b4b;
+            color: #ff8080;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            text-align: center;
+            margin-top: 1rem;
+        }
+        .error-options { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.8rem; }
+        .error-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: var(--color-text-main);
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+        .error-btn:hover { background: rgba(255,255,255,0.1); }
+    
+        /* === CTA "¿TIENES UNA IDEA?" (estilo outro de Cuberto) === */
+                .cta-idea-section {
+                    position: relative;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    text-align: center;
+                    height: 28rem;
+                    color: var(--color-text-main);
+                    background: (#244186);
+                    overflow: hidden;
+                    margin-bottom: 0;
+                }
+                .cta-idea-title {
+                    font-family: var(--font-headings);
+                    font-size: clamp(2.5rem, 6vw, 5rem);
+                    letter-spacing: -0.02em;
+                    margin-bottom: 1.5rem;
+                }
+                .cta-idea-link {
+                    position: relative;
+                    display: inline-block;
+                    font-family: var(--font-body);
+                    font-weight: 300;
+                    font-size: clamp(1.8rem, 5vw, 3rem);
+                    letter-spacing: -0.01em;
+                    text-decoration: none;
+                    color: var(--color-accent);
+                }
+                .cta-idea-link:after {
+                    content: "";
+                    position: absolute;
+                    left: 0;
+                    right: 0;
+                    bottom: -6px;
+                    border-top: 2px solid currentColor;
+                    transition: transform 0.4s ease;
+                }
+                .cta-idea-link:hover:after {
+                    transform: scaleX(0);
+                }
+
+    </style>
+</head>
+<body>
+
+    <!-- ================= HEADER ================= -->
+    <header>
+        <div class="container nav-container">
+            <!-- Botón Menú Móvil -->
+            <button class="menu-toggle" id="mobile-menu-btn" aria-label="Abrir menú">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <!-- Logo + enlaces: único elemento dentro del flex centrado -->
+            <nav class="nav-links" id="nav-links">
+                <div class="nav-group">
+                    <a href="index.html" class="active">Inicio</a>
+                    <a href="Nosotros.html">Nosotros</a>
+                </div>
+                <a href="index.html" title="Ir al Inicio" class="logo">
+                    <img src="../Editable/Imagenes/Logo sin fondo.png" alt="" style="width: auto;height: 65px; display: block;">
+                </a>
+                <div class="nav-group">
+                    <a href="Servicios.html">Servicios</a>
+                    <a href="Contacto.html">Contacto</a>
+                </div>
+            </nav>
+
+            <!-- Autenticación: fuera del flex, anclada a la esquina derecha del header -->
+            <div class="header-auth" id="auth-container">
+                <button class="btn-login-nav" id="open-login-btn">
+                    <i class="fa-solid fa-user"></i> <span class="login-text">Iniciar Sesión</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- ================= HERO SECTION ================= -->
+        <section id="inicio" class="container">
+            <div class="hero-grid">
+                <div class="hero-text">
+                    <h1 class="hero-title">Ideas que se<br>transforman en luz</h1>
+                    <p>En Prisma Helios  creamos soluciones innovadoras que iluminan el camino hacia el futuro</p>
+                </div>
+                <div class="hero-img-container">
+                    <!-- Placeholder fotográfico -->
+                    <img src="../Editable/Imagenes/inicio/Camara atardecer.png" alt="Cámara fotográfica profesional en el atardecer" class="hero-img">
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= QUIENES SOMOS ================= -->
+        <section id="nosotros-teaser" class="container">
+            <div class="about-grid">
+                <div class="about-img-container">
+                    <img src="../Editable/Imagenes/inicio/Inicio-Quienessomos" alt="Equipo de trabajo en estudio multimedia" class="hero-img">
+                </div>
+                <div class="about-text">
+                    <h1>¿Quienes somos?</h1>
+                    <p>Somos una agencia de contenido multimedial, con el objetivo de reforzar la identidad visual de las marcas emergentes. Nos basamos en la creatividad y la adaptabilidad de la marca en el entorno digital.</p>
+                    <a href="nosotros.html" class="btn">Ver más</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SERVICIOS ================= -->
+        <section id="servicios-teaser" class="container services-section">
+            <h2>¿Que ofrecemos?</h2>
+            <div class="services-grid">
+                <div class="service-item">
+                    <i class="fa-solid fa-video"></i>
+                    <h3>Producción audiovisual</h3>
+                </div>
+                <div class="service-item">
+                    <i class="fa-solid fa-pen-nib"></i>
+                    <h3>Diseño gráfico</h3>
+                </div>
+                <div class="service-item">
+                    <i class="fa-solid fa-camera"></i>
+                    <h3>Fotografía profesional</h3>
+                </div>
+                <div class="service-item">
+                    <i class="fa-solid fa-users-viewfinder"></i>
+                    <h3>Branding</h3>
+                </div>
+            </div>
+            <a href="servicios.html" class="btn">Ver más</a>
+        </section>
+
+        <!-- ================= PREGUNTAS FRECUENTES ================= -->
+        <section id="faq" class="faq-section">
+            <div class="container">
+                <h2>Preguntas frecuentes</h2>
+                <div class="faq-container">
+                    <details>
+                        <summary>1. ¿Qué tipo de servicios multimedia ofrecen exactamente?</summary>
+                        <div class="faq-content">
+                            Ofrecemos un catálogo completo que incluye producción de video, fotografía profesional corporativa, diseño de identidad visual y estrategias de branding digital adaptadas a tu nicho.
+                        </div>
+                    </details>
+                    <details>
+                        <summary>2. ¿Cómo es el proceso de trabajo al iniciar un proyecto con la agencia?</summary>
+                        <div class="faq-content">
+                            Comenzamos con una reunión de descubrimiento para entender tus metas. Luego, presentamos una propuesta creativa y un cronograma, seguido de la producción y finalmente la fase de revisión y entrega.
+                        </div>
+                    </details>
+                    <details>
+                        <summary>3. No tengo conocimientos técnicos de diseño ni formatos. ¿Ustedes me asesoran?</summary>
+                        <div class="faq-content">
+                            ¡Totalmente! Nuestro equipo de expertos te guiará en cada paso, explicándote los mejores formatos y resoluciones para las plataformas que vayas a utilizar, sin necesidad de que tengas experiencia previa.
+                        </div>
+                    </details>
+                    <details>
+                        <summary>4. ¿Trabajan con presupuestos adaptados para pequeñas y medianas empresas (Pymes)?</summary>
+                        <div class="faq-content">
+                            Sí, entendemos el ecosistema de las marcas emergentes y contamos con planes modulares que se ajustan a las necesidades y posibilidades de las Pymes sin sacrificar la calidad profesional.
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-idea-section">
+            <h2 class="cta-idea-title">¿Tienes una idea?</h2>
+            <a href="Contacto.html" class="cta-idea-link">Cuéntanosla</a>
+        </section>
+
+
+    <!-- ================= FOOTER ================= -->
+    <footer>
+        <div class="container footer-grid">
+            <div class="footer-column">
+                <div class="footer-logo"><img src="../Editable/Imagenes/Logo sin fondo.png" alt="" style="width: auto; height: 90px;"></div>
+                <p style="font-size: 1rem; color: #efedf6;">Prisma Helios</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h4>CONTACTO</h4>
+                <ul>
+                    <li><i class="fa-solid fa-phone"></i> (+57) 323 6060185</li>
+                    <li><i class="fa-solid fa-envelope"></i> prismaheliossas@gmail.com</li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h4>Acerca de</h4>
+                <ul>
+                    <li><a href="#">Aviso de privacidad</a></li>
+                    <li><a href="#">Términos de servicio</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+        <!-- ================= VENTANA MODAL (LOGIN) ================= -->
+    <div class="modal-overlay" id="login-modal">
+        <div class="modal-card">
+            <h3>Iniciar Sesión</h3>
+            <form id="login-form">
+                <input type="email" id="login-email" placeholder="Correo electrónico" required>
+                <input type="password" id="login-pass" placeholder="Contraseña" required>
+                <div class="modal-actions">
+                    <button type="submit" class="btn-modal-submit">Ingresar</button>
+                    <button type="button" class="error-btn" id="close-modal-btn">Cancelar</button>
+                </div>
+            </form>
+
+            <div class="login-error-box" id="login-error">
+                <p><strong>Usuario no registrado</strong></p>
+                <div class="error-options">
+                    <button type="button" class="error-btn" id="btn-retry">Intentar de nuevo</button>
+                    <button type="button" class="error-btn" id="btn-forgot">¿Olvidó su contraseña?</button>
+                    <button type="button" class="error-btn" id="btn-back">Regresar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= JAVASCRIPT VANILLA ================= -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Funcionalidad Menú Hamburguesa
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const navLinks = document.getElementById('nav-links');
+            const icon = menuBtn.querySelector('i');
+
+            menuBtn.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                if(navLinks.classList.contains('active')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-xmark');
+                } else {
+                    icon.classList.remove('fa-xmark');
+                    icon.classList.add('fa-bars');
+                }
+            });
+
+            // 3. AUTENTICACIÓN SIMULADA
+            const usuariosRegistrados = [
+                { correo: "estudiante@prisma.com", pass: "12345" },
+                { correo: "admin@prisma.com", pass: "admin2026" },
+                { correo: "cliente@empresa.com", pass: "prisma123" }
+            ];
+
+            const loginModal = document.getElementById('login-modal');
+            const openLoginBtn = document.getElementById('open-login-btn');
+            const closeLoginBtn = document.getElementById('close-modal-btn');
+            const loginForm = document.getElementById('login-form');
+            const loginEmailInput = document.getElementById('login-email');
+            const loginPassInput = document.getElementById('login-pass');
+            const loginErrorBox = document.getElementById('login-error');
+            const authContainer = document.getElementById('auth-container');
+
+            openLoginBtn.addEventListener('click', () => {
+                loginModal.classList.add('active');
+                resetLoginForm();
+            });
+
+            closeLoginBtn.addEventListener('click', () => {
+                loginModal.classList.remove('active');
+            });
+
+            function resetLoginForm() {
+                loginForm.reset();
+                loginErrorBox.style.display = 'none';
+            }
+
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = loginEmailInput.value.trim();
+                const password = loginPassInput.value.trim();
+
+                const usuarioValido = usuariosRegistrados.find(u => u.correo === email && u.pass === password);
+
+                if (usuarioValido) {
+                    loginModal.classList.remove('active');
+                    authContainer.innerHTML = `
+                        <div class="user-profile-badge">
+                            <i class="fa-solid fa-circle-user"></i>
+                            <span>Bienvenido, <strong>${usuarioValido.correo}</strong></span>
+                        </div>
+                    `;
+                } else {
+                    loginErrorBox.style.display = 'block';
+                }
+            });
+
+            document.getElementById('btn-retry').addEventListener('click', () => { resetLoginForm(); });
+            document.getElementById('btn-forgot').addEventListener('click', () => { window.location.href = 'contacto.html'; });
+            document.getElementById('btn-back').addEventListener('click', () => {
+                loginModal.classList.remove('active');
+                resetLoginForm();
+            });
+        });
+    </script>
+</body>
+</html>
