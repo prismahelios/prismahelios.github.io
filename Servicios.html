@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prisma Helios | Servicios</title>
             <!-- FAVICON -->
-    <link rel="icon" type="image/png" href="LOGO.png">
+    <link rel="icon" type="image/png" href="../Editable/Imagenes/LOGO.png">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -88,34 +88,34 @@
         .nav-links a:hover { color: var(--color-accent); }
 
               /* ================= LOGO CON EFECTO ZOOM Y DESTELLO ================= */
-        .logo { 
-            font-family: var(--font-headings); 
-            font-size: 2rem; 
-            font-weight: bold; 
-            letter-spacing: 2px;
-            display: inline-block;
-            cursor: pointer;
-            user-select: none;
-            
-            /* Animación fluida con curva elástica (cubic-bezier) */
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
-                        color 0.3s ease, 
-                        text-shadow 0.3s ease;
-        }
+.logo { 
+    display: inline-block;
+    cursor: pointer;
+    user-select: none;
+   
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
 
-        /* Estado HOVER: Aplicamos el Zoom del 135%, rotación sutil y destello neón */
-        .logo:hover {
-            transform: scale(1.35) rotate(-2deg);
-            color: var(--color-accent);
-            text-shadow: 
-                0 0 10px rgba(0, 210, 255, 0.8),
-                0 0 20px rgba(0, 210, 255, 0.5),
-                0 0 30px rgba(74, 20, 140, 0.8);
-        }
 
-        .logo:active {
-            transform: scale(1.15);
-        }
+.logo img {
+    border-radius: 0px !important;
+    clip-path: none !important;
+    object-fit: contain;
+}
+
+/* Efecto Zoom al pasar el mouse */
+.logo:hover {
+    transform: scale(1.35) rotate(-2deg);
+    
+    filter: 
+        drop-shadow(0 0 8px rgba(0, 210, 255, 0.8))
+        drop-shadow(0 0 15px rgba(74, 20, 140, 0.6));
+}
+
+/* Efecto al hacer clic */
+.logo:active { 
+    transform: scale(1.15); 
+}
 
         /* Contenedor de autenticación anclado a la esquina del header */
 .header-auth {
@@ -259,7 +259,7 @@
     }
 
     .services-hero .eyebrow {
-        font-family: var("Syne");
+        font-family: var("serif");
         font-size: 0.85rem;
         font-weight: 600;
         letter-spacing: 0.3em;
@@ -269,7 +269,7 @@
     }
 
 .services-hero h1 {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Playfair Display', sans-serif;
     font-weight: 800;
     font-size: 6rem;          /* 96px, como en la versión original (desktop) */
     letter-spacing: -0.04em;
@@ -399,27 +399,28 @@
     font-size: 1.05rem;
 }
 
-.cta-btn {
-    display: inline-block;
-    padding: 1rem 2.75rem;
-    border: 1px solid var(--color-accent);
-    border-radius: 999px;
-    color: var(--color-accent);
-    font-family: var(--font-body);
-    font-weight: 600;
-    letter-spacing: 1px;
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    background: transparent;
-    cursor: pointer;
-    transition: var(--transition-smooth);
-}
-
-.cta-btn:hover {
-    background: var(--color-accent);
-    color: var(--color-bg-dark);
-    box-shadow: 0 0 25px rgba(0, 210, 255, 0.4);
-}
+                .cta-idea-link {
+                    position: relative;
+                    display: inline-block;
+                    font-family: var(--font-body);
+                    font-weight: 300;
+                    font-size: clamp(1.8rem, 5vw, 3rem);
+                    letter-spacing: -0.01em;
+                    text-decoration: none;
+                    color: var(--color-accent);
+                }
+                .cta-idea-link:after {
+                    content: "";
+                    position: absolute;
+                    left: 0;
+                    right: 0;
+                    bottom: -6px;
+                    border-top: 2px solid currentColor;
+                    transition: transform 0.4s ease;
+                }
+                .cta-idea-link:hover:after {
+                    transform: scaleX(0);
+                }
 
 @media (max-width: 768px) {
     .cta-section { padding: 3rem 1.5rem; }
@@ -458,7 +459,7 @@
                     <a href="Nosotros.html">Nosotros</a>
                 </div>
                 <a href="index.html" title="Ir al Inicio"
-                class="logo"><img src="logosinfondo.png" alt="" style="width: auto; height: 65px;"></a>
+                class="logo"><img src="../Editable/Logosinfondo5.png" alt="" style="width: auto; height: 65px;"></a>
                 <div class="nav-group">
                     <a href="Servicios.html" class="active">Servicios</a>
                     <a href="Contacto.html">Contactanos</a>
@@ -473,13 +474,13 @@
     <div class="container">        
         <section class="services-hero">
             <p class="eyebrow">Creando dimensiones digitales</p>
-            <h1 class="font-headline-lg text-headline-lg md:text-display-2xl text-on-surface mb-8 leading-none">Servicios de Élite</h1>
+            <h1 class="services-hero h1">Servicios de Élite</h1>
             <div class="refraction-divider max-w-2xl mx-auto opacity-50"></div>
             <div class="divider"></div>
         </section>
         <div class="services-grid">
             <div class="service-card card-lg">
-                <img src="producción audiovisual.jpg" alt="Set de producción audiovisual profesional">
+                <img src="../Editable/Imagenes/servicios/producción audiovisual.jpg" alt="Set de producción audiovisual profesional">
                 <div class="service-card-content">
                     <h2>Producción audiovisual</h2>
                     <p>En este espacio creamos la mejor versión digital de tu empresa. Te ayudamos a reflejar de manera creativa cada detalle importante. ¡Somos tu alternativa perfecta!</p>
@@ -487,7 +488,7 @@
             </div>
 
             <div class="service-card card-sm">
-                <img src="Fotografia.avif" alt="Fotógrafo profesional en sesión">
+                <img src="../Editable/Imagenes/servicios/Fotografia.avif" alt="Fotógrafo profesional en sesión">
                 <div class="service-card-content">
                     <h2>Fotografía profesional</h2>
                     <p>Capturamos cada momento con precisión, brindando a tu marca imágenes de calidad excepcional.</p>
@@ -495,7 +496,7 @@
             </div>
 
             <div class="service-card card-sm">
-                <img src="diseño grafico.avif" alt="Equipo de diseñadores gráficos trabajando">
+                <img src="../Editable/Imagenes/servicios/diseño grafico.avif" alt="Equipo de diseñadores gráficos trabajando">
                 <div class="service-card-content">
                     <h2>Diseño gráfico</h2>
                     <p>Diseñamos y desarrollamos soluciones digitales que no solo se ven bien, sino que también funcionan a la perfección.</p>
@@ -503,7 +504,7 @@
             </div>
 
             <div class="service-card card-lg">
-                <img src="branding.jpg" alt="Proceso creativo y desarrollo de branding">
+                <img src="../Editable/Imagenes/servicios/branding.jpg" alt="Proceso creativo y desarrollo de branding">
                 <div class="service-card-content">
                     <h2>Branding</h2>
                     <p>Creamos marcas que lideran con propósito, autenticidad y una identidad visual que refleje tu esencia.</p>
@@ -514,7 +515,7 @@
         <section class="cta-section">
             <h2>¿Listo para elevar tu visión?</h2>
             <p>Fusionamos técnica avanzada con una estética impecable para crear experiencias que definen el futuro de la industria creativa.</p>
-            <a href="Contacto.html" class="cta-btn">Iniciar proyecto</a>
+            <a href="Contacto.html" class="cta-idea-link">Iniciar proyecto</a>
         </section>
     </div>
 </main>
@@ -523,7 +524,7 @@
     <footer>
         <div class="container footer-grid">
              <div class="footer-column">
-                <div class="footer-logo"><img src="logosinfondo.png" alt="" style="width: auto; height: 90px;"></div>
+                <div class="footer-logo"><img src="../Editable/Imagenes/Logo-sin-fondo.png" alt="" style="width: auto; height: 90px;"></div>
                 <p style="font-size: 1rem; color: #efedf6;">Prisma Helios</p>
                 <div class="social-links">
                     <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>

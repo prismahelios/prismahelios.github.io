@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prisma Helios | Contactanos</title>
             <!-- FAVICON -->
-    <link rel="icon" type="image/png" href="LOGO.png">
+    <link rel="icon" type="image/png" href="../Editable/Imagenes/LOGO.png">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -84,34 +84,35 @@
         .nav-links a:hover { color: var(--color-accent); }
 
               /* ================= LOGO CON EFECTO ZOOM Y DESTELLO ================= */
-        .logo { 
-            font-family: var(--font-headings); 
-            font-size: 2rem; 
-            font-weight: bold; 
-            letter-spacing: 2px;
-            display: inline-block;
-            cursor: pointer;
-            user-select: none;
-            
-            /* Animación fluida con curva elástica (cubic-bezier) */
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
-                        color 0.3s ease, 
-                        text-shadow 0.3s ease;
-        }
 
-        /* Estado HOVER: Aplicamos el Zoom del 135%, rotación sutil y destello neón */
-        .logo:hover {
-            transform: scale(1.35) rotate(-2deg);
-            color: var(--color-accent);
-            text-shadow: 
-                0 0 10px rgba(0, 210, 255, 0.8),
-                0 0 20px rgba(0, 210, 255, 0.5),
-                0 0 30px rgba(74, 20, 140, 0.8);
-        }
+.logo { 
+    display: inline-block;
+    cursor: pointer;
+    user-select: none;
+   
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
 
-        .logo:active {
-            transform: scale(1.15);
-        }
+
+.logo img {
+    border-radius: 0px !important;
+    clip-path: none !important;
+    object-fit: contain;
+}
+
+/* Efecto Zoom al pasar el mouse */
+.logo:hover {
+    transform: scale(1.35) rotate(-2deg);
+    
+    filter: 
+        drop-shadow(0 0 8px rgba(0, 210, 255, 0.8))
+        drop-shadow(0 0 15px rgba(74, 20, 140, 0.6));
+}
+
+/* Efecto al hacer clic */
+.logo:active { 
+    transform: scale(1.15); 
+}
 
         /* Contenedor de autenticación anclado a la esquina del header */
 .header-auth {
@@ -409,13 +410,13 @@
             <nav class="nav-links" id="nav-links">
                 <div class="nav-group">
                     <a href="index.html">Inicio</a>
-                    <a href="Nosotros.html">Nosotros</a>
+                    <a href="nosotros.html">Nosotros</a>
                 </div>
                 <a href="index.html" title="Ir al Inicio"
-                class="logo"><img src="logosinfondo.png" alt="" style="width: auto;height: 65px;"></a>
+                class="logo"><img src="../Editable/Logosinfondo5.png" alt="" style="width: auto;height: 65px;"></a>
                 <div class="nav-group">
-                    <a href="Servicios.html">Servicios</a>
-                    <a href="Contacto.html" class="active">Contactanos</a>
+                    <a href="servicios.html">Servicios</a>
+                    <a href="contacto.html" class="active">Contactanos</a>
                 </div>
             </nav>
             <div class="header-auth" id="auth-container"></div>
@@ -487,7 +488,7 @@
     <footer>
         <div class="container footer-grid">
              <div class="footer-column">
-                <div class="footer-logo"><img src="logosinfondo.png" alt="" style="width: auto; height: 90px;"></div>
+                <div class="footer-logo"><img src="../Editable/Imagenes/Logo-sin-fondo.png" alt="" style="width: auto; height: 90px;"></div>
                 <p style="font-size: 1rem; color: #efedf6;">Prisma Helios</p>
                 <div class="social-links">
                     <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>

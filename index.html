@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prisma Helios | Inicio</title>
         <!-- FAVICON -->
-    <link rel="icon" type="image/png" href="LOGO.png">
+    <link rel="icon" type="image/png" href="../Editable/Imagenes/LOGO.png" style="width: auto; height: 10px;">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -132,27 +132,35 @@
         .menu-toggle { display: none; font-size: 1.5rem; cursor: pointer; color: var(--color-text-main); background: none; border: none; }
 
         /* ================= LOGO CON EFECTO ZOOM Y DESTELLO ================= */
-        .logo { 
-            font-family: var(--font-headings); 
-            font-size: 2rem; 
-            font-weight: bold; 
-            letter-spacing: 2px;
-            display: inline-block;
-            cursor: pointer;
-            user-select: none;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
-                        color 0.3s ease, 
-                        text-shadow 0.3s ease;
-        }
-        .logo:hover {
-            transform: scale(1.35) rotate(-2deg);
-            color: var(--color-accent);
-            text-shadow: 
-                0 0 10px rgba(0, 210, 255, 0.8),
-                0 0 20px rgba(0, 210, 255, 0.5),
-                0 0 30px rgba(74, 20, 140, 0.8);
-        }
-        .logo:active { transform: scale(1.15); }
+/* Estilos para el contenedor del logo (el enlace) */
+.logo { 
+    display: inline-block;
+    cursor: pointer;
+    user-select: none;
+   
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+
+.logo img {
+    border-radius: 0px !important;
+    clip-path: none !important;
+    object-fit: contain;
+}
+
+/* Efecto Zoom al pasar el mouse */
+.logo:hover {
+    transform: scale(1.35) rotate(-2deg);
+    
+    filter: 
+        drop-shadow(0 0 8px rgba(0, 210, 255, 0.8))
+        drop-shadow(0 0 15px rgba(74, 20, 140, 0.6));
+}
+
+/* Efecto al hacer clic */
+.logo:active { 
+    transform: scale(1.15); 
+}
 
         /* Botón Iniciar Sesión en Navbar */
         .btn-login-nav {
@@ -470,7 +478,7 @@
                     <a href="Nosotros.html">Nosotros</a>
                 </div>
                 <a href="index.html" title="Ir al Inicio" class="logo">
-                    <img src="logosinfondo.png" alt="" style="width: auto;height: 65px; display: block;">
+                    <img src="../Editable/Logosinfondo5.png" alt="" style="width: auto;height: 70px; display: block;">
                 </a>
                 <div class="nav-group">
                     <a href="Servicios.html">Servicios</a>
@@ -491,7 +499,7 @@
                 </div>
                 <div class="hero-img-container">
                     <!-- Placeholder fotográfico -->
-                    <img src="Camara atardecer.png" alt="Cámara fotográfica profesional en el atardecer" class="hero-img">
+                    <img src="../Editable/Imagenes/inicio/Camara atardecer.png" alt="Cámara fotográfica profesional en el atardecer" class="hero-img">
                 </div>
             </div>
         </section>
@@ -500,7 +508,7 @@
         <section id="nosotros-teaser" class="container">
             <div class="about-grid">
                 <div class="about-img-container">
-                    <img src="Inicio-Quienessomos" alt="Equipo de trabajo en estudio multimedia" class="hero-img">
+                    <img src="../Editable/Imagenes/inicio/Inicio-Quienessomos" alt="Equipo de trabajo en estudio multimedia" class="hero-img">
                 </div>
                 <div class="about-text">
                     <h1>¿Quienes somos?</h1>
@@ -577,7 +585,7 @@
     <footer>
         <div class="container footer-grid">
             <div class="footer-column">
-                <div class="footer-logo"><img src="logosinfondo.png" alt="" style="width: auto; height: 90px;"></div>
+                <div class="footer-logo"><img src="../Editable/Imagenes/Logo-sin-fondo.png" alt="" style="width: auto; height: 90px;"></div>
                 <p style="font-size: 1rem; color: #efedf6;">Prisma Helios</p>
                 <div class="social-links">
                     <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
