@@ -211,7 +211,7 @@
         /* Contenedor de autenticación anclado a la esquina */
         .header-auth {
             position: absolute;
-            right: 1.5rem;
+            right: 10.5rem;
             top: 50%;
             transform: translateY(-50%);
             z-index: 10;
@@ -229,7 +229,7 @@
             .nav-group { flex-direction: column; width: 100%; gap: 0; text-align: center; }
             .nav-group a { display: block; padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); width: 100%; }
             .logo { flex-grow: 1; text-align: left; }
-            .header-auth { right: 1rem; }
+            .header-auth { right: 5.5rem; }
             .btn-login-nav span.login-text { display: none; }
         }
 
@@ -356,7 +356,7 @@
             box-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
         }
 
-        .footer-column h4 { margin-bottom: 1rem; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; }
+        .footer-column h4 { margin-bottom: 1rem; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; font-family: var(--font-headings); }
         .footer-column ul { display: flex; flex-direction: column; gap: 0.5rem; }
         .footer-column ul li { display: flex; align-items: center; gap: 0.5rem; color: var(--color-text-muted); }
         
@@ -459,33 +459,120 @@
                     transform: scaleX(0);
                 }
 
+/* === OVERLAY DE PANTALLA COMPLETA === */
+.page-transition-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;       /* 100% del ancho de la ventana */
+    height: 100vh;      /* 100% del alto de la ventana */
+    background: linear-gradient(135deg, #29498dff, #462e73ff); /* Tu color institucional para evitar parpadeos */
+    z-index: 9999;      /* Asegura que quede por encima de todo */
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease-in-out;
+    
+    /* Centrado flexbox por seguridad */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;   /* Evita barras de desplazamiento */
+}
+
+/* Estado activo cuando inicia la animación */
+.page-transition-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* Contenedor interno al 100% */
+.transition-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #0d3589, #351F65;  /* 👈 Asigna el mismo tono al fondo del contenedor */
+}
+
+.transition-content video {
+    width: auto;
+    height: 100%;
+    object-fit: contain; /* Utiliza contain si deseas mantener la relación de aspecto sin recortes */
+    object-position: center;
+    background-color: #0d3589, #351F65; /* 👈 Elimina cualquier fondo por defecto del elemento video */
+}
+
+
+
+        /* === BOTÓN DE IDIOMA (ES / EN) ===
+           Anclado a la derecha del header con position:absolute (igual que .header-auth),
+           por eso no desplaza el logo, los enlaces ni el botón de sesión. */
+        .lang-switch { position: absolute; right: 2rem; top: 50%; transform: translateY(-50%); z-index: 10; }
+        .btn-lang {
+            background-color: transparent;
+            border: 1px solid var(--color-accent);
+            color: var(--color-accent);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-family: var(--font-body);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+        .btn-lang:hover { background-color: var(--color-accent); color: var(--color-bg-dark); }
+        @media (max-width: 768px) {
+            .lang-switch { right: 1rem; }
+            .btn-lang { padding: 6px 12px; }
+        }
     </style>
 </head>
 <body>
+
+    <!-- OVERLAY DE TRANSICIÓN ANIMADA -->
+    <div id="page-transition" class="page-transition-overlay">
+        <div class="transition-content">
+            <!-- OPCIÓN A: Si tu animación es un video con canal alfa o MP4/WebM -->
+            <video id="transition-video" src="videoproyect.mp4" muted playsinline></video>
+
+            <!-- OPCIÓN B: Si es un loader/SVG animado en CSS -->
+            <!-- <div class="star-loader"></div> -->
+        </div>
+    </div>
 
     <!-- ================= HEADER ================= -->
     <header>
         <div class="container nav-container">
             <!-- Botón Menú Móvil -->
-            <button class="menu-toggle" id="mobile-menu-btn" aria-label="Abrir menú">
+            <button class="menu-toggle" id="mobile-menu-btn" aria-label="Abrir menú" data-i18n-aria-label="nav.menu">
                 <i class="fa-solid fa-bars"></i>
             </button>
 
             <!-- Logo + enlaces: único elemento dentro del flex centrado -->
             <nav class="nav-links" id="nav-links">
                 <div class="nav-group">
-                    <a href="index.html" class="active">Inicio</a>
-                    <a href="Nosotros.html">Nosotros</a>
+                    <a data-i18n="nav.home" href="index.html" class="active">Inicio</a>
+                    <a data-i18n="nav.about" href="Nosotros.html">Nosotros</a>
                 </div>
-                <a href="index.html" title="Ir al Inicio" class="logo">
+                <a href="index.html" title="Ir al Inicio" data-i18n-title="nav.logoTitle" class="logo">
                     <img src="Logosinfondo5.png" alt="" style="width: auto;height: 70px; display: block;">
                 </a>
                 <div class="nav-group">
-                    <a href="Servicios.html">Servicios</a>
-                    <a href="Contacto.html">Contactanos</a>
+                    <a data-i18n="nav.services" href="Servicios.html">Servicios</a>
+                    <a data-i18n="nav.contact" href="Contacto.html">Contactanos</a>
                 </div>
             </nav>
-            <div class="header-auth" id="auth-container"></div>
+        </div>
+        <div class="header-auth" id="auth-container"></div>
+        <!-- Botón de idioma ES / EN (fuera del flujo: no mueve el logo ni los enlaces) -->
+        <div class="lang-switch">
+            <button type="button" class="btn-lang" id="lang-toggle" aria-label="Cambiar idioma / Change language" title="Cambiar idioma / Change language">
+                <i class="fa-solid fa-globe"></i> <span id="lang-label">EN</span>
+            </button>
         </div>
     </header>
 
@@ -494,12 +581,12 @@
         <section id="inicio" class="container">
             <div class="hero-grid">
                 <div class="hero-text">
-                    <h1 class="hero-title">Ideas que se<br>transforman<br>en luz</h1>
-                    <p>En Prisma Helios  creamos soluciones innovadoras<br>que iluminan el camino hacia el futuro</p>
+                    <h1 class="hero-title" data-i18n="home.heroTitle">Ideas que se<br>transforman<br>en luz</h1>
+                    <p data-i18n="home.heroText">En Prisma Helios  creamos soluciones innovadoras<br>que iluminan el camino hacia el futuro</p>
                 </div>
                 <div class="hero-img-container">
                     <!-- Placeholder fotográfico -->
-                    <img src="Camara atardecer.png" alt="Cámara fotográfica profesional en el atardecer" class="hero-img">
+                    <img src="camaraatardecer.png" alt="Cámara fotográfica profesional en el atardecer" data-i18n-alt="home.heroAlt" class="hero-img">
                 </div>
             </div>
         </section>
@@ -508,66 +595,66 @@
         <section id="nosotros-teaser" class="container">
             <div class="about-grid">
                 <div class="about-img-container">
-                    <img src="Inicio-Quienessomos" alt="Equipo de trabajo en estudio multimedia" class="hero-img">
+                    <img src="inicioquienessomo" alt="Equipo de trabajo en estudio multimedia" data-i18n-alt="home.aboutAlt" class="hero-img">
                 </div>
                 <div class="about-text">
-                    <h1>¿Quienes somos?</h1>
-                    <p>Somos una agencia de contenido multimedial, con el objetivo de reforzar la identidad visual de las marcas emergentes. Nos basamos en la creatividad y la adaptabilidad de la marca en el entorno digital.</p>
-                    <a href="Nosotros.html" class="btn">Ver más</a>
+                    <h1 data-i18n="home.aboutTitle">¿Quienes somos?</h1>
+                    <p data-i18n="home.aboutText">Somos una agencia de contenido multimedial, con el objetivo de reforzar la identidad visual de las marcas emergentes. Nos basamos en la creatividad y la adaptabilidad de la marca en el entorno digital.</p>
+                    <a href="Nosotros.html" class="btn" data-i18n="home.more">Ver más</a>
                 </div>
             </div>
         </section>
 
         <!-- ================= SERVICIOS ================= -->
         <section id="servicios-teaser" class="container services-section">
-            <h2>¿Que ofrecemos?</h2>
+            <h2 data-i18n="home.offerTitle">¿Que ofrecemos?</h2>
             <div class="services-grid">
                 <div class="service-item">
                     <i class="fa-solid fa-video"></i>
-                    <h3>Producción audiovisual</h3>
+                    <h3 data-i18n="home.svcAudio">Producción audiovisual</h3>
                 </div>
                 <div class="service-item">
                     <i class="fa-solid fa-pen-nib"></i>
-                    <h3>Diseño gráfico</h3>
+                    <h3 data-i18n="home.svcDesign">Diseño gráfico</h3>
                 </div>
                 <div class="service-item">
                     <i class="fa-solid fa-camera"></i>
-                    <h3>Fotografía profesional</h3>
+                    <h3 data-i18n="home.svcPhoto">Fotografía profesional</h3>
                 </div>
                 <div class="service-item">
                     <i class="fa-solid fa-users-viewfinder"></i>
                     <h3>Branding</h3>
                 </div>
             </div>
-            <a href="Servicios.html" class="btn">Ver más</a>
+            <a href="Servicios.html" class="btn" data-i18n="home.more">Ver más</a>
         </section>
 
         <!-- ================= PREGUNTAS FRECUENTES ================= -->
         <section id="faq" class="faq-section">
             <div class="container">
-                <h2>Preguntas frecuentes</h2>
+                <h2 data-i18n="faq.title">Preguntas frecuentes</h2>
                 <div class="faq-container">
                     <details>
-                        <summary>1. ¿Qué tipo de servicios multimedia ofrecen exactamente?</summary>
-                        <div class="faq-content">
+                        <summary data-i18n="faq.q1">1. ¿Qué tipo de servicios multimedia ofrecen exactamente?</summary>
+                        <div class="faq-content" data-i18n="faq.a1">
                             Ofrecemos un catálogo completo que incluye producción de video, fotografía profesional corporativa, diseño de identidad visual y estrategias de branding digital adaptadas a tu nicho.
                         </div>
                     </details>
                     <details>
-                        <summary>2. ¿Cómo es el proceso de trabajo al iniciar un proyecto con la agencia?</summary>
-                        <div class="faq-content">
+                        <summary data-i18n="faq.q2">2. ¿Cómo es el proceso de trabajo al iniciar un proyecto con la agencia?</summary>
+                        <div class="faq-content" data-i18n="faq.a2">
                             Comenzamos con una reunión de descubrimiento para entender tus metas. Luego, presentamos una propuesta creativa y un cronograma, seguido de la producción y finalmente la fase de revisión y entrega.
                         </div>
                     </details>
                     <details>
-                        <summary>3. No tengo conocimientos técnicos de diseño ni formatos. ¿Ustedes me asesoran?</summary>
-                        <div class="faq-content">
+                        <summary data-i18n="faq.q3">3. No tengo conocimientos técnicos de diseño ni formatos. ¿Ustedes me asesoran?</summary>
+                        <div class="faq-content" data-i18n="faq.a3">
                             ¡Totalmente! Nuestro equipo de expertos te guiará en cada paso, explicándote los mejores formatos y resoluciones para las plataformas que vayas a utilizar, sin necesidad de que tengas experiencia previa.
                         </div>
                     </details>
                     <details>
-                        <summary>4. ¿Trabajan con presupuestos adaptados para pequeñas y medianas empresas (Pymes)?</summary>
-                        <div class="faq-content">
+                        <summary data-i18n="faq.q4">4. ¿Trabajan con presupuestos adaptados para pequeñas y medianas empresas (Pymes)?</summary>
+                        <div class="faq-content" data-i18n="faq.a4">
                             Sí, entendemos el ecosistema de las marcas emergentes y contamos con planes modulares que se ajustan a las necesidades y posibilidades de las Pymes sin sacrificar la calidad profesional.
                         </div>
                     </details>
@@ -576,8 +663,8 @@
         </section>
 
         <section class="cta-idea-section">
-            <h2 class="cta-idea-title">¿Tienes algún proyecto?</h2>
-            <a href="Contacto.html" class="cta-idea-link">Cuéntanosla</a>
+            <h2 class="cta-idea-title" data-i18n="cta.title">¿Tienes algún proyecto?</h2>
+            <a href="Contacto.html" class="cta-idea-link" data-i18n="cta.link">Hablemos</a>
         </section>
 
 
@@ -585,16 +672,16 @@
     <footer>
         <div class="container footer-grid">
             <div class="footer-column">
-                <div class="footer-logo"><img src="logosinfondo.png" alt="" style="width: auto; height: 90px;"></div>
+                <div class="footer-logo"><img src="Logo-sin-fondo.png" alt="" style="width: auto; height: 90px;"></div>
                 <p style="font-size: 1rem; color: #efedf6;">Prisma Helios</p>
                 <div class="social-links">
-                    <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
-                    <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=61594728850521" target="_blank" rel="noopener noreferrer" aria-label="facebook"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/prismahelios_agencia/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
                 </div>
             </div>
             
             <div class="footer-column">
-                <h4>CONTACTO</h4>
+                <h4 data-i18n="footer.contact">CONTACTO</h4>
                 <ul>
                     <li><i class="fa-solid fa-phone"></i> (+57) 323 6060185</li>
                     <li><i class="fa-solid fa-envelope"></i> prismaheliossas@gmail.com</li>
@@ -602,10 +689,10 @@
             </div>
             
             <div class="footer-column">
-                <h4>Acerca de</h4>
+                <h4 data-i18n="footer.about">Acerca de</h4>
                 <ul>
-                    <li><a href="#">Aviso de privacidad</a></li>
-                    <li><a href="#">Términos de servicio</a></li>
+                    <li><a href="#" data-i18n="footer.privacy">Aviso de privacidad</a></li>
+                    <li><a href="#" data-i18n="footer.terms">Términos de servicio</a></li>
                 </ul>
             </div>
         </div>
@@ -614,28 +701,28 @@
         <!-- ================= VENTANA MODAL (LOGIN) ================= -->
     <div class="modal-overlay" id="login-modal">
         <div class="modal-card">
-            <h3>Iniciar Sesión</h3>
+            <h3 data-i18n="auth.title">Iniciar Sesión</h3>
             <form id="login-form">
-                <input type="email" id="login-email" placeholder="Correo electrónico" required>
-                <input type="password" id="login-pass" placeholder="Contraseña" required>
+                <input type="email" id="login-email" placeholder="Correo electrónico" data-i18n-placeholder="auth.email" required>
+                <input type="password" id="login-pass" placeholder="Contraseña" data-i18n-placeholder="auth.password" required>
                 <div class="modal-actions">
-                    <button type="submit" class="btn-modal-submit">Ingresar</button>
-                    <button type="button" class="error-btn" id="close-modal-btn">Cancelar</button>
+                    <button type="submit" class="btn-modal-submit" data-i18n="auth.submit">Ingresar</button>
+                    <button type="button" class="error-btn" id="close-modal-btn" data-i18n="auth.cancel">Cancelar</button>
                 </div>
             </form>
 
             <div class="login-error-box" id="login-error">
-                <p><strong>Usuario no registrado</strong></p>
+                <p><strong data-i18n="auth.notFound">Usuario no registrado</strong></p>
                 <div class="error-options">
-                    <button type="button" class="error-btn" id="btn-retry">Intentar de nuevo</button>
-                    <button type="button" class="error-btn" id="btn-forgot">¿Olvidó su contraseña?</button>
-                    <button type="button" class="error-btn" id="btn-back">Regresar</button>
+                    <button type="button" class="error-btn" id="btn-retry" data-i18n="auth.retry">Intentar de nuevo</button>
+                    <button type="button" class="error-btn" id="btn-forgot" data-i18n="auth.forgot">¿Olvidó su contraseña?</button>
+                    <button type="button" class="error-btn" id="btn-back" data-i18n="auth.back">Regresar</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- ================= JAVASCRIPT VANILLA ================= -->
+    <!-- ================= JAVAS+CRIPT VANILLA ================= -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // 1. Funcionalidad Menú Hamburguesa
@@ -681,8 +768,8 @@ function renderAuthUI() {
         authContainer.innerHTML = `
             <div class="user-profile-badge">
                 <i class="fa-solid fa-circle-user"></i>
-                <span>Bienvenido</span>
-                <button class="btn-logout" id="logout-btn" title="Cerrar sesión">
+                <span data-i18n="auth.welcome">Bienvenido</span>
+                <button class="btn-logout" id="logout-btn" title="Cerrar sesión" data-i18n-title="auth.logout">
                     <i class="fa-solid fa-right-from-bracket"></i>
                 </button>
             </div>
@@ -694,7 +781,7 @@ function renderAuthUI() {
     } else {
         authContainer.innerHTML = `
             <button class="btn-login-nav" id="open-login-btn">
-                <i class="fa-solid fa-user"></i> <span class="login-text">Iniciar Sesión</span>
+                <i class="fa-solid fa-user"></i> <span class="login-text" data-i18n="auth.login">Iniciar Sesión</span>
             </button>
         `;
         document.getElementById('open-login-btn').addEventListener('click', () => {
@@ -734,6 +821,164 @@ document.getElementById('btn-back').addEventListener('click', () => {
 renderAuthUI(); // pinta el estado correcto (login o badge) apenas carga la página
             
             });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const transitionOverlay = document.getElementById('page-transition');
+    const transitionVideo = document.getElementById('transition-video');
+
+    // Duración de la animación antes de la redirección (en milisegundos)
+    const TRANSITION_DURATION = 4000; 
+
+    // Seleccionamos todos los enlaces/botones del contenido principal y footer,
+    // EXCLUYENDO explícitamente los que estén dentro de <header>
+    const contentLinks = document.querySelectorAll('main a, footer a, .btn, .cta-idea-link, .info-card');
+
+    contentLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            const targetUrl = link.getAttribute('href');
+
+            // Ignorar enlaces sin destino, anclas internas (#) o enlaces externos/PDFs
+            if (!targetUrl || 
+                targetUrl.startsWith('#') || 
+                targetUrl.startsWith('javascript:') || 
+                link.getAttribute('target') === '_blank') {
+                return;
+            }
+
+            // Prevenir la navegación inmediata del navegador
+            e.preventDefault();
+
+            // Activar la animación/overlay
+            transitionOverlay.classList.add('active');
+
+            // Si utilizas un video como animación, reproducirlo desde el inicio
+            if (transitionVideo) {
+                transitionVideo.currentTime = 0;
+                transitionVideo.play().catch(() => {});
+            }
+
+            // Esperar el tiempo de la animación antes de navegar a la nueva página
+            setTimeout(() => {
+                window.location.href = targetUrl;
+            }, TRANSITION_DURATION);
+        });
+    });
+
+    // Efecto de entrada suave (Fade-in) cuando la nueva página cargue
+    window.addEventListener('pageshow', () => {
+        transitionOverlay.classList.remove('active');
+    });
+});
+
+    </script>
+    <!-- ================= SELECTOR DE IDIOMA (ES / EN) =================
+         - El español es el contenido original del HTML: NO se reescribe.
+         - Al cambiar a inglés se guarda el texto original de cada elemento y
+           se reemplaza por la traducción; al volver a español se restaura tal cual.
+         - Para traducir un elemento nuevo: agrégale data-i18n="clave" (texto) o
+           data-i18n-placeholder / -alt / -title / -aria-label="clave" (atributos)
+           y añade "clave": "English text" al diccionario EN de abajo.
+         - El idioma elegido se recuerda entre páginas (localStorage). -->
+    <script>
+    (function () {
+        const EN = {
+        "nav.home": "Home",
+        "nav.about": "About Us",
+        "nav.services": "Services",
+        "nav.contact": "Contact Us",
+        "nav.menu": "Open menu",
+        "nav.logoTitle": "Go to Home",
+        "footer.contact": "CONTACT",
+        "footer.about": "About",
+        "footer.privacy": "Privacy Notice",
+        "footer.terms": "Terms of Service",
+        "auth.login": "Log In",
+        "auth.welcome": "Welcome",
+        "auth.logout": "Log out",
+        "auth.title": "Log In",
+        "auth.email": "Email",
+        "auth.password": "Password",
+        "auth.submit": "Log in",
+        "auth.cancel": "Cancel",
+        "auth.notFound": "User not registered",
+        "auth.retry": "Try again",
+        "auth.forgot": "Forgot your password?",
+        "auth.back": "Go back",
+        "doc.title": "Prisma Helios | Home",
+        "home.heroTitle": "Ideas that<br>transform<br>into light",
+        "home.heroText": "At Prisma Helios we create innovative solutions<br>that light the way to the future",
+        "home.heroAlt": "Professional camera at sunset",
+        "home.aboutAlt": "Team working in a multimedia studio",
+        "home.aboutTitle": "Who are we?",
+        "home.aboutText": "We are a multimedia content agency whose goal is to strengthen the visual identity of emerging brands. We build on creativity and on the brand's ability to adapt to the digital environment.",
+        "home.more": "Learn more",
+        "home.offerTitle": "What do we offer?",
+        "home.svcAudio": "Audiovisual production",
+        "home.svcDesign": "Graphic design",
+        "home.svcPhoto": "Professional photography",
+        "faq.title": "Frequently asked questions",
+        "faq.q1": "1. What kind of multimedia services do you offer, exactly?",
+        "faq.a1": "We offer a complete catalog that includes video production, professional corporate photography, visual identity design, and digital branding strategies tailored to your niche.",
+        "faq.q2": "2. What does the work process look like when starting a project with the agency?",
+        "faq.a2": "We start with a discovery meeting to understand your goals. Then we present a creative proposal and a timeline, followed by production and, finally, the review and delivery phase.",
+        "faq.q3": "3. I have no technical knowledge of design or formats. Will you advise me?",
+        "faq.a3": "Absolutely! Our team of experts will guide you every step of the way, explaining the best formats and resolutions for the platforms you plan to use, with no prior experience required.",
+        "faq.q4": "4. Do you work with budgets suited to small and medium-sized businesses (SMEs)?",
+        "faq.a4": "Yes, we understand the emerging-brand ecosystem and offer modular plans that fit the needs and means of SMEs without sacrificing professional quality.",
+        "cta.title": "Have a project in mind?",
+        "cta.link": "Let's talk"
+        };
+
+        const ATTRS = ['placeholder', 'alt', 'title', 'aria-label'];
+        const STORAGE_KEY = 'prismaIdioma';
+        const tituloES = document.title;
+        let lang = 'es';
+        try { lang = localStorage.getItem(STORAGE_KEY) === 'en' ? 'en' : 'es'; } catch (e) {}
+
+        const btn = document.getElementById('lang-toggle');
+        const label = document.getElementById('lang-label');
+
+        function aplicar() {
+            document.documentElement.lang = lang;
+
+            // Textos (guarda el original en español la primera vez que ve el elemento)
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                if (!('es' in el.dataset)) el.dataset.es = el.innerHTML;
+                const key = el.dataset.i18n;
+                el.innerHTML = (lang === 'en' && EN[key] !== undefined) ? EN[key] : el.dataset.es;
+            });
+
+            // Atributos (placeholder, alt, title, aria-label)
+            ATTRS.forEach(attr => {
+                const marca = 'data-i18n-' + attr;
+                const guardado = 'data-es-' + attr;
+                document.querySelectorAll('[' + marca + ']').forEach(el => {
+                    if (!el.hasAttribute(guardado)) el.setAttribute(guardado, el.getAttribute(attr) || '');
+                    const key = el.getAttribute(marca);
+                    el.setAttribute(attr, (lang === 'en' && EN[key] !== undefined) ? EN[key] : el.getAttribute(guardado));
+                });
+            });
+
+            document.title = (lang === 'en' && EN['doc.title']) ? EN['doc.title'] : tituloES;
+            if (label) label.textContent = (lang === 'es') ? 'EN' : 'ES'; // muestra el idioma al que se cambia
+        }
+
+        if (btn) {
+            btn.addEventListener('click', () => {
+                lang = (lang === 'es') ? 'en' : 'es';
+                try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
+                aplicar();
+            });
+        }
+
+        // El bloque de sesión (Iniciar Sesión / Bienvenido) se vuelve a pintar por JS:
+        // se re-traduce automáticamente cada vez que cambia.
+        const auth = document.getElementById('auth-container');
+        if (auth) new MutationObserver(aplicar).observe(auth, { childList: true });
+
+        window.PrismaIdioma = { get lang() { return lang; }, aplicar: aplicar };
+        aplicar();
+    })();
     </script>
 </body>
 </html>
