@@ -1028,6 +1028,53 @@ document.addEventListener('DOMContentLoaded', () => {
         window.PrismaIdioma = { get lang() { return lang; }, aplicar: aplicar };
         aplicar();
     })();
+</script>
+        <!-- === LÓGICA DE CONTROL DEL VIDEO === -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const video = document.getElementById("videoCorporativo");
+            const btnPlay = document.getElementById("btnPlay");
+            const btnMute = document.getElementById("btnMute");
+            const btnFullscreen = document.getElementById("btnFullscreen");
+
+            // Alternar Reproducción / Pausa
+            btnPlay.addEventListener("click", function() {
+                if (video.paused) {
+                    video.play();
+                    btnPlay.innerHTML = '<i class="fa-solid fa-pause"></i>';
+                } else {
+                    video.pause();
+                    btnPlay.innerHTML = '<i class="fa-solid fa-play"></i>';
+                }
+            });
+
+            // Alternar Silencio (Mute)
+            btnMute.addEventListener("click", function() {
+                if (video.muted) {
+                    video.muted = false;
+                    btnMute.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+                } else {
+                    video.muted = true;
+                    btnMute.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
+                }
+            });
+
+            // Control de Pantalla Completa
+            btnFullscreen.addEventListener("click", function() {
+                if (video.requestFullscreen) {
+                    video.requestFullscreen();
+                } else if (video.webkitRequestFullscreen) { /* Safari */
+                    video.webkitRequestFullscreen();
+                } else if (video.msRequestFullscreen) { /* IE11 */
+                    video.msRequestFullscreen();
+                }
+            });
+
+            // Si el video termina y no tiene bucle, resetear el botón
+            video.addEventListener("ended", function() {
+                btnPlay.innerHTML = '<i class="fa-solid fa-play"></i>';
+            });
+        });
     </script>
 </body>
 </html>
