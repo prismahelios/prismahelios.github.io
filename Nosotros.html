@@ -520,33 +520,41 @@
     </header>
 
     <main>
-        <!-- 1. VIDEO INSTITUCIONAL VERTICAL -->
+        <!-- ================= 1. VIDEO VERTICAL Y MANIFIESTO ================= -->
         <section class="video-section">
-            <div class="container" style="max-width: 1440px;">
-                <span class="section-subtitle" data-i18n="about.manifesto">MANIFIESTO VISUAL</span>
+            <div class="container">
+                <span class="section-subtitle">Manifiesto Visual</span>
+                <h2>Prisma Helios</h2>
 
-                <!-- Contenedor optimizado para video vertical (9:16) -->
+                <!-- Contenedor optimizado para video vertical (Formato 21:9 según tu CSS) -->
                 <div class="vertical-video-wrapper">
-                    <video id="promo-video" src="https://youtu.be/D29WffWYjfw" type="video.mp4" loop playsinline muted></video>
                     
+                    <!-- !!! AQUÍ ESTÁ EL CAMBIO PRINCIPAL !!! -->
+                    <!-- Reemplaza URL_DIRECTA_DE_TU_VIDEO con tu enlace de Google Drive o Dropbox -->
+                    <video id="videoCorporativo" playsinline loop preload="auto">
+                        <source src="URL_DIRECTA_DE_TU_VIDEO" type="video/mp4">
+                        Tu navegador no soporta la reproducción de este video.
+                    </video>
+
+                    <!-- Capa de controles personalizados sobre el video -->
                     <div class="video-controls-overlay">
                         <div class="video-top-bar">
-                            <span class="video-tag">Prisma Helios</span>
+                            <span class="video-tag"><i class="fa-solid fa-film"></i> Corporativo</span>
                         </div>
-                        
-                        <div class="video-bottom-controls">
-                            <!-- Botón Silenciar / Volumen -->
-                            <button class="ctrl-btn" id="btn-video-mute" aria-label="Silenciar o activar sonido" data-i18n-aria-label="about.muteAria">
-                                <i class="fa-solid fa-volume-xmark"></i>
-                            </button>
 
-                            <!-- Botón Play / Pausa Principal -->
-                            <button class="ctrl-btn btn-main-play" id="btn-video-play" aria-label="Reproducir o pausar video" data-i18n-aria-label="about.playAria">
+                        <div class="video-bottom-controls">
+                            <!-- Botón de Silencio -->
+                            <button class="ctrl-btn" id="btnMute" title="Silenciar/Activar sonido">
+                                <i class="fa-solid fa-volume-high"></i>
+                            </button>
+                            
+                            <!-- Botón de Reproducción Principal -->
+                            <button class="ctrl-btn btn-main-play" id="btnPlay" title="Reproducir/Pausar">
                                 <i class="fa-solid fa-play"></i>
                             </button>
 
-                            <!-- Botón Pantalla Completa -->
-                            <button class="ctrl-btn" id="btn-video-fullscreen" aria-label="Pantalla completa" data-i18n-aria-label="about.fsAria">
+                            <!-- Botón de Pantalla Completa -->
+                            <button class="ctrl-btn" id="btnFullscreen" title="Pantalla completa">
                                 <i class="fa-solid fa-expand"></i>
                             </button>
                         </div>
@@ -554,6 +562,7 @@
                 </div>
             </div>
         </section>
+
 
         <!-- 2. HISTORIA, MISIÓN, VISIÓN Y VALORES -->
         <section class="about-section">
