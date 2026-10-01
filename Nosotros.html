@@ -230,7 +230,6 @@
         .founder-bio { font-size: 0.95rem; line-height: 1.7; color: var(--color-text-muted); margin-bottom: 1.5rem; text-align: justify; }
         .founder-quote {
             background: rgba(43, 76, 155, 0.35);
-            border-left: 4px solid var(--color-accent);
             border-radius: 0 12px 12px 0;
             padding: 1.25rem 1.5rem;
             margin: 0;
@@ -332,8 +331,8 @@
         .cta-idea-link {
             position: relative;
             display: inline-block;
-            font-family: var(--font-headings);
-            font-weight: 700;
+            font-family: var(--font-body);
+            font-weight: 300;
             font-size: clamp(2rem, 5vw, 3.2rem);
             letter-spacing: 1px;
             text-transform: uppercase;
@@ -352,11 +351,30 @@
         footer { border-top: 1px solid rgba(255,255,255,0.1); padding: 3rem 0; font-size: 0.9rem; }
         .footer-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2rem; align-items: start; }
         .footer-logo { font-family: var(--font-headings); font-size: 2.5rem; font-weight: bold; line-height: 1; margin-bottom: 1rem; }
-        .social-links { display: flex; gap: 1rem; font-size: 1.2rem; }
+        .social-links { display: flex; gap: 1rem; font-size: 1.4rem; }
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            transition: var(--transition-smooth);
+        }
+        .social-links a:hover {
+            transform: scale(1.2) translateY(-3px);
+            color: var(--color-accent);
+            background: rgba(0, 210, 255, 0.15);
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
+        }
+
         .footer-column h4 { margin-bottom: 1rem; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; }
-        .footer-column ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+        .footer-column ul { display: flex; flex-direction: column; gap: 0.5rem; }
         .footer-column ul li { display: flex; align-items: center; gap: 0.5rem; color: var(--color-text-muted); }
-        @media (min-width: 769px) { .footer-column:nth-child(2) { border-left: 1px solid rgba(255,255,255,0.3); padding-left: 2rem; } }
+        
+        @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr; text-align: center; gap: 3rem;} .social-links, .footer-column ul li { justify-content: center; } }
+    
 
         /* === MODAL LOGIN === */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(7, 9, 29, 0.85); backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center; z-index: 2000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
@@ -390,30 +408,114 @@
             .clients-grid { gap: 1.5rem; }
             .founder-card-wrapper { padding: 1.5rem; }
         }
+
+        /* === OVERLAY DE TRANSICIÓN DE PÁGINA === */
+.page-transition-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;       /* 100% del ancho de la ventana */
+    height: 100vh;      /* 100% del alto de la ventana */
+    background: linear-gradient(135deg, #29498dff, #462e73ff); /* Tu color institucional para evitar parpadeos */
+    z-index: 9999;      /* Asegura que quede por encima de todo */
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease-in-out;
+    
+    /* Centrado flexbox por seguridad */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;   /* Evita barras de desplazamiento */
+}
+
+/* Estado activo cuando inicia la animación */
+.page-transition-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* Contenedor interno al 100% */
+.transition-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 📍 MODIFICACIÓN PRINCIPAL EN EL VIDEO */
+.transition-content video {
+    width: auto;
+    height: 100%;
+    object-fit: contain;  /* 👈 ESTA ES LA CLAVE: fuerza al video a cubrir la pantalla sin deformarse */
+    object-position: center; /* Mantiene centrado el foco del video */
+}
+
+        /* === BOTÓN DE IDIOMA (ES / EN) ===
+           Anclado a la derecha del header con position:absolute (igual que .header-auth),
+           por eso no desplaza el logo, los enlaces ni el botón de sesión. */
+        .lang-switch { position: absolute; right: 2rem; top: 50%; transform: translateY(-50%); z-index: 10; }
+        .btn-lang {
+            background-color: transparent;
+            border: 1px solid var(--color-accent);
+            color: var(--color-accent);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+        .btn-lang:hover { background-color: var(--color-accent); color: var(--color-bg-dark); }
+        @media (max-width: 768px) {
+            .lang-switch { right: 1rem; }
+            .btn-lang { padding: 6px 12px; }
+        }
     </style>
 </head>
 <body>
 
+<!-- OVERLAY DE TRANSICIÓN ANIMADA -->
+<div id="page-transition" class="page-transition-overlay">
+    <div class="transition-content">
+        <!-- OPCIÓN A: Si tu animación es un video con canal alfa o MP4/WebM -->
+        <video id="transition-video" src="videoproyect.mp4" muted playsinline></video>
+
+        <!-- OPCIÓN B: Si es un loader/SVG animado en CSS -->
+        <!-- <div class="star-loader"></div> -->
+    </div>
+</div>
+
     <!-- ================= HEADER ================= -->
     <header>
         <div class="container nav-container">
-            <button class="menu-toggle" id="mobile-menu-btn" aria-label="Abrir menú">
+            <button class="menu-toggle" id="mobile-menu-btn" aria-label="Abrir menú" data-i18n-aria-label="nav.menu">
                 <i class="fa-solid fa-bars"></i>
             </button>
             <nav class="nav-links" id="nav-links">
                 <div class="nav-group">
-                    <a href="index.html">Inicio</a>
-                    <a href="Nosotros.html" class="active">Nosotros</a>
+                    <a data-i18n="nav.home" href="index.html">Inicio</a>
+                    <a data-i18n="nav.about" href="Nosotros.html" class="active">Nosotros</a>
                 </div>
-                <a href="index.html" title="Ir al Inicio" class="logo">
-                    <img src="Logosinfondo5.png" alt="Logo Prisma Helios" style="width: auto; height: 65px;">
+                <a href="index.html" title="Ir al Inicio" data-i18n-title="nav.logoTitle" class="logo">
+                    <img src="Logosinfondo5.png" alt="Logo Prisma Helios" data-i18n-alt="nav.logoAlt" style="width: auto; height: 65px;">
                 </a>
                 <div class="nav-group">
-                    <a href="Servicios.html">Servicios</a>
-                    <a href="Contacto.html">Contactanos</a>
+                    <a data-i18n="nav.services" href="Servicios.html">Servicios</a>
+                    <a data-i18n="nav.contact" href="Contacto.html">Contactanos</a>
                 </div>
             </nav>
             <div class="header-auth" id="auth-container"></div>
+        </div>
+        <!-- Botón de idioma ES / EN (fuera del flujo: no mueve el logo ni los enlaces) -->
+        <div class="lang-switch">
+            <button type="button" class="btn-lang" id="lang-toggle" aria-label="Cambiar idioma / Change language" title="Cambiar idioma / Change language">
+                <i class="fa-solid fa-globe"></i> <span id="lang-label">EN</span>
+            </button>
         </div>
     </header>
 
@@ -421,11 +523,11 @@
         <!-- 1. VIDEO INSTITUCIONAL VERTICAL -->
         <section class="video-section">
             <div class="container" style="max-width: 1440px;">
-                <span class="section-subtitle">MANIFIESTO VISUAL</span>
+                <span class="section-subtitle" data-i18n="about.manifesto">MANIFIESTO VISUAL</span>
 
                 <!-- Contenedor optimizado para video vertical (9:16) -->
                 <div class="vertical-video-wrapper">
-                    <video id="promo-video" src="../stitch_multimedia_agency_showcase (2)/Grabación de pantalla 2026-09-09 125545.mp4" loop playsinline muted></video>
+                    <video id="promo-video" src="videocorporativo.mp4" loop playsinline muted></video>
                     
                     <div class="video-controls-overlay">
                         <div class="video-top-bar">
@@ -434,17 +536,17 @@
                         
                         <div class="video-bottom-controls">
                             <!-- Botón Silenciar / Volumen -->
-                            <button class="ctrl-btn" id="btn-video-mute" aria-label="Silenciar o activar sonido">
+                            <button class="ctrl-btn" id="btn-video-mute" aria-label="Silenciar o activar sonido" data-i18n-aria-label="about.muteAria">
                                 <i class="fa-solid fa-volume-xmark"></i>
                             </button>
 
                             <!-- Botón Play / Pausa Principal -->
-                            <button class="ctrl-btn btn-main-play" id="btn-video-play" aria-label="Reproducir o pausar video">
+                            <button class="ctrl-btn btn-main-play" id="btn-video-play" aria-label="Reproducir o pausar video" data-i18n-aria-label="about.playAria">
                                 <i class="fa-solid fa-play"></i>
                             </button>
 
                             <!-- Botón Pantalla Completa -->
-                            <button class="ctrl-btn" id="btn-video-fullscreen" aria-label="Pantalla completa">
+                            <button class="ctrl-btn" id="btn-video-fullscreen" aria-label="Pantalla completa" data-i18n-aria-label="about.fsAria">
                                 <i class="fa-solid fa-expand"></i>
                             </button>
                         </div>
@@ -458,27 +560,27 @@
             <div class="container">
                 <div class="about-grid">
                     <article class="about-card card-history glass-interactive">
-                        <h3>Historia</h3>
-                        <h2>Un problema que buscamos solucionar</h2>
-                        <p>Somos una agencia de contenido multimedial con el objetivo de fortalecer la identidad visual de las marcas emergentes, basándonos en la creatividad y la adaptabilidad digital.</p>
+                        <h3 data-i18n="about.historyH3">Historia</h3>
+                        <h2 data-i18n="about.historyH2">Un problema que buscamos solucionar</h2>
+                        <p data-i18n="about.historyP">Somos una agencia de contenido multimedial con el objetivo de fortalecer la identidad visual de las marcas emergentes, basándonos en la creatividad y la adaptabilidad digital.</p>
                     </article>
 
                     <article class="about-card glass-interactive">
-                        <h3>Misión</h3>
-                        <p>Fortalecer la identidad visual de las marcas emergentes, brindando un enfoque de diseño y adaptabilidad mediante una investigación constante en el entorno digital.</p>
+                        <h3 data-i18n="about.missionH3">Misión</h3>
+                        <p data-i18n="about.missionP">Fortalecer la identidad visual de las marcas emergentes, brindando un enfoque de diseño y adaptabilidad mediante una investigación constante en el entorno digital.</p>
                     </article>
 
                     <article class="about-card glass-interactive">
-                        <h3>Visión</h3>
-                        <p>Para el año 2031 nos visualizamos como la agencia multimedial de vanguardia a nivel regional, reconocidos por transformar empresas en marcas competitivas y rentables.</p>
+                        <h3 data-i18n="about.visionH3">Visión</h3>
+                        <p data-i18n="about.visionP">Para el año 2031 nos visualizamos como la agencia multimedial de vanguardia a nivel regional, reconocidos por transformar empresas en marcas competitivas y rentables.</p>
                     </article>
 
                     <article class="about-card card-values glass-interactive">
-                        <h3>Nuestros valores</h3>
+                        <h3 data-i18n="about.valuesH3">Nuestros valores</h3>
                         <div class="values-list">
-                            <div class="value-item"><i class="fa-solid fa-handshake"></i><span>Respeto</span></div>
-                            <div class="value-item"><i class="fa-solid fa-shield-halved"></i><span>Honestidad</span></div>
-                            <div class="value-item"><i class="fa-solid fa-lightbulb"></i><span>Asesoría</span></div>
+                            <div class="value-item"><i class="fa-solid fa-handshake"></i><span data-i18n="about.v1">Respeto</span></div>
+                            <div class="value-item"><i class="fa-solid fa-shield-halved"></i><span data-i18n="about.v2">Honestidad</span></div>
+                            <div class="value-item"><i class="fa-solid fa-lightbulb"></i><span data-i18n="about.v3">Asesoría</span></div>
                         </div>
                     </article>
                 </div>
@@ -491,25 +593,19 @@
                 <div class="founder-card-wrapper glass-interactive">
                     <div class="founder-grid">
                         <div class="founder-photo-container">
-                            <img src="../Editable/Imagenes/nosotros/fundador.jpg" alt="Joan Sebastián Ruiz Angulo, Fundador y Gerente de Prisma Helios">
+                            <img src="fundador.jpeg" alt="Joan Sebastián Ruiz Angulo, Fundador y Gerente de Prisma Helios" data-i18n-alt="about.founderAlt">
                         </div>
                         <div class="founder-info">
                             <div class="founder-header">
-                                <h2>Fundador Y Gerente Gereral</h2>
+                                <h2 data-i18n="about.founderTitle">Fundador Y Gerente Gereral</h2>
                                 <p class="founder-name">Joan Sebastián Ruiz Angulo</p>
                             </div>
                             <blockquote class="founder-quote">
-                                <p>"La creatividad es nuestra luz guía; la adaptabilidad, la fuerza que nos permite moldear el futuro. Transformamos grandes visiones en realidades sólidas y sostenibles."</p>
+                                <p data-i18n="about.quote">"La creatividad es nuestra luz guía; la adaptabilidad, la fuerza que nos permite moldear el futuro. Transformamos grandes visiones en realidades sólidas y sostenibles."</p>
                             </blockquote>
                             <div class="founder-social">
-                                <a href="#" class="founder-social-icon" aria-label="LinkedIn" target="_blank" rel="noopener">
+                                    <a href="https://www.linkedin.com/in/joan-sebasti%C3%A1n-ruiz-angulo-33216043b/" class="founder-social-icon" aria-label="LinkedIn" target="_blank" rel="noopener">
                                     <i class="fa-brands fa-linkedin-in"></i>
-                                </a>
-                                <a href="#" class="founder-social-icon" aria-label="Instagram" target="_blank" rel="noopener">
-                                    <i class="fa-brands fa-instagram"></i>
-                                </a>
-                                <a href="#" class="founder-social-icon" aria-label="Facebook" target="_blank" rel="noopener">
-                                    <i class="fa-brands fa-facebook-f"></i>
                                 </a>
                             </div>
                         </div>
@@ -521,27 +617,20 @@
         <!-- 5. MÁS INFORMACIÓN -->
         <section class="info-section">
             <div class="container">
-                <h2>MÁS INFORMACIÓN</h2>
+                <h2 data-i18n="about.infoTitle">MÁS INFORMACIÓN</h2>
                 <div class="info-grid">
-                    <a href="Manual de imagen corporativo.pdf" target="_blank" rel="noopener noreferrer" class="info-card">
+                    <a href="manualdeimagen.pdf" target="_blank" rel="noopener noreferrer" class="info-card">
                         <div class="info-placeholder">
-                            <img src="Manual de imagen corporativo.png" alt="Manual de Identidad Visual">
+                            <img src="portadamanual.png" alt="Manual de Identidad Visual" data-i18n-alt="about.manualAlt">
                         </div>
-                        <h3>MANUAL DE<br>IDENTIDAD VISUAL</h3>
+                        <h3 data-i18n="about.manualH3">MANUAL DE<br>IDENTIDAD VISUAL</h3>
                     </a>
 
-                    <a href="rutas/portafolio-de-servicios.pdf" target="_blank" rel="noopener noreferrer" class="info-card">
+                    <a href="portafolio.pdf" target="_blank" rel="noopener noreferrer" class="info-card">
                         <div class="info-placeholder">
-                            <i class="fa-solid fa-file-pdf"></i>
+                            <img src="portadaportafolio.png">
                         </div>
-                        <h3>PORTAFOLIO DE<br>SERVICIOS</h3>
-                    </a>
-
-                    <a href="rutas/brief.pdf" target="_blank" rel="noopener noreferrer" class="info-card">
-                        <div class="info-placeholder">
-                            <i class="fa-solid fa-file-pdf"></i>
-                        </div>
-                        <h3>BRIEF</h3>
+                        <h3 data-i18n="about.portfolioH3">PORTAFOLIO DE<br>SERVICIOS</h3>
                     </a>
                 </div>
             </div>
@@ -549,16 +638,14 @@
 
         <!-- 4. SECCIÓN DE CLIENTES (ALIADOS) -->
         <section class="clients-section">
-            <div class="container">
-                <h3>Empresas que confían en nosotros</h3>
                 <div class="clients-grid">
                     <!-- Cliente 1 -->
-                    <div class="client-item" title="Cliente 1">
-                        <img src="../Editable/Imagenes/nosotros/cliente1.png" alt="Logo Cliente 1">
+                    <div class="client-item">
+                        <img src="cliente1.png" alt="Logo Cliente 1" data-i18n-alt="about.client1">
                     </div>
                     <!-- Cliente 2 -->
-                    <div class="client-item" title="Cliente 2">
-                        <img src="../Editable/Imagenes/nosotros/cliente2.png" alt="Logo Cliente 2">
+                    <div class="client-item">
+                        <img src="cliente2.jpg" alt="Logo Cliente 2" data-i18n-alt="about.client2">
                     </div>
                 </div>
             </div>
@@ -566,7 +653,7 @@
 
         <!-- 6. LLAMADA A LOS SERVICIOS -->
         <section class="cta-idea-section">
-            <a href="Servicios.html" class="cta-idea-link">¿QUÉ TE OFRECEMOS?</a>
+            <a href="Servicios.html" class="cta-idea-link" data-i18n="about.cta">¿QUÉ TE OFRECEMOS?</a>
         </section>
     </main>
 
@@ -575,26 +662,26 @@
         <div class="container footer-grid">
             <div class="footer-column">
                 <div class="footer-logo">
-                    <img src="logosinfondo.png" alt="Prisma Helios" style="width: auto; height: 90px;">
+                    <img src="Logo-sin-fondo.png" alt="Prisma Helios" style="width: auto; height: 90px;">
                 </div>
                 <p style="font-size: 1rem; color: #efedf6;">Prisma Helios</p>
                 <div class="social-links">
-                    <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
-                    <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=61594728850521" target="_blank" rel="noopener noreferrer" aria-label="facebook"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/prismahelios_agencia/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
                 </div>
             </div>
             <div class="footer-column">
-                <h4>CONTACTO</h4>
+                <h4 data-i18n="footer.contact">CONTACTO</h4>
                 <ul>
                     <li><i class="fa-solid fa-phone"></i> (+57) 323 6060185</li>
                     <li><i class="fa-solid fa-envelope"></i> prismaheliossas@gmail.com</li>
                 </ul>
             </div>
             <div class="footer-column">
-                <h4>Acerca de</h4>
+                <h4 data-i18n="footer.about">Acerca de</h4>
                 <ul>
-                    <li><a href="#">Aviso de privacidad</a></li>
-                    <li><a href="#">Términos de servicio</a></li>
+                    <li><a href="#" data-i18n="footer.privacy">Aviso de privacidad</a></li>
+                    <li><a href="#" data-i18n="footer.terms">Términos de servicio</a></li>
                 </ul>
             </div>
         </div>
@@ -603,21 +690,21 @@
     <!-- MODAL LOGIN -->
     <div class="modal-overlay" id="login-modal">
         <div class="modal-card">
-            <h3>Iniciar Sesión</h3>
+            <h3 data-i18n="auth.title">Iniciar Sesión</h3>
             <form id="login-form">
-                <input type="email" id="login-email" placeholder="Correo electrónico" required>
-                <input type="password" id="login-pass" placeholder="Contraseña" required>
+                <input type="email" id="login-email" placeholder="Correo electrónico" data-i18n-placeholder="auth.email" required>
+                <input type="password" id="login-pass" placeholder="Contraseña" data-i18n-placeholder="auth.password" required>
                 <div class="modal-actions">
-                    <button type="submit" class="btn-modal-submit">Ingresar</button>
-                    <button type="button" class="error-btn" id="close-modal-btn">Cancelar</button>
+                    <button type="submit" class="btn-modal-submit" data-i18n="auth.submit">Ingresar</button>
+                    <button type="button" class="error-btn" id="close-modal-btn" data-i18n="auth.cancel">Cancelar</button>
                 </div>
             </form>
             <div class="login-error-box" id="login-error">
-                <p><strong>Usuario no registrado</strong></p>
+                <p><strong data-i18n="auth.notFound">Usuario no registrado</strong></p>
                 <div class="error-options">
-                    <button type="button" class="error-btn" id="btn-retry">Intentar de nuevo</button>
-                    <button type="button" class="error-btn" id="btn-forgot">¿Olvidó su contraseña?</button>
-                    <button type="button" class="error-btn" id="btn-back">Regresar</button>
+                    <button type="button" class="error-btn" id="btn-retry" data-i18n="auth.retry">Intentar de nuevo</button>
+                    <button type="button" class="error-btn" id="btn-forgot" data-i18n="auth.forgot">¿Olvidó su contraseña?</button>
+                    <button type="button" class="error-btn" id="btn-back" data-i18n="auth.back">Regresar</button>
                 </div>
             </div>
         </div>
@@ -713,8 +800,8 @@
                 authContainer.innerHTML = `
                     <div class="user-profile-badge">
                         <i class="fa-solid fa-circle-user"></i>
-                        <span>Bienvenido</span>
-                        <button class="btn-logout" id="logout-btn" title="Cerrar sesión">
+                        <span data-i18n="auth.welcome">Bienvenido</span>
+                        <button class="btn-logout" id="logout-btn" title="Cerrar sesión" data-i18n-title="auth.logout">
                             <i class="fa-solid fa-right-from-bracket"></i>
                         </button>
                     </div>
@@ -726,7 +813,7 @@
             } else {
                 authContainer.innerHTML = `
                     <button class="btn-login-nav" id="open-login-btn">
-                        <i class="fa-solid fa-user"></i> <span class="login-text">Iniciar Sesión</span>
+                        <i class="fa-solid fa-user"></i> <span class="login-text" data-i18n="auth.login">Iniciar Sesión</span>
                     </button>
                 `;
                 document.getElementById('open-login-btn').addEventListener('click', () => {
@@ -762,7 +849,7 @@
 
         renderAuthUI();
 
-        // Efecto interactivo de movimiento de mouse en tarjetas glass
+        // Efecto interactivo de ovimiento de mouse en tarjetas glass
         document.addEventListener('mousemove', (e) => {
             document.querySelectorAll('.glass-interactive').forEach(pane => {
                 const rect = pane.getBoundingClientRect();
@@ -771,6 +858,167 @@
                 pane.style.background = `radial-gradient(circle at ${paneX}% ${paneY}%, rgba(255, 255, 255, 0.12) 0%, #2B4C9B 80%)`;
             });
         });
+document.addEventListener('DOMContentLoaded', () => {
+    const transitionOverlay = document.getElementById('page-transition');
+    const transitionVideo = document.getElementById('transition-video');
+
+    // Duración de la animación antes de la redirección (en milisegundos)
+    const TRANSITION_DURATION = 900; 
+
+    // Seleccionamos todos los enlaces/botones del contenido principal y footer,
+    // EXCLUYENDO explícitamente los que estén dentro de <header>
+    const contentLinks = document.querySelectorAll('main a, footer a, .btn, .cta-idea-link, .info-card');
+
+    contentLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            const targetUrl = link.getAttribute('href');
+
+            // Ignorar enlaces sin destino, anclas internas (#) o enlaces externos/PDFs
+            if (!targetUrl || 
+                targetUrl.startsWith('#') || 
+                targetUrl.startsWith('javascript:') || 
+                link.getAttribute('target') === '_blank') {
+                return;
+            }
+
+            // Prevenir la navegación inmediata del navegador
+            e.preventDefault();
+
+            // Activar la animación/overlay
+            transitionOverlay.classList.add('active');
+
+            // Si utilizas un video como animación, reproducirlo desde el inicio
+            if (transitionVideo) {
+                transitionVideo.currentTime = 0;
+                transitionVideo.play().catch(() => {});
+            }
+
+            // Esperar el tiempo de la animación antes de navegar a la nueva página
+            setTimeout(() => {
+                window.location.href = targetUrl;
+            }, TRANSITION_DURATION);
+        });
+    });
+
+    // Efecto de entrada suave (Fade-in) cuando la nueva página cargue
+    window.addEventListener('pageshow', () => {
+        transitionOverlay.classList.remove('active');
+    });
+});
+
+    </script>
+    <!-- ================= SELECTOR DE IDIOMA (ES / EN) =================
+         - El español es el contenido original del HTML: NO se reescribe.
+         - Al cambiar a inglés se guarda el texto original de cada elemento y
+           se reemplaza por la traducción; al volver a español se restaura tal cual.
+         - Para traducir un elemento nuevo: agrégale data-i18n="clave" (texto) o
+           data-i18n-placeholder / -alt / -title / -aria-label="clave" (atributos)
+           y añade "clave": "English text" al diccionario EN de abajo.
+         - El idioma elegido se recuerda entre páginas (localStorage). -->
+    <script>
+    (function () {
+        const EN = {
+        "nav.home": "Home",
+        "nav.about": "About Us",
+        "nav.services": "Services",
+        "nav.contact": "Contact Us",
+        "nav.menu": "Open menu",
+        "nav.logoTitle": "Go to Home",
+        "footer.contact": "CONTACT",
+        "footer.about": "About",
+        "footer.privacy": "Privacy Notice",
+        "footer.terms": "Terms of Service",
+        "auth.login": "Log In",
+        "auth.welcome": "Welcome",
+        "auth.logout": "Log out",
+        "auth.title": "Log In",
+        "auth.email": "Email",
+        "auth.password": "Password",
+        "auth.submit": "Log in",
+        "auth.cancel": "Cancel",
+        "auth.notFound": "User not registered",
+        "auth.retry": "Try again",
+        "auth.forgot": "Forgot your password?",
+        "auth.back": "Go back",
+        "doc.title": "Prisma Helios | About Us",
+        "nav.logoAlt": "Prisma Helios logo",
+        "about.manifesto": "VISUAL MANIFESTO",
+        "about.muteAria": "Mute or unmute",
+        "about.playAria": "Play or pause video",
+        "about.fsAria": "Fullscreen",
+        "about.historyH3": "History",
+        "about.historyH2": "A problem we aim to solve",
+        "about.historyP": "We are a multimedia content agency whose goal is to strengthen the visual identity of emerging brands, drawing on creativity and digital adaptability.",
+        "about.missionH3": "Mission",
+        "about.missionP": "To strengthen the visual identity of emerging brands by providing a design and adaptability approach through constant research into the digital environment.",
+        "about.visionH3": "Vision",
+        "about.visionP": "By 2031, we see ourselves as the leading regional multimedia agency, recognized for transforming businesses into competitive, profitable brands.",
+        "about.valuesH3": "Our values",
+        "about.v1": "Respect",
+        "about.v2": "Honesty",
+        "about.v3": "Guidance",
+        "about.founderAlt": "Joan Sebastián Ruiz Angulo, Founder and Manager of Prisma Helios",
+        "about.founderTitle": "Founder & General Manager",
+        "about.quote": "\"Creativity is our guiding light; adaptability is the strength that allows us to shape the future. We turn great visions into solid, sustainable realities.\"",
+        "about.infoTitle": "MORE INFORMATION",
+        "about.manualAlt": "Visual Identity Manual",
+        "about.manualH3": "VISUAL IDENTITY<br>MANUAL",
+        "about.portfolioH3": "SERVICES<br>PORTFOLIO",
+        "about.client1": "Client 1 logo",
+        "about.client2": "Client 2 logo",
+        "about.cta": "WHAT CAN WE OFFER YOU?"
+        };
+
+        const ATTRS = ['placeholder', 'alt', 'title', 'aria-label'];
+        const STORAGE_KEY = 'prismaIdioma';
+        const tituloES = document.title;
+        let lang = 'es';
+        try { lang = localStorage.getItem(STORAGE_KEY) === 'en' ? 'en' : 'es'; } catch (e) {}
+
+        const btn = document.getElementById('lang-toggle');
+        const label = document.getElementById('lang-label');
+
+        function aplicar() {
+            document.documentElement.lang = lang;
+
+            // Textos (guarda el original en español la primera vez que ve el elemento)
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                if (!('es' in el.dataset)) el.dataset.es = el.innerHTML;
+                const key = el.dataset.i18n;
+                el.innerHTML = (lang === 'en' && EN[key] !== undefined) ? EN[key] : el.dataset.es;
+            });
+
+            // Atributos (placeholder, alt, title, aria-label)
+            ATTRS.forEach(attr => {
+                const marca = 'data-i18n-' + attr;
+                const guardado = 'data-es-' + attr;
+                document.querySelectorAll('[' + marca + ']').forEach(el => {
+                    if (!el.hasAttribute(guardado)) el.setAttribute(guardado, el.getAttribute(attr) || '');
+                    const key = el.getAttribute(marca);
+                    el.setAttribute(attr, (lang === 'en' && EN[key] !== undefined) ? EN[key] : el.getAttribute(guardado));
+                });
+            });
+
+            document.title = (lang === 'en' && EN['doc.title']) ? EN['doc.title'] : tituloES;
+            if (label) label.textContent = (lang === 'es') ? 'EN' : 'ES'; // muestra el idioma al que se cambia
+        }
+
+        if (btn) {
+            btn.addEventListener('click', () => {
+                lang = (lang === 'es') ? 'en' : 'es';
+                try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
+                aplicar();
+            });
+        }
+
+        // El bloque de sesión (Iniciar Sesión / Bienvenido) se vuelve a pintar por JS:
+        // se re-traduce automáticamente cada vez que cambia.
+        const auth = document.getElementById('auth-container');
+        if (auth) new MutationObserver(aplicar).observe(auth, { childList: true });
+
+        window.PrismaIdioma = { get lang() { return lang; }, aplicar: aplicar };
+        aplicar();
+    })();
     </script>
 </body>
 </html>

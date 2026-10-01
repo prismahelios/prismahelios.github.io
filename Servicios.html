@@ -120,7 +120,7 @@
         /* Contenedor de autenticación anclado a la esquina del header */
 .header-auth {
     position: absolute;
-    right: 1.5rem;
+    right: 10.5rem;
     top: 50%;
     transform: translateY(-50%);
     z-index: 10;
@@ -235,7 +235,7 @@
         .menu-toggle { display: none; font-size: 1.5rem; cursor: pointer; color: var(--color-text-main); background: none; border: none; }
 
         @media (max-width: 768px) {
-            .header-auth { right: 1rem; }
+            .header-auth { right: 5.5rem; }
             .btn-login-nav span.login-text { display: none; }
             .menu-toggle { display: block; }
             .nav-links {
@@ -431,11 +431,16 @@
         footer { border-top: 1px solid rgba(255,255,255,0.1); padding: 3rem 0; font-size: 0.9rem; }
         .footer-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2rem; align-items: start; }
         .footer-logo { font-family: var(--font-headings); font-size: 2.5rem; font-weight: bold; line-height: 1; margin-bottom: 1rem; }
-        .social-links { display: flex; gap: 1rem; font-size: 1.2rem; }
-        .footer-column h4 { margin-bottom: 1rem; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; }
-        .footer-column ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
-        .footer-column ul li { display: flex; align-items: center; gap: 0.5rem; color: var(--color-text-muted); }
-        @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr; text-align: center; gap: 3rem;}
+        .social-links { display: flex; gap: 1rem; font-size: 1.4rem; }
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            transition: var(--transition-smooth);
         }
         .social-links a:hover {
             transform: scale(1.2) translateY(-3px);
@@ -443,29 +448,122 @@
             background: rgba(0, 210, 255, 0.15);
             box-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
         }
+
+        .footer-column h4 { margin-bottom: 1rem; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; }
+        .footer-column ul { display: flex; flex-direction: column; gap: 0.5rem; }
+        .footer-column ul li { display: flex; align-items: center; gap: 0.5rem; color: var(--color-text-muted); }
+        
+        @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr; text-align: center; gap: 3rem;} .social-links, .footer-column ul li { justify-content: center; } }
+    
+
+/* === OVERLAY DE TRANSICIÓN DE PÁGINA === */
+.page-transition-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;       /* 100% del ancho de la ventana */
+    height: 100vh;      /* 100% del alto de la ventana */
+    background: linear-gradient(135deg, #29498dff, #462e73ff); /* Tu color institucional para evitar parpadeos */
+    z-index: 9999;      /* Asegura que quede por encima de todo */
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease-in-out;
+    
+    /* Centrado flexbox por seguridad */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;   /* Evita barras de desplazamiento */
+}
+
+/* Estado activo cuando inicia la animación */
+.page-transition-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* Contenedor interno al 100% */
+.transition-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 📍 MODIFICACIÓN PRINCIPAL EN EL VIDEO */
+.transition-content video {
+    width: auto;
+    height: 100%;
+    object-fit: cover;  /* 👈 ESTA ES LA CLAVE: fuerza al video a cubrir la pantalla sin deformarse */
+    object-position: center; /* Mantiene centrado el foco del video */
+}
+
+
+        /* === BOTÓN DE IDIOMA (ES / EN) ===
+           Anclado a la derecha del header con position:absolute (igual que .header-auth),
+           por eso no desplaza el logo, los enlaces ni el botón de sesión. */
+        .lang-switch { position: absolute; right: 2rem; top: 50%; transform: translateY(-50%); z-index: 10; }
+        .btn-lang {
+            background-color: transparent;
+            border: 1px solid var(--color-accent);
+            color: var(--color-accent);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-family: var(--font-body);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+        .btn-lang:hover { background-color: var(--color-accent); color: var(--color-bg-dark); }
+        @media (max-width: 768px) {
+            .lang-switch { right: 1rem; }
+            .btn-lang { padding: 6px 12px; }
+        }
     </style>
 </head>
 <body>
 
+<!-- OVERLAY DE TRANSICIÓN ANIMADA -->
+<div id="page-transition" class="page-transition-overlay">
+    <div class="transition-content">
+        <!-- OPCIÓN A: Si tu animación es un video con canal alfa o MP4/WebM -->
+        <video id="transition-video" src="videoproyect.mp4" muted playsinline></video>
+
+        <!-- OPCIÓN B: Si es un loader/SVG animado en CSS -->
+        <!-- <div class="star-loader"></div> -->
+    </div>
+</div>
+
     <!-- ================= HEADER ================= -->
     <header>
         <div class="container nav-container">
-            <button class="menu-toggle" id="mobile-menu-btn" aria-label="Abrir menú">
+            <button class="menu-toggle" id="mobile-menu-btn" aria-label="Abrir menú" data-i18n-aria-label="nav.menu">
                 <i class="fa-solid fa-bars"></i>
             </button>
             <nav class="nav-links" id="nav-links">
                 <div class="nav-group">
-                    <a href="index.html">Inicio</a>
-                    <a href="Nosotros.html">Nosotros</a>
+                    <a data-i18n="nav.home" href="index.html">Inicio</a>
+                    <a data-i18n="nav.about" href="Nosotros.html">Nosotros</a>
                 </div>
-                <a href="index.html" title="Ir al Inicio"
+                <a href="index.html" title="Ir al Inicio" data-i18n-title="nav.logoTitle"
                 class="logo"><img src="Logosinfondo5.png" alt="" style="width: auto; height: 65px;"></a>
                 <div class="nav-group">
-                    <a href="Servicios.html" class="active">Servicios</a>
-                    <a href="Contacto.html">Contactanos</a>
+                    <a data-i18n="nav.services" href="Servicios.html" class="active">Servicios</a>
+                    <a data-i18n="nav.contact" href="Contacto.html">Contactanos</a>
                 </div>
             </nav>
-            <div class="header-auth" id="auth-container"></div>
+        </div>
+        <div class="header-auth" id="auth-container"></div>
+        <!-- Botón de idioma ES / EN (fuera del flujo: no mueve el logo ni los enlaces) -->
+        <div class="lang-switch">
+            <button type="button" class="btn-lang" id="lang-toggle" aria-label="Cambiar idioma / Change language" title="Cambiar idioma / Change language">
+                <i class="fa-solid fa-globe"></i> <span id="lang-label">EN</span>
+            </button>
         </div>
     </header>
 
@@ -473,49 +571,49 @@
 <main>
     <div class="container">        
         <section class="services-hero">
-            <p class="eyebrow">Creando dimensiones digitales</p>
-            <h1 class="services-hero h1">Servicios de Élite</h1>
+            <p class="eyebrow" data-i18n="svc.eyebrow">Creando dimensiones digitales</p>
+            <h1 class="services-hero h1" data-i18n="svc.heroTitle">Servicios de Élite</h1>
             <div class="refraction-divider max-w-2xl mx-auto opacity-50"></div>
             <div class="divider"></div>
         </section>
         <div class="services-grid">
             <div class="service-card card-lg">
-                <img src="producción audiovisual.jpg" alt="Set de producción audiovisual profesional">
+                <img src="producción audiovisual.jpg" alt="Set de producción audiovisual profesional" data-i18n-alt="svc.audioAlt">
                 <div class="service-card-content">
-                    <h2>Producción audiovisual</h2>
-                    <p>En este espacio creamos la mejor versión digital de tu empresa. Te ayudamos a reflejar de manera creativa cada detalle importante. ¡Somos tu alternativa perfecta!</p>
+                    <h2 data-i18n="svc.audioH2">Producción audiovisual</h2>
+                    <p data-i18n="svc.audioP">En este espacio creamos la mejor versión digital de tu empresa. Te ayudamos a reflejar de manera creativa cada detalle importante. ¡Somos tu alternativa perfecta!</p>
                 </div>
             </div>
 
             <div class="service-card card-sm">
-                <img src="Fotografia.avif" alt="Fotógrafo profesional en sesión">
+                <img src="fotografia.avif" alt="Fotógrafo profesional en sesión" data-i18n-alt="svc.photoAlt">
                 <div class="service-card-content">
-                    <h2>Fotografía profesional</h2>
-                    <p>Capturamos cada momento con precisión, brindando a tu marca imágenes de calidad excepcional.</p>
+                    <h2 data-i18n="svc.photoH2">Fotografía profesional</h2>
+                    <p data-i18n="svc.photoP">Capturamos cada momento con precisión, brindando a tu marca imágenes de calidad excepcional.</p>
                 </div>
             </div>
 
             <div class="service-card card-sm">
-                <img src="diseño grafico.avif" alt="Equipo de diseñadores gráficos trabajando">
+                <img src="diseñografico.avif" alt="Equipo de diseñadores gráficos trabajando" data-i18n-alt="svc.designAlt">
                 <div class="service-card-content">
-                    <h2>Diseño gráfico</h2>
-                    <p>Diseñamos y desarrollamos soluciones digitales que no solo se ven bien, sino que también funcionan a la perfección.</p>
+                    <h2 data-i18n="svc.designH2">Diseño gráfico</h2>
+                    <p data-i18n="svc.designP">Diseñamos y desarrollamos soluciones digitales que no solo se ven bien, sino que también funcionan a la perfección.</p>
                 </div>
             </div>
 
             <div class="service-card card-lg">
-                <img src="branding.jpg" alt="Proceso creativo y desarrollo de branding">
+                <img src="branding.jpg" alt="Proceso creativo y desarrollo de branding" data-i18n-alt="svc.brandAlt">
                 <div class="service-card-content">
                     <h2>Branding</h2>
-                    <p>Creamos marcas que lideran con propósito, autenticidad y una identidad visual que refleje tu esencia.</p>
+                    <p data-i18n="svc.brandP">Creamos marcas que lideran con propósito, autenticidad y una identidad visual que refleje tu esencia.</p>
                 </div>
             </div>
         </div>
 
         <section class="cta-section">
-            <h2>¿Listo para elevar tu visión?</h2>
-            <p>Fusionamos técnica avanzada con una estética impecable para crear experiencias que definen el futuro de la industria creativa.</p>
-            <a href="Contacto.html" class="cta-idea-link">Iniciar proyecto</a>
+            <h2 data-i18n="svc.ctaH2">¿Listo para elevar tu visión?</h2>
+            <p data-i18n="svc.ctaP">Fusionamos técnica avanzada con una estética impecable para crear experiencias que definen el futuro de la industria creativa.</p>
+            <a href="Contacto.html" class="cta-idea-link" data-i18n="svc.ctaLink">Iniciar proyecto</a>
         </section>
     </div>
 </main>
@@ -524,25 +622,25 @@
     <footer>
         <div class="container footer-grid">
              <div class="footer-column">
-                <div class="footer-logo"><img src="logosinfondo.png" alt="" style="width: auto; height: 90px;"></div>
+                <div class="footer-logo"><img src="Logo-sin-fondo.png" alt="" style="width: auto; height: 90px;"></div>
                 <p style="font-size: 1rem; color: #efedf6;">Prisma Helios</p>
                 <div class="social-links">
-                    <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
-                    <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=61594728850521" target="_blank" rel="noopener noreferrer" aria-label="facebook"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/prismahelios_agencia/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
                 </div>
             </div>
             <div class="footer-column">
-                <h4>CONTACTO</h4>
+                <h4 data-i18n="footer.contact">CONTACTO</h4>
                 <ul>
                     <li><i class="fa-solid fa-phone"></i> (+57) 323 6060185</li>
                     <li><i class="fa-solid fa-envelope"></i> prismaheliossas@gmail.com</li>
                 </ul>
             </div>
             <div class="footer-column">
-                <h4>Acerca de</h4>
+                <h4 data-i18n="footer.about">Acerca de</h4>
                 <ul>
-                    <li><a href="#">Aviso de privacidad</a></li>
-                    <li><a href="#">Términos de servicio</a></li>
+                    <li><a href="#" data-i18n="footer.privacy">Aviso de privacidad</a></li>
+                    <li><a href="#" data-i18n="footer.terms">Términos de servicio</a></li>
                 </ul>
             </div>
         </div>
@@ -550,27 +648,27 @@
 
 <div class="modal-overlay" id="login-modal">
     <div class="modal-card">
-        <h3>Iniciar Sesión</h3>
+        <h3 data-i18n="auth.title">Iniciar Sesión</h3>
         <form id="login-form">
-            <input type="email" id="login-email" placeholder="Correo electrónico" required>
-            <input type="password" id="login-pass" placeholder="Contraseña" required>
+            <input type="email" id="login-email" placeholder="Correo electrónico" data-i18n-placeholder="auth.email" required>
+            <input type="password" id="login-pass" placeholder="Contraseña" data-i18n-placeholder="auth.password" required>
             <div class="modal-actions">
-                <button type="submit" class="btn-modal-submit">Ingresar</button>
-                <button type="button" class="error-btn" id="close-modal-btn">Cancelar</button>
+                <button type="submit" class="btn-modal-submit" data-i18n="auth.submit">Ingresar</button>
+                <button type="button" class="error-btn" id="close-modal-btn" data-i18n="auth.cancel">Cancelar</button>
             </div>
         </form>
         <div class="login-error-box" id="login-error">
-            <p><strong>Usuario no registrado</strong></p>
+            <p><strong data-i18n="auth.notFound">Usuario no registrado</strong></p>
             <div class="error-options">
-                <button type="button" class="error-btn" id="btn-retry">Intentar de nuevo</button>
-                <button type="button" class="error-btn" id="btn-forgot">¿Olvidó su contraseña?</button>
-                <button type="button" class="error-btn" id="btn-back">Regresar</button>
+                <button type="button" class="error-btn" id="btn-retry" data-i18n="auth.retry">Intentar de nuevo</button>
+                <button type="button" class="error-btn" id="btn-forgot" data-i18n="auth.forgot">¿Olvidó su contraseña?</button>
+                <button type="button" class="error-btn" id="btn-back" data-i18n="auth.back">Regresar</button>
             </div>
         </div>
     </div>
 </div>
 
-    <!-- ================= JAVASCRIPT ================= -->
+    <!-- ================= JAASCRIPT ================= -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // Menú Hamburguesa
@@ -632,8 +730,8 @@ function renderAuthUI() {
         authContainer.innerHTML = `
             <div class="user-profile-badge">
                 <i class="fa-solid fa-circle-user"></i>
-                <span>Bienvenido</span>
-                <button class="btn-logout" id="logout-btn" title="Cerrar sesión">
+                <span data-i18n="auth.welcome">Bienvenido</span>
+                <button class="btn-logout" id="logout-btn" title="Cerrar sesión" data-i18n-title="auth.logout">
                     <i class="fa-solid fa-right-from-bracket"></i>
                 </button>
             </div>
@@ -645,7 +743,7 @@ function renderAuthUI() {
     } else {
         authContainer.innerHTML = `
             <button class="btn-login-nav" id="open-login-btn">
-                <i class="fa-solid fa-user"></i> <span class="login-text">Iniciar Sesión</span>
+                <i class="fa-solid fa-user"></i> <span class="login-text" data-i18n="auth.login">Iniciar Sesión</span>
             </button>
         `;
         document.getElementById('open-login-btn').addEventListener('click', () => {
@@ -684,6 +782,157 @@ document.getElementById('btn-back').addEventListener('click', () => {
 
 renderAuthUI(); // pinta el estado correcto (login o badge) apenas carga la página
 
+document.addEventListener('DOMContentLoaded', () => {
+    const transitionOverlay = document.getElementById('page-transition');
+    const transitionVideo = document.getElementById('transition-video');
+
+    // Duración de la animación antes de la redirección (en milisegundos)
+    const TRANSITION_DURATION = 900; 
+
+    // Seleccionamos todos los enlaces/botones del contenido principal y footer,
+    // EXCLUYENDO explícitamente los que estén dentro de <header>
+    const contentLinks = document.querySelectorAll('main a, footer a, .btn, .cta-idea-link, .info-card');
+
+    contentLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            const targetUrl = link.getAttribute('href');
+
+            // Ignorar enlaces sin destino, anclas internas (#) o enlaces externos/PDFs
+            if (!targetUrl || 
+                targetUrl.startsWith('#') || 
+                targetUrl.startsWith('javascript:') || 
+                link.getAttribute('target') === '_blank') {
+                return;
+            }
+
+            // Prevenir la navegación inmediata del navegador
+            e.preventDefault();
+
+            // Activar la animación/overlay
+            transitionOverlay.classList.add('active');
+
+            // Si utilizas un video como animación, reproducirlo desde el inicio
+            if (transitionVideo) {
+                transitionVideo.currentTime = 0;
+                transitionVideo.play().catch(() => {});
+            }
+
+            // Esperar el tiempo de la animación antes de navegar a la nueva página
+            setTimeout(() => {
+                window.location.href = targetUrl;
+            }, TRANSITION_DURATION);
+        });
+    });
+
+    // Efecto de entrada suave (Fade-in) cuando la nueva página cargue
+    window.addEventListener('pageshow', () => {
+        transitionOverlay.classList.remove('active');
+    });
+});
+
         </script>
+    <!-- ================= SELECTOR DE IDIOMA (ES / EN) =================
+         - El español es el contenido original del HTML: NO se reescribe.
+         - Al cambiar a inglés se guarda el texto original de cada elemento y
+           se reemplaza por la traducción; al volver a español se restaura tal cual.
+         - Para traducir un elemento nuevo: agrégale data-i18n="clave" (texto) o
+           data-i18n-placeholder / -alt / -title / -aria-label="clave" (atributos)
+           y añade "clave": "English text" al diccionario EN de abajo.
+         - El idioma elegido se recuerda entre páginas (localStorage). -->
+    <script>
+    (function () {
+        const EN = {
+        "nav.home": "Home",
+        "nav.about": "About Us",
+        "nav.services": "Services",
+        "nav.contact": "Contact Us",
+        "nav.menu": "Open menu",
+        "nav.logoTitle": "Go to Home",
+        "footer.contact": "CONTACT",
+        "footer.about": "About",
+        "footer.privacy": "Privacy Notice",
+        "footer.terms": "Terms of Service",
+        "auth.login": "Log In",
+        "auth.welcome": "Welcome",
+        "auth.logout": "Log out",
+        "auth.title": "Log In",
+        "auth.email": "Email",
+        "auth.password": "Password",
+        "auth.submit": "Log in",
+        "auth.cancel": "Cancel",
+        "auth.notFound": "User not registered",
+        "auth.retry": "Try again",
+        "auth.forgot": "Forgot your password?",
+        "auth.back": "Go back",
+        "doc.title": "Prisma Helios | Services",
+        "svc.eyebrow": "Creating digital dimensions",
+        "svc.heroTitle": "Elite Services",
+        "svc.audioAlt": "Professional audiovisual production set",
+        "svc.audioH2": "Audiovisual production",
+        "svc.audioP": "Here we create the best digital version of your company. We help you creatively reflect every important detail. We're your perfect alternative!",
+        "svc.photoAlt": "Professional photographer during a shoot",
+        "svc.photoH2": "Professional photography",
+        "svc.photoP": "We capture every moment with precision, giving your brand images of exceptional quality.",
+        "svc.designAlt": "Team of graphic designers at work",
+        "svc.designH2": "Graphic design",
+        "svc.designP": "We design and develop digital solutions that not only look good but also work flawlessly.",
+        "svc.brandAlt": "Creative process and branding development",
+        "svc.brandP": "We create brands that lead with purpose, authenticity, and a visual identity that reflects your essence.",
+        "svc.ctaH2": "Ready to elevate your vision?",
+        "svc.ctaP": "We blend advanced technique with impeccable aesthetics to create experiences that define the future of the creative industry.",
+        "svc.ctaLink": "Start a project"
+        };
+
+        const ATTRS = ['placeholder', 'alt', 'title', 'aria-label'];
+        const STORAGE_KEY = 'prismaIdioma';
+        const tituloES = document.title;
+        let lang = 'es';
+        try { lang = localStorage.getItem(STORAGE_KEY) === 'en' ? 'en' : 'es'; } catch (e) {}
+
+        const btn = document.getElementById('lang-toggle');
+        const label = document.getElementById('lang-label');
+
+        function aplicar() {
+            document.documentElement.lang = lang;
+
+            // Textos (guarda el original en español la primera vez que ve el elemento)
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                if (!('es' in el.dataset)) el.dataset.es = el.innerHTML;
+                const key = el.dataset.i18n;
+                el.innerHTML = (lang === 'en' && EN[key] !== undefined) ? EN[key] : el.dataset.es;
+            });
+
+            // Atributos (placeholder, alt, title, aria-label)
+            ATTRS.forEach(attr => {
+                const marca = 'data-i18n-' + attr;
+                const guardado = 'data-es-' + attr;
+                document.querySelectorAll('[' + marca + ']').forEach(el => {
+                    if (!el.hasAttribute(guardado)) el.setAttribute(guardado, el.getAttribute(attr) || '');
+                    const key = el.getAttribute(marca);
+                    el.setAttribute(attr, (lang === 'en' && EN[key] !== undefined) ? EN[key] : el.getAttribute(guardado));
+                });
+            });
+
+            document.title = (lang === 'en' && EN['doc.title']) ? EN['doc.title'] : tituloES;
+            if (label) label.textContent = (lang === 'es') ? 'EN' : 'ES'; // muestra el idioma al que se cambia
+        }
+
+        if (btn) {
+            btn.addEventListener('click', () => {
+                lang = (lang === 'es') ? 'en' : 'es';
+                try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
+                aplicar();
+            });
+        }
+
+        // El bloque de sesión (Iniciar Sesión / Bienvenido) se vuelve a pintar por JS:
+        // se re-traduce automáticamente cada vez que cambia.
+        const auth = document.getElementById('auth-container');
+        if (auth) new MutationObserver(aplicar).observe(auth, { childList: true });
+
+        window.PrismaIdioma = { get lang() { return lang; }, aplicar: aplicar };
+        aplicar();
+    })();
+    </script>
 </body>
 </html>
