@@ -520,41 +520,33 @@
     </header>
 
     <main>
-        <!-- ================= 1. VIDEO VERTICAL Y MANIFIESTO ================= -->
+        <!-- 1. VIDEO INSTITUCIONAL VERTICAL -->
         <section class="video-section">
-            <div class="container">
-                <span class="section-subtitle">Manifiesto Visual</span>
-                <h2>Prisma Helios</h2>
+            <div class="container" style="max-width: 1440px;">
+                <span class="section-subtitle" data-i18n="about.manifesto">MANIFIESTO VISUAL</span>
 
-                <!-- Contenedor optimizado para video vertical (Formato 21:9 según tu CSS) -->
+                <!-- Contenedor optimizado para video vertical (9:16) -->
                 <div class="vertical-video-wrapper">
+                    <video id="promo-video" src="" loop playsinline muted></video>
                     
-                    <!-- !!! AQUÍ ESTÁ EL CAMBIO PRINCIPAL !!! -->
-                    <!-- Reemplaza URL_DIRECTA_DE_TU_VIDEO con tu enlace de Google Drive o Dropbox -->
-                    <video id="videoCorporativo" playsinline loop preload="auto">
-                        <source src="https://youtu.be/D29WffWYjfw?si=fImxEKVhp79rdZbq" type="video/mp4">
-                        Tu navegador no soporta la reproducción de este video.
-                    </video>
-
-                    <!-- Capa de controles personalizados sobre el video -->
                     <div class="video-controls-overlay">
                         <div class="video-top-bar">
-                            <span class="video-tag"><i class="fa-solid fa-film"></i> Corporativo</span>
+                            <span class="video-tag">Prisma Helios</span>
                         </div>
-
+                        
                         <div class="video-bottom-controls">
-                            <!-- Botón de Silencio -->
-                            <button class="ctrl-btn" id="btnMute" title="Silenciar/Activar sonido">
-                                <i class="fa-solid fa-volume-high"></i>
+                            <!-- Botón Silenciar / Volumen -->
+                            <button class="ctrl-btn" id="btn-video-mute" aria-label="Silenciar o activar sonido" data-i18n-aria-label="about.muteAria">
+                                <i class="fa-solid fa-volume-xmark"></i>
                             </button>
-                            
-                            <!-- Botón de Reproducción Principal -->
-                            <button class="ctrl-btn btn-main-play" id="btnPlay" title="Reproducir/Pausar">
+
+                            <!-- Botón Play / Pausa Principal -->
+                            <button class="ctrl-btn btn-main-play" id="btn-video-play" aria-label="Reproducir o pausar video" data-i18n-aria-label="about.playAria">
                                 <i class="fa-solid fa-play"></i>
                             </button>
 
-                            <!-- Botón de Pantalla Completa -->
-                            <button class="ctrl-btn" id="btnFullscreen" title="Pantalla completa">
+                            <!-- Botón Pantalla Completa -->
+                            <button class="ctrl-btn" id="btn-video-fullscreen" aria-label="Pantalla completa" data-i18n-aria-label="about.fsAria">
                                 <i class="fa-solid fa-expand"></i>
                             </button>
                         </div>
@@ -563,7 +555,6 @@
             </div>
         </section>
 
-
         <!-- 2. HISTORIA, MISIÓN, VISIÓN Y VALORES -->
         <section class="about-section">
             <div class="container">
@@ -571,7 +562,7 @@
                     <article class="about-card card-history glass-interactive">
                         <h3 data-i18n="about.historyH3">Historia</h3>
                         <h2 data-i18n="about.historyH2">Un problema que buscamos solucionar</h2>
-                        <p data-i18n="about.historyP">Somos una agencia de contenido multimedial con el objetivo de fortalecer la identidad visual de las marcas emergentes, basándonos en la creatividad y la adaptabilidad digital.</p>
+                        <p data-i18n="about.historyP">>En una Insitución Educativa, el sitio web oficial, estaba mal diseñado y desordenado. Las redes sociales no conectaban con el público.El número de matriculado bajo, y los estudiantes no tuvieron sentido de pertenencia.<br><br>Al observar que esta situación pasa en el mundo del emprendimiento, paginas mal diseñadas y negocios que no conectan con su público, queremos solucionar eso, mediante diseño y contenido multimedia.</p>
                     </article>
 
                     <article class="about-card glass-interactive">
@@ -1028,53 +1019,6 @@ document.addEventListener('DOMContentLoaded', () => {
         window.PrismaIdioma = { get lang() { return lang; }, aplicar: aplicar };
         aplicar();
     })();
-</script>
-        <!-- === LÓGICA DE CONTROL DEL VIDEO === -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const video = document.getElementById("videoCorporativo");
-            const btnPlay = document.getElementById("btnPlay");
-            const btnMute = document.getElementById("btnMute");
-            const btnFullscreen = document.getElementById("btnFullscreen");
-
-            // Alternar Reproducción / Pausa
-            btnPlay.addEventListener("click", function() {
-                if (video.paused) {
-                    video.play();
-                    btnPlay.innerHTML = '<i class="fa-solid fa-pause"></i>';
-                } else {
-                    video.pause();
-                    btnPlay.innerHTML = '<i class="fa-solid fa-play"></i>';
-                }
-            });
-
-            // Alternar Silencio (Mute)
-            btnMute.addEventListener("click", function() {
-                if (video.muted) {
-                    video.muted = false;
-                    btnMute.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
-                } else {
-                    video.muted = true;
-                    btnMute.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
-                }
-            });
-
-            // Control de Pantalla Completa
-            btnFullscreen.addEventListener("click", function() {
-                if (video.requestFullscreen) {
-                    video.requestFullscreen();
-                } else if (video.webkitRequestFullscreen) { /* Safari */
-                    video.webkitRequestFullscreen();
-                } else if (video.msRequestFullscreen) { /* IE11 */
-                    video.msRequestFullscreen();
-                }
-            });
-
-            // Si el video termina y no tiene bucle, resetear el botón
-            video.addEventListener("ended", function() {
-                btnPlay.innerHTML = '<i class="fa-solid fa-play"></i>';
-            });
-        });
     </script>
 </body>
 </html>

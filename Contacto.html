@@ -441,19 +441,23 @@
     <!-- ================= HEADER ================= -->
     <header>
         <div class="container nav-container">
+            <!-- Botón Menú Móvil -->
             <button class="menu-toggle" id="mobile-menu-btn" aria-label="Abrir menú" data-i18n-aria-label="nav.menu">
                 <i class="fa-solid fa-bars"></i>
             </button>
+
+            <!-- Logo + enlaces: único elemento dentro del flex centrado -->
             <nav class="nav-links" id="nav-links">
                 <div class="nav-group">
-                    <a data-i18n="nav.home" href="index.html">Inicio</a>
+                    <a data-i18n="nav.home" href="index.html" >Inicio</a>
                     <a data-i18n="nav.about" href="Nosotros.html">Nosotros</a>
                 </div>
-                <a href="index.html" title="Ir al Inicio" data-i18n-title="nav.logoTitle"
-                class="logo"><img src="Logosinfondo5.png" alt="" style="width: auto;height: 65px;"></a>
+                <a href="index.html" title="Ir al Inicio" data-i18n-title="nav.logoTitle" class="logo">
+                    <img src="../prismahelios.github.io/Logosinfondo5.png" alt="" style="width: auto;height: 70px; display: block;">
+                </a>
                 <div class="nav-group">
                     <a data-i18n="nav.services" href="Servicios.html">Servicios</a>
-                    <a data-i18n="nav.contact" href="Contacto.html" class="active">Contactanos</a>
+                    <a data-i18n="nav.contact" href="Contacto.html" class="active" >Contactanos</a>
                 </div>
             </nav>
         </div>
@@ -484,7 +488,7 @@
                     <form id="contactFormMain">
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="nombre" data-i18n="contact.lblName">MI NOMBRE(S) ES *</label>
+                                <label for="nombre" data-i18n="contact.lblName">MI NOMBRE ES *</label>
                                 <input type="text" id="nombre" name="nombre" required placeholder="Juan" data-i18n-placeholder="contact.phName">
                             </div>
                             <div class="form-group">
