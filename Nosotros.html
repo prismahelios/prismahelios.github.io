@@ -95,7 +95,7 @@
             position: relative;
             max-width: 100%; /* Ancho ideal de teléfono */
             width: 100%;
-            aspect-ratio: 21 / 9;
+            aspect-ratio: 16 / 9;
             margin: 0 auto;
             border-radius: 24px;
             overflow: hidden;
@@ -110,6 +110,17 @@
             object-fit: cover;
             display: block;
         }
+
+        /* Video de YouTube (iframe) */
+        .vertical-video-wrapper iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+            display: block;
+        }
+        .vertical-video-wrapper:fullscreen { aspect-ratio: auto; border-radius: 0; border: none; }
 
         /* Capa de controles personalizados sobre el video */
         .video-controls-overlay {
@@ -527,7 +538,13 @@
 
                 <!-- Contenedor optimizado para video vertical (9:16) -->
                 <div class="vertical-video-wrapper">
-                    <video id="promo-video" iframe> width="560" height="315" src="https://www.youtube.com/embed/D29WffWYjfw?si=phM89DAbv3I1Dnv4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loop playsinline muted></iframe></video>
+                    <iframe id="promo-video"
+                        src="https://www.youtube.com/embed/D29WffWYjfw?enablejsapi=1&controls=0&mute=1&loop=1&playlist=D29WffWYjfw&playsinline=1&rel=0&modestbranding=1"
+                        title="Video institucional Prisma Helios"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen></iframe>
                     <div class="video-controls-overlay">
                         <div class="video-top-bar">
                             <span class="video-tag">Prisma Helios</span>
@@ -728,47 +745,63 @@
                 }
             });
 
-            // === LÓGICA DE CONTROL DEL VIDEO VERTICAL ===
-            const promoVideo = document.getElementById('promo-video');
+            // === LÓGICA DE CONTROL DEL VIDEO (YouTube IFrame API) ===
             const btnPlay = document.getElementById('btn-video-play');
             const btnMute = document.getElementById('btn-video-mute');
             const btnFullscreen = document.getElementById('btn-video-fullscreen');
+            const videoWrapper = document.querySelector('.vertical-video-wrapper');
             const iconPlay = btnPlay.querySelector('i');
             const iconMute = btnMute.querySelector('i');
+            let ytPlayer = null;
+
+            // Cargar la API de YouTube
+            const ytScript = document.createElement('script');
+            ytScript.src = 'https://www.youtube.com/iframe_api';
+            document.head.appendChild(ytScript);
+
+            // YouTube llama a esta función cuando la API está lista
+            window.onYouTubeIframeAPIReady = function () {
+                ytPlayer = new YT.Player('promo-video', {
+                    events: {
+                        onStateChange: (e) => {
+                            const reproduciendo = (e.data === YT.PlayerState.PLAYING);
+                            iconPlay.classList.toggle('fa-pause', reproduciendo);
+                            iconPlay.classList.toggle('fa-play', !reproduciendo);
+                        }
+                    }
+                });
+            };
 
             // Play / Pausa
             btnPlay.addEventListener('click', () => {
-                if (promoVideo.paused) {
-                    promoVideo.play();
-                    iconPlay.classList.remove('fa-play');
-                    iconPlay.classList.add('fa-pause');
+                if (!ytPlayer) return;
+                if (ytPlayer.getPlayerState() === YT.PlayerState.PLAYING) {
+                    ytPlayer.pauseVideo();
                 } else {
-                    promoVideo.pause();
-                    iconPlay.classList.remove('fa-pause');
-                    iconPlay.classList.add('fa-play');
+                    ytPlayer.playVideo();
                 }
             });
 
             // Silenciar / Activar Sonido
             btnMute.addEventListener('click', () => {
-                promoVideo.muted = !promoVideo.muted;
-                if (promoVideo.muted) {
-                    iconMute.classList.remove('fa-volume-high');
-                    iconMute.classList.add('fa-volume-xmark');
-                } else {
+                if (!ytPlayer) return;
+                if (ytPlayer.isMuted()) {
+                    ytPlayer.unMute();
                     iconMute.classList.remove('fa-volume-xmark');
                     iconMute.classList.add('fa-volume-high');
+                } else {
+                    ytPlayer.mute();
+                    iconMute.classList.remove('fa-volume-high');
+                    iconMute.classList.add('fa-volume-xmark');
                 }
             });
 
-            // Pantalla Completa
+            // Pantalla Completa (del contenedor, para conservar los botones)
             btnFullscreen.addEventListener('click', () => {
-                if (promoVideo.requestFullscreen) {
-                    promoVideo.requestFullscreen();
-                } else if (promoVideo.webkitRequestFullscreen) { /* Safari */
-                    promoVideo.webkitRequestFullscreen();
-                } else if (promoVideo.msRequestFullscreen) { /* IE11 */
-                    promoVideo.msRequestFullscreen();
+                if (videoWrapper.requestFullscreen) {
+                    videoWrapper.requestFullscreen();
+                } else if (videoWrapper.webkitRequestFullscreen) { /* Safari */
+                    videoWrapper.webkitRequestFullscreen();
                 }
             });
         });
