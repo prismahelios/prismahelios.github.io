@@ -93,14 +93,16 @@
         /* Contenedor optimizado para video vertical (Formato 9:16) */
         .vertical-video-wrapper {
             position: relative;
-            max-width: 100%; /* Ancho ideal de teléfono */
+            max-width: 100%;
             width: 100%;
             aspect-ratio: 21 / 9;
             margin: 0 auto;
             border-radius: 24px;
-            overflow: hidden; .vertical-video-wrapper iframe { transform: scale(2); }
+            overflow: hidden;
             border: 2px solid rgba(0, 210, 255, 0.3);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(0, 210, 255, 0.2);
+            box-shadow:
+                0 15px 35px rgba(0, 0, 0, 0.6),
+                0 0 25px rgba(0, 210, 255, 0.2);
             background: #0d1137;
         }
 
@@ -540,11 +542,13 @@
                 <!-- Contenedor optimizado para video vertical (9:16) -->
                 <div class="vertical-video-wrapper">
                     <iframe id="promo-video"
-                        src="https://www.youtube.com/embed/D29WffWYjfw?enablejsapi=1&controls=0&disablekb=1&fs=0&iv_load_policy=3&modestbranding=1&rel=0&mute=1&loop=1&playlist=D29WffWYjfw&playsinline=1"                        title="Video institucional Prisma Helios"
+                        src="https://www.youtube.com/embed/D29WffWYjfw?enablejsapi=1&controls=0&disablekb=1&fs=0&iv_load_policy=3&rel=0&mute=1&loop=1&playlist=D29WffWYjfw&playsinline=1"
+                        title="Video institucional Prisma Helios"
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         referrerpolicy="strict-origin-when-cross-origin"
-                        allowfullscreen></iframe>
+                        allowfullscreen>
+                    </iframe>
                     <div class="video-controls-overlay">
                         <div class="video-top-bar">
                             <span class="video-tag">Prisma Helios</span>
@@ -746,65 +750,292 @@
             });
 
             // === LÓGICA DE CONTROL DEL VIDEO (YouTube IFrame API) ===
+
             const btnPlay = document.getElementById('btn-video-play');
             const btnMute = document.getElementById('btn-video-mute');
             const btnFullscreen = document.getElementById('btn-video-fullscreen');
+
             const videoWrapper = document.querySelector('.vertical-video-wrapper');
+
             const iconPlay = btnPlay.querySelector('i');
             const iconMute = btnMute.querySelector('i');
+            const iconFullscreen = btnFullscreen.querySelector('i');
+
             let ytPlayer = null;
 
-            // Cargar la API de YouTube
+
+            // =====================================================
+            // CARGAR API DE YOUTUBE
+            // =====================================================
+
             const ytScript = document.createElement('script');
+
             ytScript.src = 'https://www.youtube.com/iframe_api';
+
             document.head.appendChild(ytScript);
 
-            // YouTube llama a esta función cuando la API está lista
+
+            // =====================================================
+            // YOUTUBE AVISA CUANDO LA API ESTÁ LISTA
+            // =====================================================
+
             window.onYouTubeIframeAPIReady = function () {
+
                 ytPlayer = new YT.Player('promo-video', {
+
                     events: {
-                        onStateChange: (e) => {
-                            const reproduciendo = (e.data === YT.PlayerState.PLAYING);
-                            iconPlay.classList.toggle('fa-pause', reproduciendo);
-                            iconPlay.classList.toggle('fa-play', !reproduciendo);
+
+                        onReady: function () {
+
+                            // El video comienza silenciado
+                            ytPlayer.mute();
+
+                            iconMute.classList.remove('fa-volume-high');
+                            iconMute.classList.add('fa-volume-xmark');
+
+                        },
+
+                        onStateChange: function (event) {
+
+                            const reproduciendo =
+                                event.data === YT.PlayerState.PLAYING;
+
+                            const terminado =
+                                event.data === YT.PlayerState.ENDED;
+
+
+                            // Cambiar Play ↔ Pausa
+
+                            if (reproduciendo) {
+
+                                iconPlay.classList.remove('fa-play');
+                                iconPlay.classList.add('fa-pause');
+
+                                btnPlay.setAttribute(
+                                    'aria-label',
+                                    'Pausar video'
+                                );
+
+                            } else {
+
+                                iconPlay.classList.remove('fa-pause');
+                                iconPlay.classList.add('fa-play');
+
+                                btnPlay.setAttribute(
+                                    'aria-label',
+                                    'Reproducir video'
+                                );
+
+                            }
+
+
+                            // Si termina, mantener el botón en Play
+
+                            if (terminado) {
+
+                                iconPlay.classList.remove('fa-pause');
+                                iconPlay.classList.add('fa-play');
+
+                            }
+
                         }
+
                     }
+
                 });
+
             };
 
-            // Play / Pausa
-            btnPlay.addEventListener('click', () => {
+
+            // =====================================================
+            // BOTÓN PLAY / PAUSA
+            // =====================================================
+
+            btnPlay.addEventListener('click', function () {
+
                 if (!ytPlayer) return;
-                if (ytPlayer.getPlayerState() === YT.PlayerState.PLAYING) {
+
+
+                const estado = ytPlayer.getPlayerState();
+
+
+                if (estado === YT.PlayerState.PLAYING) {
+
                     ytPlayer.pauseVideo();
+
                 } else {
+
                     ytPlayer.playVideo();
+
                 }
+
             });
 
-            // Silenciar / Activar Sonido
-            btnMute.addEventListener('click', () => {
+
+            // =====================================================
+            // BOTÓN SILENCIAR / ACTIVAR SONIDO
+            // =====================================================
+
+            btnMute.addEventListener('click', function () {
+
                 if (!ytPlayer) return;
+
+
                 if (ytPlayer.isMuted()) {
+
+                    // Activar sonido
+
                     ytPlayer.unMute();
+
                     iconMute.classList.remove('fa-volume-xmark');
                     iconMute.classList.add('fa-volume-high');
+
+                    btnMute.setAttribute(
+                        'aria-label',
+                        'Silenciar video'
+                    );
+
                 } else {
+
+                    // Silenciar
+
                     ytPlayer.mute();
+
                     iconMute.classList.remove('fa-volume-high');
                     iconMute.classList.add('fa-volume-xmark');
+
+                    btnMute.setAttribute(
+                        'aria-label',
+                        'Activar sonido'
+                    );
+
                 }
+
             });
 
-            // Pantalla Completa (del contenedor, para conservar los botones)
-            btnFullscreen.addEventListener('click', () => {
+
+            // =====================================================
+            // COMPROBAR SI ESTÁ EN PANTALLA COMPLETA
+            // =====================================================
+
+            function estaEnPantallaCompleta() {
+
+                return (
+                    document.fullscreenElement === videoWrapper ||
+                    document.webkitFullscreenElement === videoWrapper
+                );
+
+            }
+
+
+            // =====================================================
+            // ACTUALIZAR ICONO DE PANTALLA COMPLETA
+            // =====================================================
+
+            function actualizarIconoFullscreen() {
+
+                const fullscreen = estaEnPantallaCompleta();
+
+
+                if (fullscreen) {
+
+                    iconFullscreen.classList.remove('fa-expand');
+                    iconFullscreen.classList.add('fa-compress');
+
+                    btnFullscreen.setAttribute(
+                        'aria-label',
+                        'Salir de pantalla completa'
+                    );
+
+                } else {
+
+                    iconFullscreen.classList.remove('fa-compress');
+                    iconFullscreen.classList.add('fa-expand');
+
+                    btnFullscreen.setAttribute(
+                        'aria-label',
+                        'Pantalla completa'
+                    );
+
+                }
+
+            }
+
+
+            // =====================================================
+            // BOTÓN PANTALLA COMPLETA
+            // =====================================================
+
+            btnFullscreen.addEventListener('click', async function () {
+
+                try {
+
+                    if (estaEnPantallaCompleta()) {
+
+                        // SALIR DE PANTALLA COMPLETA
+
+                        if (document.exitFullscreen) {
+
+                            await document.exitFullscreen();
+
+                        } else if (document.webkitExitFullscreen) {
+
+                            document.webkitExitFullscreen();
+
+                        }
+
+                    } else {
+
+                        // ENTRAR EN PANTALLA COMPLETA
+
+                        if (videoWrapper.requestFullscreen) {
+
+                            await videoWrapper.requestFullscreen();
+
+                        } else if (videoWrapper.webkitRequestFullscreen) {
+
+                            videoWrapper.webkitRequestFullscreen();
+
+                        }
+
+                    }
+
+                } catch (error) {
+
+                    console.error(
+                        'No se pudo cambiar el modo de pantalla completa:',
+                        error
+                    );
+
+                }
+
+            });
+
+
+            // =====================================================
+            // DETECTAR CAMBIOS DE PANTALLA COMPLETA
+            // =====================================================
+
+            document.addEventListener(
+                'fullscreenchange',
+                actualizarIconoFullscreen
+            );
+
+            document.addEventListener(
+                'webkitfullscreenchange',
+                actualizarIconoFullscreen
+            );
+
+
+            // Estado inicial
+
+            actualizarIconoFullscreen();
                 if (videoWrapper.requestFullscreen) {
                     videoWrapper.requestFullscreen();
                 } else if (videoWrapper.webkitRequestFullscreen) { /* Safari */
                     videoWrapper.webkitRequestFullscreen();
                 }
             });
-        });
 
         // === AUTENTICACIÓN CON PERSISTENCIA ===
         const usuariosRegistrados = [
