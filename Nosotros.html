@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prisma Helios | Nosotros</title>
     <!-- FAVICON -->
-    <link rel="icon" type="image/png" href="LOGO.png">
+    <link rel="icon" type="image/png" href="../Editable3/Imagenes/LOGO.png">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -93,16 +93,14 @@
         /* Contenedor optimizado para video vertical (Formato 9:16) */
         .vertical-video-wrapper {
             position: relative;
-            max-width: 100%;
+            max-width: 100%; /* Ancho ideal de teléfono */
             width: 100%;
             aspect-ratio: 21 / 9;
             margin: 0 auto;
             border-radius: 24px;
             overflow: hidden;
             border: 2px solid rgba(0, 210, 255, 0.3);
-            box-shadow:
-                0 15px 35px rgba(0, 0, 0, 0.6),
-                0 0 25px rgba(0, 210, 255, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(0, 210, 255, 0.2);
             background: #0d1137;
         }
 
@@ -112,18 +110,6 @@
             object-fit: cover;
             display: block;
         }
-
-        /* Video de YouTube (iframe) */
-        .vertical-video-wrapper iframe {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
-            display: block;
-            pointer-events: none;
-        }
-        .vertical-video-wrapper:fullscreen { aspect-ratio: auto; border-radius: 0; border: none; }
 
         /* Capa de controles personalizados sobre el video */
         .video-controls-overlay {
@@ -466,9 +452,6 @@
     object-position: center; /* Mantiene centrado el foco del video */
 }
 
-        /* === BOTÓN DE IDIOMA (ES / EN) ===
-           Anclado a la derecha del header con position:absolute (igual que .header-auth),
-           por eso no desplaza el logo, los enlaces ni el botón de sesión. */
         .lang-switch { position: absolute; right: 2rem; top: 50%; transform: translateY(-50%); z-index: 10; }
         .btn-lang {
             background-color: transparent;
@@ -477,6 +460,7 @@
             padding: 6px 16px;
             border-radius: 20px;
             font-size: 0.85rem;
+            font-family: var(--font-body);
             cursor: pointer;
             transition: var(--transition-smooth);
             display: flex;
@@ -489,6 +473,7 @@
             .lang-switch { right: 1rem; }
             .btn-lang { padding: 6px 12px; }
         }
+
     </style>
 </head>
 <body>
@@ -497,7 +482,7 @@
 <div id="page-transition" class="page-transition-overlay">
     <div class="transition-content">
         <!-- OPCIÓN A: Si tu animación es un video con canal alfa o MP4/WebM -->
-        <video id="transition-video" src="videoproyect.mp4" muted playsinline></video>
+        <video id="transition-video" src="../Editable3/Animaciones/Video Project 6.mp4" muted playsinline></video>
 
         <!-- OPCIÓN B: Si es un loader/SVG animado en CSS -->
         <!-- <div class="star-loader"></div> -->
@@ -507,24 +492,27 @@
     <!-- ================= HEADER ================= -->
     <header>
         <div class="container nav-container">
+            <!-- Botón Menú Móvil -->
             <button class="menu-toggle" id="mobile-menu-btn" aria-label="Abrir menú" data-i18n-aria-label="nav.menu">
                 <i class="fa-solid fa-bars"></i>
             </button>
+
+            <!-- Logo + enlaces: único elemento dentro del flex centrado -->
             <nav class="nav-links" id="nav-links">
                 <div class="nav-group">
                     <a data-i18n="nav.home" href="index.html">Inicio</a>
                     <a data-i18n="nav.about" href="Nosotros.html" class="active">Nosotros</a>
                 </div>
                 <a href="index.html" title="Ir al Inicio" data-i18n-title="nav.logoTitle" class="logo">
-                    <img src="Logosinfondo5.png" alt="Logo Prisma Helios" data-i18n-alt="nav.logoAlt" style="width: auto; height: 65px;">
+                    <img src="../Editable4/Imagenes/Logosinfondo5.png" alt="" style="width: auto;height: 70px; display: block;">
                 </a>
                 <div class="nav-group">
                     <a data-i18n="nav.services" href="Servicios.html">Servicios</a>
                     <a data-i18n="nav.contact" href="Contacto.html">Contactanos</a>
                 </div>
             </nav>
-            <div class="header-auth" id="auth-container"></div>
         </div>
+        <div class="header-auth" id="auth-container"></div>
         <!-- Botón de idioma ES / EN (fuera del flujo: no mueve el logo ni los enlaces) -->
         <div class="lang-switch">
             <button type="button" class="btn-lang" id="lang-toggle" aria-label="Cambiar idioma / Change language" title="Cambiar idioma / Change language">
@@ -541,14 +529,8 @@
 
                 <!-- Contenedor optimizado para video vertical (9:16) -->
                 <div class="vertical-video-wrapper">
-                    <iframe id="promo-video"
-                        src="https://www.youtube.com/embed/D29WffWYjfw?enablejsapi=1&controls=0&disablekb=1&fs=0&iv_load_policy=3&rel=0&mute=1&loop=1&playlist=D29WffWYjfw&playsinline=1"
-                        title="Video institucional Prisma Helios"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        referrerpolicy="strict-origin-when-cross-origin"
-                        allowfullscreen>
-                    </iframe>
+                    <video id="promo-video" src="../Editable4/videocorporativo.mp4" loop playsinline muted></video>
+                    
                     <div class="video-controls-overlay">
                         <div class="video-top-bar">
                             <span class="video-tag">Prisma Helios</span>
@@ -580,27 +562,27 @@
             <div class="container">
                 <div class="about-grid">
                     <article class="about-card card-history glass-interactive">
-                        <h3 data-i18n="about.historyH3">Historia</h3>
-                        <h2 data-i18n="about.historyH2">Un problema que buscamos solucionar</h2>
-                        <p data-i18n="about.historyP">En una Insitución Educativa, el sitio web oficial, estaba mal diseñado y desordenado. Las redes sociales no conectaban con el público.El número de matriculado bajo, y los estudiantes no tuvieron sentido de pertenencia.<br><br>Al observar que esta situación pasa en el mundo del emprendimiento, paginas mal diseñadas y negocios que no conectan con su público, queremos solucionar eso, mediante diseño y contenido multimedia.</p>
+                        <h3>Historia</h3>
+                        <h2>Un problema que buscamos solucionar</h2>
+                        <p>En una Insitución Educativa, el sitio web oficial, estaba mal diseñado y desordenado. Las redes sociales no conectaban con el público.El número de matriculado bajo, y los estudiantes no tuvieron sentido de pertenencia.<br><br>Al observar que esta situación pasa en el mundo del emprendimiento, paginas mal diseñadas y negocios que no conectan con su público, queremos solucionar eso, mediante diseño y contenido multimedia.</p>
                     </article>
 
                     <article class="about-card glass-interactive">
-                        <h3 data-i18n="about.missionH3">Misión</h3>
-                        <p data-i18n="about.missionP">Fortalecer la identidad visual de las marcas emergentes, brindando un enfoque de diseño y adaptabilidad mediante una investigación constante en el entorno digital.</p>
+                        <h3>Misión</h3>
+                        <p>Fortalecer la identidad visual de las marcas emergentes, brindando un enfoque de diseño y adaptabilidad mediante una investigación constante en el entorno digital.</p>
                     </article>
 
                     <article class="about-card glass-interactive">
-                        <h3 data-i18n="about.visionH3">Visión</h3>
-                        <p data-i18n="about.visionP">Para el año 2031 nos visualizamos como la agencia multimedial de vanguardia a nivel regional, reconocidos por transformar empresas en marcas competitivas y rentables.</p>
+                        <h3>Visión</h3>
+                        <p>Para el año 2031 nos visualizamos como la agencia multimedial de vanguardia a nivel regional, reconocidos por transformar empresas en marcas competitivas y rentables.</p>
                     </article>
 
                     <article class="about-card card-values glass-interactive">
-                        <h3 data-i18n="about.valuesH3">Nuestros valores</h3>
+                        <h3>Nuestros valores</h3>
                         <div class="values-list">
-                            <div class="value-item"><i class="fa-solid fa-handshake"></i><span data-i18n="about.v1">Respeto</span></div>
-                            <div class="value-item"><i class="fa-solid fa-shield-halved"></i><span data-i18n="about.v2">Honestidad</span></div>
-                            <div class="value-item"><i class="fa-solid fa-lightbulb"></i><span data-i18n="about.v3">Asesoría</span></div>
+                            <div class="value-item"><i class="fa-solid fa-handshake"></i><span>Respeto</span></div>
+                            <div class="value-item"><i class="fa-solid fa-shield-halved"></i><span>Honestidad</span></div>
+                            <div class="value-item"><i class="fa-solid fa-lightbulb"></i><span>Innovación</span></div>
                         </div>
                     </article>
                 </div>
@@ -613,15 +595,15 @@
                 <div class="founder-card-wrapper glass-interactive">
                     <div class="founder-grid">
                         <div class="founder-photo-container">
-                            <img src="fundador.jpeg" alt="Joan Sebastián Ruiz Angulo, Fundador y Gerente de Prisma Helios" data-i18n-alt="about.founderAlt">
+                            <img src="../Editable3/Imagenes/nosotros/fundador.jpeg" alt="Joan Sebastián Ruiz Angulo, Fundador y Gerente de Prisma Helios">
                         </div>
                         <div class="founder-info">
                             <div class="founder-header">
-                                <h2 data-i18n="about.founderTitle">Fundador Y Gerente Gereral</h2>
+                                <h2>Fundador Y Gerente Gereral</h2>
                                 <p class="founder-name">Joan Sebastián Ruiz Angulo</p>
                             </div>
                             <blockquote class="founder-quote">
-                                <p data-i18n="about.quote">"La creatividad es nuestra luz guía; la adaptabilidad, la fuerza que nos permite moldear el futuro. Transformamos grandes visiones en realidades sólidas y sostenibles."</p>
+                                <p>"La creatividad es nuestra luz guía; la adaptabilidad, la fuerza que nos permite moldear el futuro. Transformamos grandes visiones en realidades sólidas y sostenibles."</p>
                             </blockquote>
                             <div class="founder-social">
                                     <a href="https://www.linkedin.com/in/joan-sebasti%C3%A1n-ruiz-angulo-33216043b/" class="founder-social-icon" aria-label="LinkedIn" target="_blank" rel="noopener">
@@ -637,20 +619,20 @@
         <!-- 5. MÁS INFORMACIÓN -->
         <section class="info-section">
             <div class="container">
-                <h2 data-i18n="about.infoTitle">MÁS INFORMACIÓN</h2>
+                <h2>MÁS INFORMACIÓN</h2>
                 <div class="info-grid">
-                    <a href="manualdeimagen.pdf" target="_blank" rel="noopener noreferrer" class="info-card">
+                    <a href="../Editable3/PDF´S/Manual de imagen corporativo.pdf" target="_blank" rel="noopener noreferrer" class="info-card">
                         <div class="info-placeholder">
-                            <img src="portadamanual.png" alt="Manual de Identidad Visual" data-i18n-alt="about.manualAlt">
+                            <img src="../Editable3/Imagenes/nosotros/portadamanual.png" alt="Manual de Identidad Visual">
                         </div>
-                        <h3 data-i18n="about.manualH3">MANUAL DE<br>IDENTIDAD VISUAL</h3>
+                        <h3>MANUAL DE<br>IDENTIDAD VISUAL</h3>
                     </a>
 
-                    <a href="portafolio.pdf" target="_blank" rel="noopener noreferrer" class="info-card">
+                    <a href="../Editable3/PDF´S/portafolio.pdf" target="_blank" rel="noopener noreferrer" class="info-card">
                         <div class="info-placeholder">
-                            <img src="portadaportafolio.png">
+                            <img src="../Editable3/Imagenes/nosotros/portadaportafolio.png">
                         </div>
-                        <h3 data-i18n="about.portfolioH3">PORTAFOLIO DE<br>SERVICIOS</h3>
+                        <h3>PORTAFOLIO DE<br>SERVICIOS</h3>
                     </a>
                 </div>
             </div>
@@ -661,11 +643,11 @@
                 <div class="clients-grid">
                     <!-- Cliente 1 -->
                     <div class="client-item">
-                        <img src="cliente1.png" alt="Logo Cliente 1" data-i18n-alt="about.client1">
+                        <img src="../Editable3/Imagenes/nosotros/logoeustaquio.png" alt="Logo Cliente 1">
                     </div>
                     <!-- Cliente 2 -->
                     <div class="client-item">
-                        <img src="cliente2.jpg" alt="Logo Cliente 2" data-i18n-alt="about.client2">
+                        <img src="../Editable3/Imagenes/nosotros/cliente2.jpg" alt="Logo Cliente 2">
                     </div>
                 </div>
             </div>
@@ -673,7 +655,7 @@
 
         <!-- 6. LLAMADA A LOS SERVICIOS -->
         <section class="cta-idea-section">
-            <a href="Servicios.html" class="cta-idea-link" data-i18n="about.cta">¿QUÉ TE OFRECEMOS?</a>
+            <a href="Servicios.html" class="cta-idea-link">¿QUÉ TE OFRECEMOS?</a>
         </section>
     </main>
 
@@ -682,7 +664,7 @@
         <div class="container footer-grid">
             <div class="footer-column">
                 <div class="footer-logo">
-                    <img src="Logo-sin-fondo.png" alt="Prisma Helios" style="width: auto; height: 90px;">
+                    <img src="../Editable3/Imagenes/Logo-sin-fondo.png" alt="Prisma Helios" style="width: auto; height: 90px;">
                 </div>
                 <p style="font-size: 1rem; color: #efedf6;">Prisma Helios</p>
                 <div class="social-links">
@@ -691,17 +673,17 @@
                 </div>
             </div>
             <div class="footer-column">
-                <h4 data-i18n="footer.contact">CONTACTO</h4>
+                <h4>CONTACTO</h4>
                 <ul>
                     <li><i class="fa-solid fa-phone"></i> (+57) 323 6060185</li>
                     <li><i class="fa-solid fa-envelope"></i> prismaheliossas@gmail.com</li>
                 </ul>
             </div>
             <div class="footer-column">
-                <h4 data-i18n="footer.about">Acerca de</h4>
+                <h4>Acerca de</h4>
                 <ul>
-                    <li><a href="#" data-i18n="footer.privacy">Aviso de privacidad</a></li>
-                    <li><a href="#" data-i18n="footer.terms">Términos de servicio</a></li>
+                    <li><a href="#">Aviso de privacidad</a></li>
+                    <li><a href="#">Términos de servicio</a></li>
                 </ul>
             </div>
         </div>
@@ -710,21 +692,21 @@
     <!-- MODAL LOGIN -->
     <div class="modal-overlay" id="login-modal">
         <div class="modal-card">
-            <h3 data-i18n="auth.title">Iniciar Sesión</h3>
+            <h3>Iniciar Sesión</h3>
             <form id="login-form">
-                <input type="email" id="login-email" placeholder="Correo electrónico" data-i18n-placeholder="auth.email" required>
-                <input type="password" id="login-pass" placeholder="Contraseña" data-i18n-placeholder="auth.password" required>
+                <input type="email" id="login-email" placeholder="Correo electrónico" required>
+                <input type="password" id="login-pass" placeholder="Contraseña" required>
                 <div class="modal-actions">
-                    <button type="submit" class="btn-modal-submit" data-i18n="auth.submit">Ingresar</button>
-                    <button type="button" class="error-btn" id="close-modal-btn" data-i18n="auth.cancel">Cancelar</button>
+                    <button type="submit" class="btn-modal-submit">Ingresar</button>
+                    <button type="button" class="error-btn" id="close-modal-btn">Cancelar</button>
                 </div>
             </form>
             <div class="login-error-box" id="login-error">
-                <p><strong data-i18n="auth.notFound">Usuario no registrado</strong></p>
+                <p><strong>Usuario no registrado</strong></p>
                 <div class="error-options">
-                    <button type="button" class="error-btn" id="btn-retry" data-i18n="auth.retry">Intentar de nuevo</button>
-                    <button type="button" class="error-btn" id="btn-forgot" data-i18n="auth.forgot">¿Olvidó su contraseña?</button>
-                    <button type="button" class="error-btn" id="btn-back" data-i18n="auth.back">Regresar</button>
+                    <button type="button" class="error-btn" id="btn-retry">Intentar de nuevo</button>
+                    <button type="button" class="error-btn" id="btn-forgot">¿Olvidó su contraseña?</button>
+                    <button type="button" class="error-btn" id="btn-back">Regresar</button>
                 </div>
             </div>
         </div>
@@ -749,293 +731,50 @@
                 }
             });
 
-            // === LÓGICA DE CONTROL DEL VIDEO (YouTube IFrame API) ===
-
+            // === LÓGICA DE CONTROL DEL VIDEO VERTICAL ===
+            const promoVideo = document.getElementById('promo-video');
             const btnPlay = document.getElementById('btn-video-play');
             const btnMute = document.getElementById('btn-video-mute');
             const btnFullscreen = document.getElementById('btn-video-fullscreen');
-
-            const videoWrapper = document.querySelector('.vertical-video-wrapper');
-
             const iconPlay = btnPlay.querySelector('i');
             const iconMute = btnMute.querySelector('i');
-            const iconFullscreen = btnFullscreen.querySelector('i');
 
-            let ytPlayer = null;
-
-
-            // =====================================================
-            // CARGAR API DE YOUTUBE
-            // =====================================================
-
-            const ytScript = document.createElement('script');
-
-            ytScript.src = 'https://www.youtube.com/iframe_api';
-
-            document.head.appendChild(ytScript);
-
-
-            // =====================================================
-            // YOUTUBE AVISA CUANDO LA API ESTÁ LISTA
-            // =====================================================
-
-            window.onYouTubeIframeAPIReady = function () {
-
-                ytPlayer = new YT.Player('promo-video', {
-
-                    events: {
-
-                        onReady: function () {
-
-                            // El video comienza silenciado
-                            ytPlayer.mute();
-
-                            iconMute.classList.remove('fa-volume-high');
-                            iconMute.classList.add('fa-volume-xmark');
-
-                        },
-
-                        onStateChange: function (event) {
-
-                            const reproduciendo =
-                                event.data === YT.PlayerState.PLAYING;
-
-                            const terminado =
-                                event.data === YT.PlayerState.ENDED;
-
-
-                            // Cambiar Play ↔ Pausa
-
-                            if (reproduciendo) {
-
-                                iconPlay.classList.remove('fa-play');
-                                iconPlay.classList.add('fa-pause');
-
-                                btnPlay.setAttribute(
-                                    'aria-label',
-                                    'Pausar video'
-                                );
-
-                            } else {
-
-                                iconPlay.classList.remove('fa-pause');
-                                iconPlay.classList.add('fa-play');
-
-                                btnPlay.setAttribute(
-                                    'aria-label',
-                                    'Reproducir video'
-                                );
-
-                            }
-
-
-                            // Si termina, mantener el botón en Play
-
-                            if (terminado) {
-
-                                iconPlay.classList.remove('fa-pause');
-                                iconPlay.classList.add('fa-play');
-
-                            }
-
-                        }
-
-                    }
-
-                });
-
-            };
-
-
-            // =====================================================
-            // BOTÓN PLAY / PAUSA
-            // =====================================================
-
-            btnPlay.addEventListener('click', function () {
-
-                if (!ytPlayer) return;
-
-
-                const estado = ytPlayer.getPlayerState();
-
-
-                if (estado === YT.PlayerState.PLAYING) {
-
-                    ytPlayer.pauseVideo();
-
+            // Play / Pausa
+            btnPlay.addEventListener('click', () => {
+                if (promoVideo.paused) {
+                    promoVideo.play();
+                    iconPlay.classList.remove('fa-play');
+                    iconPlay.classList.add('fa-pause');
                 } else {
-
-                    ytPlayer.playVideo();
-
+                    promoVideo.pause();
+                    iconPlay.classList.remove('fa-pause');
+                    iconPlay.classList.add('fa-play');
                 }
-
             });
 
-
-            // =====================================================
-            // BOTÓN SILENCIAR / ACTIVAR SONIDO
-            // =====================================================
-
-            btnMute.addEventListener('click', function () {
-
-                if (!ytPlayer) return;
-
-
-                if (ytPlayer.isMuted()) {
-
-                    // Activar sonido
-
-                    ytPlayer.unMute();
-
-                    iconMute.classList.remove('fa-volume-xmark');
-                    iconMute.classList.add('fa-volume-high');
-
-                    btnMute.setAttribute(
-                        'aria-label',
-                        'Silenciar video'
-                    );
-
-                } else {
-
-                    // Silenciar
-
-                    ytPlayer.mute();
-
+            // Silenciar / Activar Sonido
+            btnMute.addEventListener('click', () => {
+                promoVideo.muted = !promoVideo.muted;
+                if (promoVideo.muted) {
                     iconMute.classList.remove('fa-volume-high');
                     iconMute.classList.add('fa-volume-xmark');
-
-                    btnMute.setAttribute(
-                        'aria-label',
-                        'Activar sonido'
-                    );
-
-                }
-
-            });
-
-
-            // =====================================================
-            // COMPROBAR SI ESTÁ EN PANTALLA COMPLETA
-            // =====================================================
-
-            function estaEnPantallaCompleta() {
-
-                return (
-                    document.fullscreenElement === videoWrapper ||
-                    document.webkitFullscreenElement === videoWrapper
-                );
-
-            }
-
-
-            // =====================================================
-            // ACTUALIZAR ICONO DE PANTALLA COMPLETA
-            // =====================================================
-
-            function actualizarIconoFullscreen() {
-
-                const fullscreen = estaEnPantallaCompleta();
-
-
-                if (fullscreen) {
-
-                    iconFullscreen.classList.remove('fa-expand');
-                    iconFullscreen.classList.add('fa-compress');
-
-                    btnFullscreen.setAttribute(
-                        'aria-label',
-                        'Salir de pantalla completa'
-                    );
-
                 } else {
-
-                    iconFullscreen.classList.remove('fa-compress');
-                    iconFullscreen.classList.add('fa-expand');
-
-                    btnFullscreen.setAttribute(
-                        'aria-label',
-                        'Pantalla completa'
-                    );
-
-                }
-
-            }
-
-
-            // =====================================================
-            // BOTÓN PANTALLA COMPLETA
-            // =====================================================
-
-            btnFullscreen.addEventListener('click', async function () {
-
-                try {
-
-                    if (estaEnPantallaCompleta()) {
-
-                        // SALIR DE PANTALLA COMPLETA
-
-                        if (document.exitFullscreen) {
-
-                            await document.exitFullscreen();
-
-                        } else if (document.webkitExitFullscreen) {
-
-                            document.webkitExitFullscreen();
-
-                        }
-
-                    } else {
-
-                        // ENTRAR EN PANTALLA COMPLETA
-
-                        if (videoWrapper.requestFullscreen) {
-
-                            await videoWrapper.requestFullscreen();
-
-                        } else if (videoWrapper.webkitRequestFullscreen) {
-
-                            videoWrapper.webkitRequestFullscreen();
-
-                        }
-
-                    }
-
-                } catch (error) {
-
-                    console.error(
-                        'No se pudo cambiar el modo de pantalla completa:',
-                        error
-                    );
-
-                }
-
-            });
-
-
-            // =====================================================
-            // DETECTAR CAMBIOS DE PANTALLA COMPLETA
-            // =====================================================
-
-            document.addEventListener(
-                'fullscreenchange',
-                actualizarIconoFullscreen
-            );
-
-            document.addEventListener(
-                'webkitfullscreenchange',
-                actualizarIconoFullscreen
-            );
-
-
-            // Estado inicial
-
-            actualizarIconoFullscreen();
-                if (videoWrapper.requestFullscreen) {
-                    videoWrapper.requestFullscreen();
-                } else if (videoWrapper.webkitRequestFullscreen) { /* Safari */
-                    videoWrapper.webkitRequestFullscreen();
+                    iconMute.classList.remove('fa-volume-xmark');
+                    iconMute.classList.add('fa-volume-high');
                 }
             });
+
+            // Pantalla Completa
+            btnFullscreen.addEventListener('click', () => {
+                if (promoVideo.requestFullscreen) {
+                    promoVideo.requestFullscreen();
+                } else if (promoVideo.webkitRequestFullscreen) { /* Safari */
+                    promoVideo.webkitRequestFullscreen();
+                } else if (promoVideo.msRequestFullscreen) { /* IE11 */
+                    promoVideo.msRequestFullscreen();
+                }
+            });
+        });
 
         // === AUTENTICACIÓN CON PERSISTENCIA ===
         const usuariosRegistrados = [
@@ -1063,8 +802,8 @@
                 authContainer.innerHTML = `
                     <div class="user-profile-badge">
                         <i class="fa-solid fa-circle-user"></i>
-                        <span data-i18n="auth.welcome">Bienvenido</span>
-                        <button class="btn-logout" id="logout-btn" title="Cerrar sesión" data-i18n-title="auth.logout">
+                        <span>Bienvenido</span>
+                        <button class="btn-logout" id="logout-btn" title="Cerrar sesión">
                             <i class="fa-solid fa-right-from-bracket"></i>
                         </button>
                     </div>
@@ -1076,7 +815,7 @@
             } else {
                 authContainer.innerHTML = `
                     <button class="btn-login-nav" id="open-login-btn">
-                        <i class="fa-solid fa-user"></i> <span class="login-text" data-i18n="auth.login">Iniciar Sesión</span>
+                        <i class="fa-solid fa-user"></i> <span class="login-text">Iniciar Sesión</span>
                     </button>
                 `;
                 document.getElementById('open-login-btn').addEventListener('click', () => {
@@ -1112,7 +851,7 @@
 
         renderAuthUI();
 
-        // Efecto interactivo de ovimiento de mouse en tarjetas glass
+        // Efecto interactivo de movimiento de mouse en tarjetas glass
         document.addEventListener('mousemove', (e) => {
             document.querySelectorAll('.glass-interactive').forEach(pane => {
                 const rect = pane.getBoundingClientRect();
@@ -1169,7 +908,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+
+
     </script>
+
+</script>
     <!-- ================= SELECTOR DE IDIOMA (ES / EN) =================
          - El español es el contenido original del HTML: NO se reescribe.
          - Al cambiar a inglés se guarda el texto original de cada elemento y
@@ -1283,5 +1026,6 @@ document.addEventListener('DOMContentLoaded', () => {
         aplicar();
     })();
     </script>
+
 </body>
 </html>
