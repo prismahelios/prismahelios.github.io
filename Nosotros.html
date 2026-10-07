@@ -452,6 +452,9 @@
     object-position: center; /* Mantiene centrado el foco del video */
 }
 
+        /* === BOTÓN DE IDIOMA (ES / EN) ===
+           Anclado a la derecha del header con position:absolute (igual que .header-auth),
+           por eso no desplaza el logo, los enlaces ni el botón de sesión. */
         .lang-switch { position: absolute; right: 2rem; top: 50%; transform: translateY(-50%); z-index: 10; }
         .btn-lang {
             background-color: transparent;
@@ -460,7 +463,6 @@
             padding: 6px 16px;
             border-radius: 20px;
             font-size: 0.85rem;
-            font-family: var(--font-body);
             cursor: pointer;
             transition: var(--transition-smooth);
             display: flex;
@@ -473,7 +475,6 @@
             .lang-switch { right: 1rem; }
             .btn-lang { padding: 6px 12px; }
         }
-
     </style>
 </head>
 <body>
@@ -492,27 +493,24 @@
     <!-- ================= HEADER ================= -->
     <header>
         <div class="container nav-container">
-            <!-- Botón Menú Móvil -->
             <button class="menu-toggle" id="mobile-menu-btn" aria-label="Abrir menú" data-i18n-aria-label="nav.menu">
                 <i class="fa-solid fa-bars"></i>
             </button>
-
-            <!-- Logo + enlaces: único elemento dentro del flex centrado -->
             <nav class="nav-links" id="nav-links">
                 <div class="nav-group">
                     <a data-i18n="nav.home" href="index.html">Inicio</a>
                     <a data-i18n="nav.about" href="Nosotros.html" class="active">Nosotros</a>
                 </div>
                 <a href="index.html" title="Ir al Inicio" data-i18n-title="nav.logoTitle" class="logo">
-                    <img src="Logosinfondo5.png" alt="" style="width: auto;height: 70px; display: block;">
+                    <img src="Logosinfondo5.png" alt="Logo Prisma Helios" data-i18n-alt="nav.logoAlt" style="width: auto; height: 65px;">
                 </a>
                 <div class="nav-group">
                     <a data-i18n="nav.services" href="Servicios.html">Servicios</a>
                     <a data-i18n="nav.contact" href="Contacto.html">Contactanos</a>
                 </div>
             </nav>
+            <div class="header-auth" id="auth-container"></div>
         </div>
-        <div class="header-auth" id="auth-container"></div>
         <!-- Botón de idioma ES / EN (fuera del flujo: no mueve el logo ni los enlaces) -->
         <div class="lang-switch">
             <button type="button" class="btn-lang" id="lang-toggle" aria-label="Cambiar idioma / Change language" title="Cambiar idioma / Change language">
@@ -525,7 +523,7 @@
         <!-- 1. VIDEO INSTITUCIONAL VERTICAL -->
         <section class="video-section">
             <div class="container" style="max-width: 1440px;">
-                <span class="section-subtitle">MANIFESTACIÓN VISUAL</span>
+                <span class="section-subtitle" data-i18n="about.manifesto">MANIFIESTO VISUAL</span>
 
                 <!-- Contenedor optimizado para video vertical (9:16) -->
                 <div class="vertical-video-wrapper">
@@ -538,17 +536,17 @@
                         
                         <div class="video-bottom-controls">
                             <!-- Botón Silenciar / Volumen -->
-                            <button class="ctrl-btn" id="btn-video-mute" aria-label="Silenciar o activar sonido">
+                            <button class="ctrl-btn" id="btn-video-mute" aria-label="Silenciar o activar sonido" data-i18n-aria-label="about.muteAria">
                                 <i class="fa-solid fa-volume-xmark"></i>
                             </button>
 
                             <!-- Botón Play / Pausa Principal -->
-                            <button class="ctrl-btn btn-main-play" id="btn-video-play" aria-label="Reproducir o pausar video">
+                            <button class="ctrl-btn btn-main-play" id="btn-video-play" aria-label="Reproducir o pausar video" data-i18n-aria-label="about.playAria">
                                 <i class="fa-solid fa-play"></i>
                             </button>
 
                             <!-- Botón Pantalla Completa -->
-                            <button class="ctrl-btn" id="btn-video-fullscreen" aria-label="Pantalla completa">
+                            <button class="ctrl-btn" id="btn-video-fullscreen" aria-label="Pantalla completa" data-i18n-aria-label="about.fsAria">
                                 <i class="fa-solid fa-expand"></i>
                             </button>
                         </div>
@@ -562,27 +560,27 @@
             <div class="container">
                 <div class="about-grid">
                     <article class="about-card card-history glass-interactive">
-                        <h3>Historia</h3>
-                        <h2>Un problema que buscamos solucionar</h2>
-                        <p>En una Insitución Educativa, el sitio web oficial, estaba mal diseñado y desordenado. Las redes sociales no conectaban con el público.El número de matriculado bajo, y los estudiantes no tuvieron sentido de pertenencia.<br><br>Al observar que esta situación pasa en el mundo del emprendimiento, paginas mal diseñadas y negocios que no conectan con su público, queremos solucionar eso, mediante diseño y contenido multimedia.</p>
+                        <h3 data-i18n="about.historyH3">Historia</h3>
+                        <h2 data-i18n="about.historyH2">Un problema que buscamos solucionar</h2>
+                        <p data-i18n="about.historyP">En una Insitución Educativa, el sitio web oficial, estaba mal diseñado y desordenado. Las redes sociales no conectaban con el público.El número de matriculado bajo, y los estudiantes no tuvieron sentido de pertenencia.<br><br>Al observar que esta situación pasa en el mundo del emprendimiento, paginas mal diseñadas y negocios que no conectan con su público, queremos solucionar eso, mediante diseño y contenido multimedia.</p>
                     </article>
 
                     <article class="about-card glass-interactive">
-                        <h3>Misión</h3>
-                        <p>Fortalecer la identidad visual de las marcas emergentes, brindando un enfoque de diseño y adaptabilidad mediante una investigación constante en el entorno digital.</p>
+                        <h3 data-i18n="about.missionH3">Misión</h3>
+                        <p data-i18n="about.missionP">Fortalecer la identidad visual de las marcas emergentes, brindando un enfoque de diseño y adaptabilidad mediante una investigación constante en el entorno digital.</p>
                     </article>
 
                     <article class="about-card glass-interactive">
-                        <h3>Visión</h3>
-                        <p>Para el año 2031 nos visualizamos como la agencia multimedial de vanguardia a nivel regional, reconocidos por transformar empresas en marcas competitivas y rentables.</p>
+                        <h3 data-i18n="about.visionH3">Visión</h3>
+                        <p data-i18n="about.visionP">Para el año 2031 nos visualizamos como la agencia multimedial de vanguardia a nivel regional, reconocidos por transformar empresas en marcas competitivas y rentables.</p>
                     </article>
 
                     <article class="about-card card-values glass-interactive">
-                        <h3>Nuestros valores</h3>
+                        <h3 data-i18n="about.valuesH3">Nuestros valores</h3>
                         <div class="values-list">
-                            <div class="value-item"><i class="fa-solid fa-handshake"></i><span>Respeto</span></div>
-                            <div class="value-item"><i class="fa-solid fa-shield-halved"></i><span>Honestidad</span></div>
-                            <div class="value-item"><i class="fa-solid fa-lightbulb"></i><span>Innovación</span></div>
+                            <div class="value-item"><i class="fa-solid fa-handshake"></i><span data-i18n="about.v1">Respeto</span></div>
+                            <div class="value-item"><i class="fa-solid fa-shield-halved"></i><span data-i18n="about.v2">Honestidad</span></div>
+                            <div class="value-item"><i class="fa-solid fa-lightbulb"></i><span data-i18n="about.v3">Innovación</span></div>
                         </div>
                     </article>
                 </div>
@@ -595,15 +593,15 @@
                 <div class="founder-card-wrapper glass-interactive">
                     <div class="founder-grid">
                         <div class="founder-photo-container">
-                            <img src="fundador.jpeg" alt="Joan Sebastián Ruiz Angulo, Fundador y Gerente de Prisma Helios">
+                            <img src="fundador.jpeg" alt="Joan Sebastián Ruiz Angulo, Fundador y Gerente de Prisma Helios" data-i18n-alt="about.founderAlt">
                         </div>
                         <div class="founder-info">
                             <div class="founder-header">
-                                <h2>Fundador Y Gerente Gereral</h2>
+                                <h2 data-i18n="about.founderTitle">Fundador Y Gerente Gereral</h2>
                                 <p class="founder-name">Joan Sebastián Ruiz Angulo</p>
                             </div>
                             <blockquote class="founder-quote">
-                                <p>"La creatividad es nuestra luz guía; la adaptabilidad, la fuerza que nos permite moldear el futuro. Transformamos grandes visiones en realidades sólidas y sostenibles."</p>
+                                <p data-i18n="about.quote">"La creatividad es nuestra luz guía; la adaptabilidad, la fuerza que nos permite moldear el futuro. Transformamos grandes visiones en realidades sólidas y sostenibles."</p>
                             </blockquote>
                             <div class="founder-social">
                                     <a href="https://www.linkedin.com/in/joan-sebasti%C3%A1n-ruiz-angulo-33216043b/" class="founder-social-icon" aria-label="LinkedIn" target="_blank" rel="noopener">
@@ -619,20 +617,20 @@
         <!-- 5. MÁS INFORMACIÓN -->
         <section class="info-section">
             <div class="container">
-                <h2>MÁS INFORMACIÓN</h2>
+                <h2 data-i18n="about.infoTitle">MÁS INFORMACIÓN</h2>
                 <div class="info-grid">
                     <a href="manualdeimagen.pdf" target="_blank" rel="noopener noreferrer" class="info-card">
                         <div class="info-placeholder">
-                            <img src="portadamanual.png" alt="Manual de Identidad Visual">
+                            <img src="portadamanual.png" alt="Manual de Identidad Visual" data-i18n-alt="about.manualAlt">
                         </div>
-                        <h3>MANUAL DE<br>IDENTIDAD VISUAL</h3>
+                        <h3 data-i18n="about.manualH3">MANUAL DE<br>IDENTIDAD VISUAL</h3>
                     </a>
 
                     <a href="portafolio.pdf" target="_blank" rel="noopener noreferrer" class="info-card">
                         <div class="info-placeholder">
                             <img src="portadaportafolio.png">
                         </div>
-                        <h3>PORTAFOLIO DE<br>SERVICIOS</h3>
+                        <h3 data-i18n="about.portfolioH3">PORTAFOLIO DE<br>SERVICIOS</h3>
                     </a>
                 </div>
             </div>
@@ -643,11 +641,11 @@
                 <div class="clients-grid">
                     <!-- Cliente 1 -->
                     <div class="client-item">
-                        <img src="cliente1.png" alt="Logo Cliente 1">
+                        <img src="cliente1.png" alt="Logo Cliente 1" data-i18n-alt="about.client1">
                     </div>
                     <!-- Cliente 2 -->
                     <div class="client-item">
-                        <img src="cliente2.jpg" alt="Logo Cliente 2">
+                        <img src="cliente2.jpg" alt="Logo Cliente 2" data-i18n-alt="about.client2">
                     </div>
                 </div>
             </div>
@@ -655,7 +653,7 @@
 
         <!-- 6. LLAMADA A LOS SERVICIOS -->
         <section class="cta-idea-section">
-            <a href="Servicios.html" class="cta-idea-link">¿QUÉ TE OFRECEMOS?</a>
+            <a href="Servicios.html" class="cta-idea-link" data-i18n="about.cta">¿QUÉ TE OFRECEMOS?</a>
         </section>
     </main>
 
@@ -673,17 +671,17 @@
                 </div>
             </div>
             <div class="footer-column">
-                <h4>CONTACTO</h4>
+                <h4 data-i18n="footer.contact">CONTACTO</h4>
                 <ul>
                     <li><i class="fa-solid fa-phone"></i> (+57) 323 6060185</li>
                     <li><i class="fa-solid fa-envelope"></i> prismaheliossas@gmail.com</li>
                 </ul>
             </div>
             <div class="footer-column">
-                <h4>Acerca de</h4>
+                <h4 data-i18n="footer.about">Acerca de</h4>
                 <ul>
-                    <li><a href="#">Aviso de privacidad</a></li>
-                    <li><a href="#">Términos de servicio</a></li>
+                    <li><a href="#" data-i18n="footer.privacy">Aviso de privacidad</a></li>
+                    <li><a href="#" data-i18n="footer.terms">Términos de servicio</a></li>
                 </ul>
             </div>
         </div>
@@ -692,21 +690,21 @@
     <!-- MODAL LOGIN -->
     <div class="modal-overlay" id="login-modal">
         <div class="modal-card">
-            <h3>Iniciar Sesión</h3>
+            <h3 data-i18n="auth.title">Iniciar Sesión</h3>
             <form id="login-form">
-                <input type="email" id="login-email" placeholder="Correo electrónico" required>
-                <input type="password" id="login-pass" placeholder="Contraseña" required>
+                <input type="email" id="login-email" placeholder="Correo electrónico" data-i18n-placeholder="auth.email" required>
+                <input type="password" id="login-pass" placeholder="Contraseña" data-i18n-placeholder="auth.password" required>
                 <div class="modal-actions">
-                    <button type="submit" class="btn-modal-submit">Ingresar</button>
-                    <button type="button" class="error-btn" id="close-modal-btn">Cancelar</button>
+                    <button type="submit" class="btn-modal-submit" data-i18n="auth.submit">Ingresar</button>
+                    <button type="button" class="error-btn" id="close-modal-btn" data-i18n="auth.cancel">Cancelar</button>
                 </div>
             </form>
             <div class="login-error-box" id="login-error">
-                <p><strong>Usuario no registrado</strong></p>
+                <p><strong data-i18n="auth.notFound">Usuario no registrado</strong></p>
                 <div class="error-options">
-                    <button type="button" class="error-btn" id="btn-retry">Intentar de nuevo</button>
-                    <button type="button" class="error-btn" id="btn-forgot">¿Olvidó su contraseña?</button>
-                    <button type="button" class="error-btn" id="btn-back">Regresar</button>
+                    <button type="button" class="error-btn" id="btn-retry" data-i18n="auth.retry">Intentar de nuevo</button>
+                    <button type="button" class="error-btn" id="btn-forgot" data-i18n="auth.forgot">¿Olvidó su contraseña?</button>
+                    <button type="button" class="error-btn" id="btn-back" data-i18n="auth.back">Regresar</button>
                 </div>
             </div>
         </div>
@@ -802,8 +800,8 @@
                 authContainer.innerHTML = `
                     <div class="user-profile-badge">
                         <i class="fa-solid fa-circle-user"></i>
-                        <span>Bienvenido</span>
-                        <button class="btn-logout" id="logout-btn" title="Cerrar sesión">
+                        <span data-i18n="auth.welcome">Bienvenido</span>
+                        <button class="btn-logout" id="logout-btn" title="Cerrar sesión" data-i18n-title="auth.logout">
                             <i class="fa-solid fa-right-from-bracket"></i>
                         </button>
                     </div>
@@ -815,7 +813,7 @@
             } else {
                 authContainer.innerHTML = `
                     <button class="btn-login-nav" id="open-login-btn">
-                        <i class="fa-solid fa-user"></i> <span class="login-text">Iniciar Sesión</span>
+                        <i class="fa-solid fa-user"></i> <span class="login-text" data-i18n="auth.login">Iniciar Sesión</span>
                     </button>
                 `;
                 document.getElementById('open-login-btn').addEventListener('click', () => {
@@ -908,11 +906,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-
-
     </script>
-
-</script>
     <!-- ================= SELECTOR DE IDIOMA (ES / EN) =================
          - El español es el contenido original del HTML: NO se reescribe.
          - Al cambiar a inglés se guarda el texto original de cada elemento y
@@ -1026,6 +1020,5 @@ document.addEventListener('DOMContentLoaded', () => {
         aplicar();
     })();
     </script>
-
 </body>
 </html>
