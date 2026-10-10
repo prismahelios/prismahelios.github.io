@@ -375,7 +375,245 @@
     .service-card-content p { opacity: 1; transform: none; }
 }
 
-/* === CTA FINAL === */
+
+        /* === INDICADOR HOVER DE SERVICIOS === */
+        .service-hover-indicator {
+            position: fixed;
+            top: 141px;
+            left: 50%;
+            transform: translate(-50%, -8px);
+            z-index: 1500;
+            padding: 9px 20px;
+            border: 1px solid rgba(0, 210, 255, 0.35);
+            border-radius: 999px;
+            background: rgba(24, 44, 97, 0.92);
+            backdrop-filter: blur(14px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.28), 0 0 20px rgba(0,210,255,0.12);
+            color: var(--color-text-main);
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+        }
+
+        .service-hover-indicator.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, 0);
+        }
+
+        /* === MODALES DE SERVICIOS === */
+        .service-modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background: rgba(7, 9, 29, 0.86);
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .service-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .service-modal {
+            position: relative;
+            width: min(920px, 100%);
+            max-height: min(820px, 90vh);
+            overflow-y: auto;
+            padding: 2rem;
+            border: 1px solid rgba(0, 210, 255, 0.25);
+            border-radius: 26px;
+            background:
+                radial-gradient(circle at 100% 0%, rgba(74, 20, 140, 0.28), transparent 35%),
+                linear-gradient(145deg, rgba(24, 44, 97, 0.98), rgba(25, 30, 90, 0.98));
+            box-shadow: 0 30px 80px rgba(0,0,0,0.55), 0 0 40px rgba(0,210,255,0.10);
+            transform: translateY(24px) scale(0.97);
+            transition: transform 0.35s cubic-bezier(0.23,1,0.32,1);
+        }
+
+        .service-modal-overlay.active .service-modal {
+            transform: translateY(0) scale(1);
+        }
+
+        .service-modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 42px;
+            height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255,255,255,0.16);
+            border-radius: 50%;
+            background: rgba(255,255,255,0.07);
+            color: var(--color-text-main);
+            cursor: pointer;
+            font-size: 1.05rem;
+            transition: var(--transition-smooth);
+        }
+
+        .service-modal-close:hover,
+        .service-modal-close:focus-visible {
+            background: var(--color-accent);
+            color: var(--color-bg-dark);
+            transform: rotate(90deg);
+            outline: none;
+        }
+
+        .service-modal-header {
+            padding-right: 3.5rem;
+            padding-bottom: 1.35rem;
+            border-bottom: 1px solid rgba(255,255,255,0.10);
+        }
+
+        .service-modal-kicker {
+            display: block;
+            margin-bottom: 0.35rem;
+            color: var(--color-accent);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+
+        .service-modal-title-row {
+            display: flex;
+            align-items: center;
+            gap: 0.9rem;
+        }
+
+        .service-modal-title-row h2 {
+            margin: 0;
+            font-size: clamp(1.8rem, 4vw, 2.7rem);
+        }
+
+        .service-modal-icon {
+            width: 48px;
+            height: 48px;
+            flex: 0 0 48px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 14px;
+            background: linear-gradient(135deg, rgba(0,210,255,0.18), rgba(112,48,160,0.28));
+            border: 1px solid rgba(0,210,255,0.25);
+            color: var(--color-accent);
+            font-size: 1.2rem;
+        }
+
+        .service-modal-description {
+            margin: 1.35rem 0 1.8rem;
+            max-width: 760px;
+            font-size: 0.98rem;
+        }
+
+        .service-gallery-title {
+            margin-bottom: 0.8rem;
+            font-size: 1.15rem;
+        }
+
+        .service-gallery {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1rem;
+        }
+
+        .service-gallery-item {
+            min-height: 190px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.10);
+            background: rgba(255,255,255,0.04);
+        }
+
+        .service-gallery-item img,
+        .service-gallery-item video {
+            width: 100%;
+            height: 100%;
+            min-height: 190px;
+            display: block;
+            object-fit: cover;
+        }
+
+        .service-gallery-placeholder {
+            min-height: 190px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.55rem;
+            padding: 1rem;
+            text-align: center;
+            color: rgba(255,255,255,0.55);
+            background:
+                linear-gradient(135deg, rgba(0,210,255,0.07), rgba(74,20,140,0.16)),
+                repeating-linear-gradient(45deg, rgba(255,255,255,0.025) 0 10px, transparent 10px 20px);
+        }
+
+        .service-gallery-placeholder i {
+            color: var(--color-accent);
+            font-size: 1.5rem;
+        }
+
+        .service-card {
+            cursor: pointer;
+        }
+
+        .service-card:focus-visible {
+            outline: 2px solid var(--color-accent);
+            outline-offset: 4px;
+        }
+
+        body.service-modal-open {
+            overflow: hidden;
+        }
+
+        @media (max-width: 768px) {
+            .service-hover-indicator {
+                top: 118px;
+                padding: 7px 14px;
+                font-size: 0.72rem;
+            }
+
+            .service-modal-overlay {
+                padding: 1rem;
+            }
+
+            .service-modal {
+                padding: 1.35rem;
+                border-radius: 20px;
+                max-height: 92vh;
+            }
+
+            .service-gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .service-gallery-item,
+            .service-gallery-item img,
+            .service-gallery-item video,
+            .service-gallery-placeholder {
+                min-height: 170px;
+            }
+        }
+
+        /* === CTA FINAL === */
 .cta-section {
     position: relative;
     overflow: hidden;
@@ -567,6 +805,37 @@
         </div>
     </header>
 
+    <!-- INDICADOR HOVER DE TARJETAS DE SERVICIO -->
+    <div id="service-hover-indicator" class="service-hover-indicator" role="status" aria-live="polite">
+        <i class="fa-regular fa-hand-pointer"></i>
+        <span data-i18n="svc.viewService">Ver servicio</span>
+    </div>
+
+    <!-- MODAL DINÁMICO DE SERVICIOS -->
+    <div class="service-modal-overlay" id="service-modal" aria-hidden="true">
+        <div class="service-modal" role="dialog" aria-modal="true" aria-labelledby="service-modal-title">
+            <button type="button" class="service-modal-close" id="service-modal-close"
+                    aria-label="Cerrar ventana" data-i18n-aria-label="svc.closeModal">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="service-modal-header">
+                <span class="service-modal-kicker" data-i18n="svc.modalKicker">Servicio Prisma Helios</span>
+                <div class="service-modal-title-row">
+                    <h2 id="service-modal-title">Servicio</h2>
+                    <span class="service-modal-icon" id="service-modal-icon" aria-hidden="true">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </span>
+                </div>
+            </div>
+
+            <p class="service-modal-description" id="service-modal-description"></p>
+
+            <h3 class="service-gallery-title" data-i18n="svc.galleryTitle">Galería / Muestras</h3>
+            <div class="service-gallery" id="service-gallery"></div>
+        </div>
+    </div>
+
     <!-- ================= CONTENIDO PRINCIPAL ================= -->
 <main>
     <div class="container">        
@@ -577,7 +846,7 @@
             <div class="divider"></div>
         </section>
         <div class="services-grid">
-            <div class="service-card card-lg">
+            <div class="service-card card-lg" tabindex="0" role="button" aria-controls="service-modal" aria-label="Ver servicio de Producción audiovisual" data-i18n-aria-label="svc.cardAudio" data-service="audio">
                 <img src="producción audiovisual.jpg" alt="Set de producción audiovisual profesional" data-i18n-alt="svc.audioAlt">
                 <div class="service-card-content">
                     <h2 data-i18n="svc.audioH2">Producción audiovisual</h2>
@@ -585,15 +854,15 @@
                 </div>
             </div>
 
-            <div class="service-card card-sm">
-                <img src="pexels-edgarlara-14446843.jpg" alt="">
+            <div class="service-card card-sm" tabindex="0" role="button" aria-controls="service-modal" aria-label="Ver servicio de Contenido fotográfico" data-i18n-aria-label="svc.cardPhoto" data-service="photo">
+                <img src="fotografia.avif" alt="">
                 <div class="service-card-content">
                     <h2 data-i18n="svc.photoH2">Fotografía profesional</h2>
                     <p data-i18n="svc.photoP">Capturamos cada momento con precisión, brindando a tu marca imágenes de calidad excepcional.</p>
                 </div>
             </div> 
 
-            <div class="service-card card-sm">
+            <div class="service-card card-sm" tabindex="0" role="button" aria-controls="service-modal" aria-label="Ver servicio de Diseño gráfico" data-i18n-aria-label="svc.cardDesign" data-service="design">
                 <img src="diseñografico.avif" alt="Equipo de diseñadores gráficos trabajando" data-i18n-alt="svc.designAlt">
                 <div class="service-card-content">
                     <h2 data-i18n="svc.designH2">Diseño gráfico</h2>
@@ -601,7 +870,7 @@
                 </div>
             </div>
 
-            <div class="service-card card-lg">
+            <div class="service-card card-lg" tabindex="0" role="button" aria-controls="service-modal" aria-label="Ver servicio de Branding" data-i18n-aria-label="svc.cardBranding" data-service="branding">
                 <img src="branding.jpg" alt="Proceso creativo y desarrollo de branding" data-i18n-alt="svc.brandAlt">
                 <div class="service-card-content">
                     <h2>Branding</h2>
@@ -702,6 +971,64 @@
             card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
         });
     });
+
+// === INTERACCIÓN Y MODALES DE SERVICIOS ===
+const serviceHoverIndicator = document.getElementById('service-hover-indicator');
+const serviceModal = document.getElementById('service-modal');
+const serviceModalClose = document.getElementById('service-modal-close');
+const serviceModalTitle = document.getElementById('service-modal-title');
+const serviceModalIcon = document.getElementById('service-modal-icon');
+const serviceModalDescription = document.getElementById('service-modal-description');
+const serviceGallery = document.getElementById('service-gallery');
+const serviceCards = document.querySelectorAll('.service-card');
+
+const serviceData = {
+  audio: { title:'Producción audiovisual', description:'Creamos piezas audiovisuales para comunicar la esencia de tu marca de forma dinámica, profesional y atractiva.', icon:'fa-solid fa-video', image:'../Editable5/Imagenes/servicios/producción audiovisual.jpg', alt:'Muestra de producción audiovisual' },
+  photo: { title:'Contenido fotográfico', description:'Producimos fotografías profesionales para mostrar tus productos, servicios y experiencias con una presentación visual de alta calidad.', icon:'fa-solid fa-camera', image:'../Editable5/Imagenes/servicios/Fotografia.avif', alt:'Muestra de contenido fotográfico' },
+  design: { title:'Diseño gráfico', description:'Diseñamos piezas visuales coherentes y funcionales que ayudan a comunicar tu mensaje y fortalecer la presencia de tu marca.', icon:'fa-solid fa-pen-nib', image:'../Editable5/Imagenes/servicios/diseño grafico.avif', alt:'Muestra de diseño gráfico' },
+  branding: { title:'Branding', description:'Construimos identidades visuales con personalidad, propósito y coherencia para que tu marca sea reconocible y memorable.', icon:'fa-solid fa-fingerprint', image:'../Editable5/Imagenes/servicios/branding.jpg', alt:'Muestra de branding' }
+};
+
+let lastFocusedServiceCard = null;
+
+function openServiceModal(key) {
+  const service = serviceData[key];
+  if (!service) return;
+  lastFocusedServiceCard = document.querySelector(`.service-card[data-service="${key}"]`);
+  serviceModalTitle.textContent = service.title;
+  serviceModalDescription.textContent = service.description;
+  serviceModalIcon.innerHTML = `<i class="${service.icon}"></i>`;
+  serviceGallery.innerHTML = `
+    <div class="service-gallery-item"><img src="${service.image}" alt="${service.alt}"></div>
+    <div class="service-gallery-item service-gallery-placeholder"><i class="fa-regular fa-image"></i><span>Añade aquí otra muestra</span></div>
+    <div class="service-gallery-item service-gallery-placeholder"><i class="fa-solid fa-photo-film"></i><span>Imagen o video de portafolio</span></div>`;
+  serviceModal.classList.add('active');
+  serviceModal.setAttribute('aria-hidden','false');
+  document.body.classList.add('service-modal-open');
+  serviceModalClose.focus();
+}
+
+function closeServiceModal() {
+  serviceModal.classList.remove('active');
+  serviceModal.setAttribute('aria-hidden','true');
+  document.body.classList.remove('service-modal-open');
+  if (lastFocusedServiceCard) { lastFocusedServiceCard.focus(); lastFocusedServiceCard = null; }
+}
+
+serviceCards.forEach(card => {
+  card.addEventListener('mouseenter', () => serviceHoverIndicator.classList.add('active'));
+  card.addEventListener('mouseleave', () => serviceHoverIndicator.classList.remove('active'));
+  card.addEventListener('focus', () => serviceHoverIndicator.classList.add('active'));
+  card.addEventListener('blur', () => serviceHoverIndicator.classList.remove('active'));
+  card.addEventListener('click', () => openServiceModal(card.dataset.service));
+  card.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openServiceModal(card.dataset.service); }
+  });
+});
+
+serviceModalClose.addEventListener('click', closeServiceModal);
+serviceModal.addEventListener('click', e => { if (e.target === serviceModal) closeServiceModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && serviceModal.classList.contains('active')) closeServiceModal(); });
 
 // === AUTENTICACIÓN CON PERSISTENCIA (localStorage) ===
 const usuariosRegistrados = [
