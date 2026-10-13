@@ -485,7 +485,13 @@
                 <!-- Columna Derecha: Formulario -->
                 <div class="contact-form-card">
                     <h2 data-i18n="contact.h2">ESCRÍBENOS</h2>
-                    <form action="https://formsubmit.co/prismaheliossas@gmail.com" method="POST" id="contactFormMain">
+                    <form
+                    id="contactFormMain"
+                    action="https://formsubmit.co/prismaheliossas@gmail.com"
+                    method="POST"
+                >
+                    <input type="hidden" name="_subject" value="Nuevo mensaje desde Prisma Helios">
+                    <input type="hidden" name="_template" value="table">
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="nombre" data-i18n="contact.lblName">MI NOMBRE ES *</label>
@@ -600,10 +606,13 @@
                 }
             });
 
-            // 2. Validación y Simulación de Envío del Formulario
-            const form = document.getElementById('contactFormMain');
-            const feedbackMsg = document.getElementById('formFeedback');
-            const submitBtn = form.querySelector('.btn-submit');
+            /* 2. Validación del teléfono */
+            const telefono = document.getElementById('telefono');
+
+            telefono.addEventListener('input', (e) => {
+                e.target.value = e.target.value.replace(/\D/g, '');
+            });
+
 
             // Filtrar el teléfono para que solo acepte números mientras se escribe
             document.getElementById('telefono').addEventListener('input', (e) => {
