@@ -529,6 +529,293 @@
             .lang-switch { right: 1rem; }
             .btn-lang { padding: 6px 12px; }
         }
+
+
+        /* =========================================================
+           AJUSTES RESPONSIVOS PRISMA HELIOS — TABLETS Y MÓVILES
+           Solo actúan por debajo de 992px; escritorio sin cambios.
+        ========================================================= */
+        @media (max-width: 992px) {
+            .container { width: 100%; padding-left: 1.5rem; padding-right: 1.5rem; }
+            .hero-grid, .about-grid { gap: 2rem; }
+            .hero-grid > *, .about-grid > *, .contact-card { min-width: 0; }
+            .hero-img, .about-img-container img { width: 100%; height: auto; object-fit: cover; }
+            .services-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .faq-container { width: 100%; }
+        }
+
+        @media (max-width: 768px) {
+            /* Cabecera alineada como en Servicios y Contacto */
+            header { padding: .65rem 0; }
+            .nav-container { min-height: 56px; width: 100%; padding-left: 1rem; padding-right: 1rem; }
+            .menu-toggle {
+                display: block;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 12;
+                padding: .25rem;
+                line-height: 1;
+                font-size: 1.8rem;
+            }
+            .nav-links {
+                position: absolute;
+                top: calc(100% + .65rem);
+                left: 0;
+                right: 0;
+                transform: none;
+                width: 100%;
+                max-height: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0;
+                overflow: hidden;
+                background: var(--color-primary);
+                border-radius: 0 0 12px 12px;
+                box-shadow: 0 12px 25px rgba(0,0,0,.25);
+                z-index: 11;
+                transition: max-height .3s ease-in-out;
+            }
+            .nav-links.active { max-height: 360px; padding-bottom: .5rem; }
+            .nav-group { display: flex; flex-direction: column; align-items: stretch; width: 100%; gap: 0; text-align: center; }
+            .nav-group a { display: block; width: 100%; padding: .85rem 1rem; border-bottom: 1px solid rgba(255,255,255,.1); }
+            .nav-links .logo { display: none; }
+            .header-auth { top: 50%; right: 6.6rem; transform: translateY(-50%); z-index: 13; }
+            .btn-login-nav { min-width: 48px; min-height: 42px; justify-content: center; padding: 6px 12px; }
+            .btn-login-nav span.login-text { display: none; }
+            .user-profile-badge { padding: 6px 10px; }
+            .lang-switch { top: 50%; right: .8rem; transform: translateY(-50%); z-index: 13; }
+            .btn-lang { min-height: 42px; padding: 6px 12px; gap: 7px; }
+
+            /* Contenido principal: sin desbordamientos ni espacios excesivos */
+            main { margin-top: 112px; padding-bottom: 2rem; }
+            section { padding: 3.5rem 0; }
+            #inicio { margin-bottom: 2rem; }
+            .hero-grid { grid-template-columns: minmax(0, 1fr); gap: 1.75rem; text-align: center; }
+            .hero-title { font-size: clamp(2.2rem, 8vw, 3.4rem); line-height: 1.12; overflow-wrap: anywhere; }
+            .hero-grid > div, .about-grid > div { min-width: 0; }
+            .hero-img { max-width: 100%; }
+            .about-grid { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; text-align: center; }
+            .about-text h2, .services-section h2, .faq-section h2 { font-size: clamp(1.7rem, 6vw, 2.3rem); }
+            .about-img-container { order: -1; }
+            #nosotros-teaser { margin-bottom: 2rem; }
+            #servicio-teaser { padding-top: 2rem; }
+            .services-grid { grid-template-columns: minmax(0, 1fr); gap: 1.25rem; }
+            .summary, .faq-container, .faq-content { min-width: 0; }
+            summary { gap: .75rem; padding: 1rem .75rem; font-size: 1rem; text-align: left; }
+            .faq-content { overflow-wrap: anywhere; }
+            .contact-section { padding: 2.5rem 0 3rem; }
+            .contact-card { padding: 1.5rem; }
+            .contact-card h2 { font-size: 1.6rem; }
+
+            /* Pie de página centrado, como en Servicios/Contacto */
+            footer { padding: 2.5rem 0; }
+            .footer-grid { grid-template-columns: minmax(0, 1fr); gap: 2rem; text-align: center; }
+            .footer-column { width: 100%; min-width: 0; display: flex; flex-direction: column; align-items: center; }
+            .footer-logo { display: flex; justify-content: center; align-items: center; width: 100%; margin-bottom: .75rem; }
+            .footer-logo img { width: auto; max-width: min(180px, 55vw); height: auto !important; max-height: 90px; object-fit: contain; margin: 0 auto; }
+            .social-links { justify-content: center; align-items: center; flex-wrap: wrap; }
+            .footer-column ul { width: 100%; list-style: none; align-items: center; padding: 0; }
+            .footer-column ul li { display: flex; justify-content: center; align-items: flex-start; gap: .55rem; width: 100%; text-align: center; overflow-wrap: anywhere; }
+            .footer-column ul li a { overflow-wrap: anywhere; }
+        }
+
+        @media (max-width: 480px) {
+            .container { padding-left: 1rem; padding-right: 1rem; }
+            .nav-container { padding-left: .75rem; padding-right: .75rem; }
+            .header-auth { right: 6rem; }
+            .lang-switch { right: .65rem; }
+            .btn-lang { padding: 6px 10px; font-size: .8rem; }
+            main { margin-top: 104px; }
+            section { padding: 2.75rem 0; }
+            .hero-title { font-size: clamp(2rem, 9vw, 2.8rem); }
+            .contact-card { padding: 1.2rem; }
+            .footer-grid { gap: 1.75rem; }
+            .footer-column ul li { font-size: .9rem; }
+        }
+
+    
+
+        /* =========================================================
+           HEADER RESPONSIVO — MISMO DISEÑO QUE SERVICIOS
+           Solo modifica tabletas y móviles; escritorio permanece intacto.
+        ========================================================= */
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem 0;
+            }
+
+            .nav-container {
+                position: relative;
+                width: 100%;
+                min-height: 70px;
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .menu-toggle {
+                display: block;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 14;
+                padding: .25rem;
+                line-height: 1;
+                font-size: 1.8rem;
+            }
+
+            /* Menú desplegable en tres columnas: enlaces | logo | enlaces */
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                right: auto;
+                transform: translateX(-50%);
+                width: calc(100% - 2rem);
+                max-width: 520px;
+                display: grid;
+                grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+                align-items: center;
+                gap: .5rem;
+                max-height: 0;
+                padding: 0 .5rem;
+                overflow: hidden;
+                background: var(--color-primary);
+                border-radius: 0 0 12px 12px;
+                box-shadow: 0 12px 25px rgba(0,0,0,.25);
+                z-index: 13;
+                transition: max-height .3s ease-in-out, padding .3s ease-in-out;
+            }
+
+            .nav-links.active {
+                max-height: 190px;
+                padding: .45rem .5rem .6rem;
+            }
+
+            .nav-group {
+                display: flex;
+                flex-direction: column;
+                align-items: stretch;
+                justify-content: center;
+                width: 100%;
+                min-width: 0;
+                gap: 0;
+                text-align: center;
+            }
+
+            .nav-group a {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 60px;
+                width: 100%;
+                padding: .65rem .25rem;
+                border-bottom: 1px solid rgba(255,255,255,.1);
+                font-size: clamp(.82rem, 2.8vw, 1.05rem);
+                line-height: 1.25;
+                overflow-wrap: anywhere;
+            }
+
+            .nav-links .logo {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex: 0 0 auto;
+                width: auto;
+                text-align: center;
+            }
+
+            .nav-links .logo img {
+                width: auto !important;
+                height: 70px !important;
+                max-width: 64px;
+                object-fit: contain;
+            }
+
+            .header-auth {
+                top: 50%;
+                right: 6.5rem;
+                transform: translateY(-50%);
+                z-index: 15;
+            }
+
+            .btn-login-nav {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-width: 62px;
+                min-height: 42px;
+                padding: 6px 12px;
+            }
+
+            .btn-login-nav span.login-text {
+                display: none;
+            }
+
+            .user-profile-badge {
+                padding: 6px 9px;
+                max-width: 120px;
+                overflow: hidden;
+            }
+
+            .lang-switch {
+                top: 50%;
+                right: .8rem;
+                transform: translateY(-50%);
+                z-index: 15;
+            }
+
+            .btn-lang {
+                min-height: 42px;
+                padding: 6px 12px;
+                gap: 7px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-container {
+                padding-left: .75rem;
+                padding-right: .75rem;
+            }
+
+            .header-auth {
+                right: 6rem;
+            }
+
+            .lang-switch {
+                right: .65rem;
+            }
+
+            .btn-lang {
+                padding: 6px 10px;
+                font-size: .8rem;
+            }
+
+            .nav-links {
+                width: calc(100% - 1rem);
+                gap: .2rem;
+                padding-left: .25rem;
+                padding-right: .25rem;
+            }
+
+            .nav-links.active {
+                padding: .35rem .25rem .5rem;
+            }
+
+            .nav-links .logo img {
+                height: 58px !important;
+                max-width: 52px;
+            }
+
+            .nav-group a {
+                min-height: 56px;
+                font-size: clamp(.75rem, 3.2vw, .9rem);
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -563,7 +850,7 @@
                 </a>
                 <div class="nav-group">
                     <a data-i18n="nav.services" href="Servicios.html">Servicios</a>
-                    <a data-i18n="nav.contact" href="Contacto.html">Contactanos</a>
+                    <a data-i18n="nav.contact" href="Contacto.html">Contáctanos</a>
                 </div>
             </nav>
         </div>
@@ -598,7 +885,7 @@
                     <img src="imagenes/inicio/inicioquienessomo" alt="Equipo de trabajo en estudio multimedia" data-i18n-alt="home.aboutAlt" class="hero-img">
                 </div>
                 <div class="about-text">
-                    <h1 data-i18n="home.aboutTitle">¿Quienes somos?</h1>
+                    <h1 data-i18n="home.aboutTitle">¿Quiénes somos?</h1>
                     <p data-i18n="home.aboutText">Somos una agencia de contenido multimedial, con el objetivo de reforzar la identidad visual de las marcas emergentes. Nos basamos en la creatividad y la adaptabilidad de la marca en el entorno digital.</p>
                     <a href="Nosotros.html" class="btn" data-i18n="home.more">Ver más</a>
                 </div>
@@ -607,7 +894,7 @@
 
         <!-- ================= SERVICIOS ================= -->
         <section id="servicios-teaser" class="container services-section">
-            <h2 data-i18n="home.offerTitle">¿Que ofrecemos?</h2>
+            <h2 data-i18n="home.offerTitle">¿Qué ofrecemos?</h2>
             <div class="services-grid">
                 <div class="service-item">
                     <i class="fa-solid fa-video"></i>
@@ -691,8 +978,8 @@
             <div class="footer-column">
                 <h4 data-i18n="footer.about">Acerca de</h4>
                 <ul>
-                    <li><a href="#" data-i18n="footer.privacy">Aviso de privacidad</a></li>
-                    <li><a href="#" data-i18n="footer.terms">Términos de servicio</a></li>
+                    <li><a href="Privacidad.html" data-i18n="footer.privacy">Aviso de privacidad</a></li>
+                    <li><a href="Terminos.html" data-i18n="footer.terms">Términos de servicio</a></li>
                 </ul>
             </div>
         </div>
@@ -906,7 +1193,7 @@ document.addEventListener('DOMContentLoaded', () => {
         "auth.back": "Go back",
         "doc.title": "Prisma Helios | Home",
         "home.heroTitle": "Ideas that<br>transform<br>into light",
-        "home.heroText": "At Prisma Helios we create innovative solutions<br>that light the way to the future",
+        "home.heroText": "At Prisma Helios we create innovative<br>solutions that light the way to the future",
         "home.heroAlt": "Professional camera at sunset",
         "home.aboutAlt": "Team working in a multimedia studio",
         "home.aboutTitle": "Who are we?",

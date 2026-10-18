@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prisma Helios | Contactanos</title>
+    <title>Prisma Helios | Contáctanos</title>
             <!-- FAVICON -->
     <link rel="icon" type="image/png" href="logos/LOGO.png">
     
@@ -366,6 +366,7 @@
         }
 
         .form-feedback.success { display: block; background: rgba(0, 212, 255, 0.2); color: var(--color-accent); border: 1px solid var(--color-accent); }
+        .form-feedback.error { display: block; background: rgba(255, 90, 90, 0.15); color: #ff9a9a; border: 1px solid #ff6b6b; }
 
         /* Responsividad */
         @media (max-width: 992px) {
@@ -457,7 +458,7 @@
                 </a>
                 <div class="nav-group">
                     <a data-i18n="nav.services" href="Servicios.html">Servicios</a>
-                    <a data-i18n="nav.contact" href="Contacto.html" class="active" >Contactanos</a>
+                    <a data-i18n="nav.contact" href="Contacto.html" class="active" >Contáctanos</a>
                 </div>
             </nav>
         </div>
@@ -485,11 +486,7 @@
                 <!-- Columna Derecha: Formulario -->
                 <div class="contact-form-card">
                     <h2 data-i18n="contact.h2">ESCRÍBENOS</h2>
-                    <form
-                    id="contactFormMain"
-                    action="https://formsubmit.co/prismaheliossas@gmail.com"
-                    method="POST"
-                >
+                    <form action="https://formsubmit.co/prismaheliossas@gmail.com" method="POST" id="contactFormMain">
                     <input type="hidden" name="_subject" value="Nuevo mensaje desde Prisma Helios">
                     <input type="hidden" name="_template" value="table">
                         <div class="form-row">
@@ -530,8 +527,11 @@
                         <div id="formFeedback" class="form-feedback" data-i18n="contact.ok">
                             ¡Mensaje enviado con éxito! Nos comunicaremos contigo pronto.
                         </div>
-                        <input type="hidden" name="_next"  value="https://prismahelios.github.io/Contacto.html">
+                        <div id="formError" class="form-feedback" data-i18n="contact.err">
+                            No se pudo enviar el mensaje. Inténtalo de nuevo o escríbenos a prismaheliossas@gmail.com.
+                        </div>
                         <input type="hidden" name="_captcha" value="false">
+                        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
                     </form>
                 </div>
 
@@ -551,7 +551,7 @@
                 </div>
             </div>
             <div class="footer-column">
-                <h4 data-i18n="footer.contact">CONTATO</h4>
+                <h4 data-i18n="footer.contact">CONTACTO</h4>
                 <ul>
                     <li><i class="fa-solid fa-phone"></i> (+57) 312 6100760</li>
                     <li><i class="fa-solid fa-envelope"></i> prismaheliossas@gmail.com</li>
@@ -560,8 +560,8 @@
             <div class="footer-column">
                 <h4 data-i18n="footer.about">Acerca de</h4>
                 <ul>
-                    <li><a href="#" data-i18n="footer.privacy">Aviso de privacidad</a></li>
-                    <li><a href="#" data-i18n="footer.terms">Términos de servicio</a></li>
+                    <li><a href="Privacidad.html" target="_self" data-i18n="footer.privacy">Aviso de privacidad</a></li>
+                    <li><a href="Terminos.html" target="_self" data-i18n="footer.terms">Términos de servicio</a></li>
                 </ul>
             </div>
         </div>
@@ -595,67 +595,88 @@
             // 1. Menú Hamburguesa
             const menuBtn = document.getElementById('mobile-menu-btn');
             const navLinks = document.getElementById('nav-links');
-            const icon = menuBtn.querySelector('i');
+            const icon = menuBtn ? menuBtn.querySelector('i') : null;
 
-            menuBtn.addEventListener('click', () => {
-                navLinks.classList.toggle('active');
-                if(navLinks.classList.contains('active')) {
-                    icon.classList.remove('fa-bars');
-                    icon.classList.add('fa-xmark');
-                } else {
-                    icon.classList.remove('fa-xmark');
-                    icon.classList.add('fa-bars');
-                }
-            });
-
-            /* 2. Validación del teléfono */
-            const telefono = document.getElementById('telefono');
-
-            telefono.addEventListener('input', (e) => {
-                e.target.value = e.target.value.replace(/\D/g, '');
-            });
-
-
-            // Filtrar el teléfono para que solo acepte números mientras se escribe
-            document.getElementById('telefono').addEventListener('input', (e) => {
-                e.target.value = e.target.value.replace(/\D/g, '');
-            });
-
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-
-            // Si algún campo no cumple sus reglas (patrón, longitud, requerido, etc.),
-            // se detiene aquí y el navegador muestra el mensaje de error correspondiente.
-            if (!form.checkValidity()) {
-                form.reportValidity();
-                return;
+            if (menuBtn && navLinks && icon) {
+                menuBtn.addEventListener('click', () => {
+                    navLinks.classList.toggle('active');
+                    if(navLinks.classList.contains('active')) {
+                        icon.classList.remove('fa-bars');
+                        icon.classList.add('fa-xmark');
+                    } else {
+                        icon.classList.remove('fa-xmark');
+                        icon.classList.add('fa-bars');
+                    }
+                });
             }
 
-            // Cambiar estado del botón
-            const originalText = submitBtn.textContent;
-                submitBtn.textContent = (window.PrismaIdioma && PrismaIdioma.lang === 'en') ? 'SENDING...' : 'ENVIANDO...';
-                submitBtn.disabled = true;
-                submitBtn.style.opacity = '0.7';
+            // 2. Validación del teléfono (solo números)
+            const telefono = document.getElementById('telefono');
+            if (telefono) {
+                telefono.addEventListener('input', (e) => {
+                    e.target.value = e.target.value.replace(/\D/g, '');
+                });
+            }
 
-                // Simular petición asíncrona (API/Backend)
-                setTimeout(() => {
-                    // Restaurar botón
-                    submitBtn.textContent = originalText;
-                    submitBtn.disabled = false;
-                    submitBtn.style.opacity = '1';
-                    
-                    // Mostrar mensaje de éxito
-                    feedbackMsg.classList.add('success');
-                    
-                    // Limpiar formulario
-                    form.reset();
-                    
-                    // Ocultar mensaje después de 5 segundos
-                    setTimeout(() => {
-                        feedbackMsg.classList.remove('success');
-                    }, 5000);
-                }, 1500);
-            });
+            // 3. Envío del formulario (AJAX a FormSubmit: sin salir de la página ni captcha)
+            const FORM_ENDPOINT = 'https://formsubmit.co/ajax/prismaheliossas@gmail.com';
+            const form = document.getElementById('contactFormMain');
+            const submitBtn = form ? form.querySelector('.btn-submit') : null;
+            const feedbackMsg = document.getElementById('formFeedback');
+            const errorMsg = document.getElementById('formError');
+
+            if (form && submitBtn && feedbackMsg && errorMsg) {
+                let feedbackTimer;
+                const hideFeedback = () => {
+                    [feedbackMsg, errorMsg].forEach(el => {
+                        el.classList.remove('success', 'error');
+                        el.style.display = 'none';
+                    });
+                };
+                const showFeedback = (el, cls, ms) => {
+                    clearTimeout(feedbackTimer);
+                    hideFeedback();
+                    el.style.display = 'block';
+                    el.classList.add(cls);
+                    feedbackTimer = setTimeout(hideFeedback, ms);
+                };
+
+                form.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    if (!form.checkValidity()) {
+                        form.reportValidity();
+                        return;
+                    }
+
+                    const originalText = submitBtn.textContent;
+                    submitBtn.textContent = (window.PrismaIdioma && PrismaIdioma.lang === 'en') ? 'SENDING...' : 'ENVIANDO...';
+                    submitBtn.disabled = true;
+                    submitBtn.style.opacity = '0.7';
+
+                    try {
+                        const res = await fetch(FORM_ENDPOINT, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                            body: JSON.stringify(Object.fromEntries(new FormData(form)))
+                        });
+                        const data = await res.json().catch(() => ({}));
+                        if (res.ok && String(data.success) === 'true') {
+                            form.reset();
+                            showFeedback(feedbackMsg, 'success', 6000);
+                        } else {
+                            console.error('FormSubmit:', data.message || res.status);
+                            showFeedback(errorMsg, 'error', 8000);
+                        }
+                    } catch (err) {
+                        console.error('Error de red al enviar el formulario:', err);
+                        showFeedback(errorMsg, 'error', 8000);
+                    } finally {
+                        submitBtn.textContent = originalText;
+                        submitBtn.disabled = false;
+                        submitBtn.style.opacity = '1';
+                    }
+                });
+            }
         });
 
 // === AUTENTICACIÓN CON PERSISTENCIA (localStorage) ===
@@ -776,7 +797,7 @@ renderAuthUI(); // pinta el estado correcto (login o badge) apenas carga la pág
         "contact.h3": "Tell us what you want to achieve and let's make it happen together.",
         "contact.p": "Fill out the contact form below with your details and we'll call you right away to give you more information about our services.",
         "contact.h2": "WRITE TO US",
-        "contact.lblName": "MY FIRST NAME(S) IS *",
+        "contact.lblName": "MY NAME IS *",
         "contact.lblLast": "MY LAST NAME IS *",
         "contact.lblPhone": "MY PHONE NUMBER IS *",
         "contact.lblMail": "MY EMAIL IS *",
@@ -788,7 +809,8 @@ renderAuthUI(); // pinta el estado correcto (login o badge) apenas carga la pág
         "contact.titlePhone": "It must contain numbers only. Please double-check your number",
         "contact.titleMail": "Enter a valid email, e.g.: name@gmail.com",
         "contact.send": "SEND",
-        "contact.ok": "Message sent successfully! We will get back to you soon."
+        "contact.ok": "Message sent successfully! We will get back to you soon.",
+        "contact.err": "We could not send your message. Please try again or write to us at prismaheliossas@gmail.com."
         };
 
         const ATTRS = ['placeholder', 'alt', 'title', 'aria-label'];

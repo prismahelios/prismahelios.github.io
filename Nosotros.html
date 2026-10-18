@@ -475,6 +475,312 @@
             .lang-switch { right: 1rem; }
             .btn-lang { padding: 6px 12px; }
         }
+
+
+        /* =========================================================
+           AJUSTES RESPONSIVOS PRISMA HELIOS — TABLETS Y MÓVILES
+           Solo actúan por debajo de 992px; escritorio sin cambios.
+        ========================================================= */
+        @media (max-width: 992px) {
+            .container { width: 100%; padding-left: 1.5rem; padding-right: 1.5rem; }
+            .about-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .card-history { grid-row: auto; }
+            .card-history, .card-values { min-width: 0; }
+            .founder-card-wrapper { padding: 2rem; }
+            .founder-grid { grid-template-columns: minmax(0, 1fr); gap: 2rem; }
+            .founder-photo-container { max-width: 320px; margin: 0 auto; }
+            .founder-info { min-width: 0; }
+            .founder-bio { overflow-wrap: anywhere; }
+        }
+
+        @media (max-width: 768px) {
+            /* Cabecera alineada como en Servicios y Contacto */
+            header { padding: .65rem 0; }
+            .nav-container { min-height: 56px; width: 100%; padding-left: 1rem; padding-right: 1rem; position: relative; }
+            .menu-toggle {
+                display: block;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 12;
+                padding: .25rem;
+                line-height: 1;
+                font-size: 1.8rem;
+            }
+            .nav-links {
+                position: absolute;
+                top: calc(100% + .65rem);
+                left: 0;
+                right: 0;
+                transform: none;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0;
+                max-height: 0;
+                overflow: hidden;
+                background: var(--color-primary);
+                border-radius: 0 0 12px 12px;
+                box-shadow: 0 12px 25px rgba(0,0,0,.25);
+                z-index: 11;
+                transition: max-height .3s ease-in-out;
+            }
+            .nav-links.active { max-height: 360px; padding-bottom: .5rem; }
+            .nav-group { display: flex; flex-direction: column; align-items: stretch; width: 100%; gap: 0; text-align: center; }
+            .nav-group a { display: block; width: 100%; padding: .85rem 1rem; border-bottom: 1px solid rgba(255,255,255,.1); }
+            .nav-links .logo { display: none; }
+            .header-auth { top: 50%; right: 6.6rem; transform: translateY(-50%); z-index: 13; }
+            .btn-login-nav { min-width: 48px; min-height: 42px; justify-content: center; padding: 6px 12px; }
+            .btn-login-nav span.login-text { display: none; }
+            .user-profile-badge { padding: 6px 10px; }
+            .lang-switch { top: 50%; right: .8rem; transform: translateY(-50%); z-index: 13; }
+            .btn-lang { min-height: 42px; padding: 6px 12px; gap: 7px; }
+
+            /* Manifiesto audiovisual */
+            main { margin-top: 112px; padding-bottom: 2rem; }
+            .video-section { padding: 2.5rem 0 1.75rem; }
+            .video-section .container { padding-left: 1rem; padding-right: 1rem; }
+            .video-section h2 { font-size: clamp(1.35rem, 5vw, 2rem); letter-spacing: .12em; margin-bottom: 1.25rem; overflow-wrap: anywhere; }
+            .video-section .section-subtitle { font-size: .78rem; letter-spacing: .14em; }
+            .vertical-video-wrapper { width: 100%; max-width: 100%; aspect-ratio: 16 / 9; border-radius: 20px; }
+            .video-controls-overlay { padding: .75rem; }
+            .video-tag { font-size: .72rem; }
+            .video-bottom-controls { justify-content: space-between; gap: .4rem; }
+            .ctrl-btn { width: 42px; height: 42px; font-size: 1rem; flex: 0 0 auto; }
+            .ctrl-btn.btn-main-play { width: 52px; height: 52px; }
+
+            /* Historia, misión, visión y fundador */
+            .about-section, .founder-section { padding: 2rem 0; }
+            .about-grid { grid-template-columns: minmax(0, 1fr); gap: 1.25rem; }
+            .card-history { grid-row: auto; grid-column: auto; }
+            .card-values { grid-column: auto; }
+            .about-card { padding: 1.35rem; border-radius: 14px; }
+            .about-card > h3 { font-size: 1rem; letter-spacing: .12em; }
+            .card-history h2 { font-size: clamp(1.45rem, 6vw, 2rem); line-height: 1.2; overflow-wrap: anywhere; }
+            .card-history img { height: auto; max-height: 240px; margin-top: 1rem; object-fit: cover; }
+            .values-list { grid-template-columns: minmax(0, 1fr); gap: 1.25rem; }
+            .value-item span { font-size: .85rem; }
+            .founder-card-wrapper { padding: 1.25rem; }
+            .founder-grid { grid-template-columns: minmax(0, 1fr); gap: 2rem; }
+            .founder-photo-container { width: 100%; max-width: 280px; margin: 0 auto; }
+            .founder-photo-container img { width: 100%; height: auto; max-height: 360px; aspect-ratio: 3 / 4; object-fit: cover; }
+            .founder-header h2 { font-size: clamp(1.55rem, 6vw, 2rem); }
+            .founder-bio { text-align: left; font-size: .92rem; }
+            .founder-quote { padding: 1rem; }
+            .founder-social { justify-content: center; flex-wrap: wrap; }
+
+            /* Footer centrado y con textos que pueden saltar de línea */
+            footer { padding: 2.5rem 0; }
+            .footer-grid { grid-template-columns: minmax(0, 1fr); gap: 2rem; text-align: center; }
+            .footer-column { width: 100%; min-width: 0; display: flex; flex-direction: column; align-items: center; }
+            .footer-logo { display: flex; justify-content: center; align-items: center; width: 100%; margin-bottom: .75rem; }
+            .footer-logo img { width: auto; max-width: min(180px, 55vw); height: auto !important; max-height: 90px; object-fit: contain; margin: 0 auto; }
+            .social-links { justify-content: center; align-items: center; flex-wrap: wrap; }
+            .footer-column ul { width: 100%; list-style: none; align-items: center; padding: 0; }
+            .footer-column ul li { display: flex; justify-content: center; align-items: flex-start; gap: .55rem; width: 100%; text-align: center; overflow-wrap: anywhere; }
+            .footer-column ul li a { overflow-wrap: anywhere; }
+        }
+
+        @media (max-width: 480px) {
+            .container { padding-left: 1rem; padding-right: 1rem; }
+            .nav-container { padding-left: .75rem; padding-right: .75rem; }
+            .header-auth { right: 6rem; }
+            .lang-switch { right: .65rem; }
+            .btn-lang { padding: 6px 10px; font-size: .8rem; }
+            main { margin-top: 104px; }
+            .video-section { padding-top: 2rem; }
+            .video-section .container { padding-left: .75rem; padding-right: .75rem; }
+            .video-controls-overlay { padding: .6rem; }
+            .ctrl-btn { width: 38px; height: 38px; }
+            .ctrl-btn.btn-main-play { width: 48px; height: 48px; }
+            .about-card { padding: 1.1rem; }
+            .founder-card-wrapper { padding: 1rem; }
+            .footer-grid { gap: 1.75rem; }
+            .footer-column ul li { font-size: .9rem; }
+        }
+
+    
+
+        /* =========================================================
+           HEADER RESPONSIVO — MISMO DISEÑO QUE SERVICIOS
+           Solo modifica tabletas y móviles; escritorio permanece intacto.
+        ========================================================= */
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem 0;
+            }
+
+            .nav-container {
+                position: relative;
+                width: 100%;
+                min-height: 70px;
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .menu-toggle {
+                display: block;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 14;
+                padding: .25rem;
+                line-height: 1;
+                font-size: 1.8rem;
+            }
+
+            /* Menú desplegable en tres columnas: enlaces | logo | enlaces */
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                right: auto;
+                transform: translateX(-50%);
+                width: calc(100% - 2rem);
+                max-width: 520px;
+                display: grid;
+                grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+                align-items: center;
+                gap: .5rem;
+                max-height: 0;
+                padding: 0 .5rem;
+                overflow: hidden;
+                background: var(--color-primary);
+                border-radius: 0 0 12px 12px;
+                box-shadow: 0 12px 25px rgba(0,0,0,.25);
+                z-index: 13;
+                transition: max-height .3s ease-in-out, padding .3s ease-in-out;
+            }
+
+            .nav-links.active {
+                max-height: 190px;
+                padding: .45rem .5rem .6rem;
+            }
+
+            .nav-group {
+                display: flex;
+                flex-direction: column;
+                align-items: stretch;
+                justify-content: center;
+                width: 100%;
+                min-width: 0;
+                gap: 0;
+                text-align: center;
+            }
+
+            .nav-group a {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 60px;
+                width: 100%;
+                padding: .65rem .25rem;
+                border-bottom: 1px solid rgba(255,255,255,.1);
+                font-size: clamp(.82rem, 2.8vw, 1.05rem);
+                line-height: 1.25;
+                overflow-wrap: anywhere;
+            }
+
+            .nav-links .logo {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex: 0 0 auto;
+                width: auto;
+                text-align: center;
+            }
+
+            .nav-links .logo img {
+                width: auto !important;
+                height: 70px !important;
+                max-width: 64px;
+                object-fit: contain;
+            }
+
+            .header-auth {
+                top: 50%;
+                right: 6.5rem;
+                transform: translateY(-50%);
+                z-index: 15;
+            }
+
+            .btn-login-nav {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-width: 62px;
+                min-height: 42px;
+                padding: 6px 12px;
+            }
+
+            .btn-login-nav span.login-text {
+                display: none;
+            }
+
+            .user-profile-badge {
+                padding: 6px 9px;
+                max-width: 120px;
+                overflow: hidden;
+            }
+
+            .lang-switch {
+                top: 50%;
+                right: .8rem;
+                transform: translateY(-50%);
+                z-index: 15;
+            }
+
+            .btn-lang {
+                min-height: 42px;
+                padding: 6px 12px;
+                gap: 7px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-container {
+                padding-left: .75rem;
+                padding-right: .75rem;
+            }
+
+            .header-auth {
+                right: 6rem;
+            }
+
+            .lang-switch {
+                right: .65rem;
+            }
+
+            .btn-lang {
+                padding: 6px 10px;
+                font-size: .8rem;
+            }
+
+            .nav-links {
+                width: calc(100% - 1rem);
+                gap: .2rem;
+                padding-left: .25rem;
+                padding-right: .25rem;
+            }
+
+            .nav-links.active {
+                padding: .35rem .25rem .5rem;
+            }
+
+            .nav-links .logo img {
+                height: 58px !important;
+                max-width: 52px;
+            }
+
+            .nav-group a {
+                min-height: 56px;
+                font-size: clamp(.75rem, 3.2vw, .9rem);
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -506,7 +812,7 @@
                 </a>
                 <div class="nav-group">
                     <a data-i18n="nav.services" href="Servicios.html">Servicios</a>
-                    <a data-i18n="nav.contact" href="Contacto.html">Contactanos</a>
+                    <a data-i18n="nav.contact" href="Contacto.html">Contáctanos</a>
                 </div>
             </nav>
             <div class="header-auth" id="auth-container"></div>
@@ -523,7 +829,7 @@
         <!-- 1. VIDEO INSTITUCIONAL VERTICAL -->
         <section class="video-section">
             <div class="container" style="max-width: 1440px;">
-                <span class="section-subtitle" data-i18n="about.manifesto">MANIFIESTO VISUAL</span>
+                <span class="section-subtitle" data-i18n="about.manifesto">MANIFESTACIÓN VISUAL</span>
 
                 <!-- Contenedor optimizado para video vertical (9:16) -->
                 <div class="vertical-video-wrapper">
@@ -562,7 +868,7 @@
                     <article class="about-card card-history glass-interactive">
                         <h3 data-i18n="about.historyH3">Historia</h3>
                         <h2 data-i18n="about.historyH2">Un problema que buscamos solucionar</h2>
-                        <p data-i18n="about.historyP">En una Insitución Educativa, el sitio web oficial, estaba mal diseñado y desordenado. Las redes sociales no conectaban con el público.El número de matriculado bajo, y los estudiantes no tuvieron sentido de pertenencia.<br><br>Al observar que esta situación pasa en el mundo del emprendimiento, paginas mal diseñadas y negocios que no conectan con su público, queremos solucionar eso, mediante diseño y contenido multimedia.</p>
+                        <p data-i18n="about.historyP">En una Institución Educativa, el sitio web oficial, estaba mal diseñado y desordenado. Las redes sociales no conectaban con el público. El número de matriculado bajó, y los estudiantes no tuvieron sentido de pertenencia.<br><br>Al observar que esta situación pasa en el mundo del emprendimiento, páginas mal diseñadas y negocios que no conectan con su público, queremos solucionar eso, mediante diseño y contenido multimedia.</p>
                     </article>
 
                     <article class="about-card glass-interactive">
@@ -597,7 +903,7 @@
                         </div>
                         <div class="founder-info">
                             <div class="founder-header">
-                                <h2 data-i18n="about.founderTitle">Fundador Y Gerente Gereral</h2>
+                                <h2 data-i18n="about.founderTitle">Fundador Y Gerente General</h2>
                                 <p class="founder-name">Joan Sebastián Ruiz Angulo</p>
                             </div>
                             <blockquote class="founder-quote">
@@ -680,8 +986,8 @@
             <div class="footer-column">
                 <h4 data-i18n="footer.about">Acerca de</h4>
                 <ul>
-                    <li><a href="#" data-i18n="footer.privacy">Aviso de privacidad</a></li>
-                    <li><a href="#" data-i18n="footer.terms">Términos de servicio</a></li>
+                    <li><a href="Privacidad.html" data-i18n="footer.privacy">Aviso de privacidad</a></li>
+                    <li><a href="Terminos.html" data-i18n="footer.terms">Términos de servicio</a></li>
                 </ul>
             </div>
         </div>
@@ -942,24 +1248,24 @@ document.addEventListener('DOMContentLoaded', () => {
         "auth.back": "Go back",
         "doc.title": "Prisma Helios | About Us",
         "nav.logoAlt": "Prisma Helios logo",
-        "about.manifesto": "VISUAL MANIFESTO",
+        "about.manifesto": "VISUAL MANIFESTATION",
         "about.muteAria": "Mute or unmute",
         "about.playAria": "Play or pause video",
         "about.fsAria": "Fullscreen",
         "about.historyH3": "History",
         "about.historyH2": "A problem we aim to solve",
-        "about.historyP": "We are a multimedia content agency whose goal is to strengthen the visual identity of emerging brands, drawing on creativity and digital adaptability.",
+        "about.historyP": "In an Educational Institution, the official website was poorly designed and disorganized. The social media accounts did not connect with the audience. The enrollment number was low, and the students did not have a sense of belonging.<br><br>Observing that this situation also occurs in the world of entrepreneurship, with poorly designed websites and businesses that do not connect with their audience, we aim to address this through design and multimedia content.",        
         "about.missionH3": "Mission",
-        "about.missionP": "To strengthen the visual identity of emerging brands by providing a design and adaptability approach through constant research into the digital environment.",
+        "about.missionP": "To strengthen the visual identity of emerging brands<br>by providing a design and adaptability approach through constant research into the digital environment.",
         "about.visionH3": "Vision",
         "about.visionP": "By 2031, we see ourselves as the leading regional multimedia agency, recognized for transforming businesses into competitive, profitable brands.",
         "about.valuesH3": "Our values",
         "about.v1": "Respect",
         "about.v2": "Honesty",
-        "about.v3": "Guidance",
+        "about.v3": "Innovation",
         "about.founderAlt": "Joan Sebastián Ruiz Angulo, Founder and Manager of Prisma Helios",
-        "about.founderTitle": "Founder & General Manager",
-        "about.quote": "\"Creativity is our guiding light; adaptability is the strength that allows us to shape the future. We turn great visions into solid, sustainable realities.\"",
+        "about.founderTitle": "Founder y General Manager",
+        "about.quote": "\"Creativity is our guiding light; adaptability is the strength that allows us<br>to shape the future. We turn great visions into solid, sustainable realities.\"",
         "about.infoTitle": "MORE INFORMATION",
         "about.manualAlt": "Visual Identity Manual",
         "about.manualH3": "VISUAL IDENTITY<br>MANUAL",
