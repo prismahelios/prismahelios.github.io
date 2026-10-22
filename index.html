@@ -66,6 +66,7 @@
     font-display: swap;
 } 
 
+
         /* === IMPORTACIÓN DEL PASO 1 (Resumen para que funcione el archivo) === */
         :root {
             --color-bg-dark: #191e5a;
@@ -339,13 +340,19 @@
         }
         summary:hover { color: var(--color-accent); }
         summary::-webkit-details-marker { display: none; }
-        summary::after {
-            content: '\f107';
-            font-family: 'Font Awesome 6 Free'; font-weight: 900;
-            background-color: rgba(255,255,255,0.1); border-radius: 50%;
-            width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;
-            transition: transform 0.3s ease, background-color 0.3s ease;
-        }
+    summary::after {
+        content: '\f107';
+        font-family: 'Font Awesome 6 Free', 'FontAwesome';
+        font-weight: 900;
+        background-color: rgba(255,255,255,0.1); 
+        border-radius: 50%;
+        width: 30px; 
+        height: 30px; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center;
+        transition: transform 0.3s ease, background-color 0.3s ease;
+    }
         details[open] summary::after { 
             transform: rotate(180deg); 
             background-color: var(--color-accent);
@@ -541,7 +548,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #0d3589, #351F65;  /* 👈 Asigna el mismo tono al fondo del contenedor */
+    background-color: #0d3589, #351F65;  /*  Asigna el mismo tono al fondo del contenedor */
 }
 
 .transition-content video {
@@ -549,7 +556,7 @@
     height: 100%;
     object-fit: contain; /* Utiliza contain si deseas mantener la relación de aspecto sin recortes */
     object-position: center;
-    background-color: #0d3589, #351F65; /* 👈 Elimina cualquier fondo por defecto del elemento video */
+    background-color: #0d3589, #351F65; /*  Elimina cualquier fondo por defecto del elemento video */
 }
 
 
@@ -685,124 +692,7 @@
             .footer-column ul li { font-size: .9rem; }
         }
 
-:root {
-            --wa-color:        #25D366;  /* Verde oficial de WhatsApp */
-            --wa-color-hover:  #1EBE5A;  /* Verde un poco más oscuro al pasar el cursor */
-            --wa-size:         60px;     /* Diámetro del botón en escritorio */
-            --wa-offset:       24px;     /* Margen respecto al borde inferior y derecho */
-            --wa-z-index:      1500;     /* Ver nota de capas más abajo */
-        }
- 
-        /* ---------- Botón flotante ---------- */
-        .wa-float {
-            /* Posición fija en la esquina inferior derecha.
-               env(safe-area-inset-*) evita que lo tape la barra del
-               sistema en iPhone / móviles con "notch" o gestos. */
-            position: fixed;
-            right:  calc(var(--wa-offset) + env(safe-area-inset-right, 0px));
-            bottom: calc(var(--wa-offset) + env(safe-area-inset-bottom, 0px));
- 
-            /* Capas del sitio: header = 1000, modal de login = 2000,
-               modal de servicios = 3000, transición de página = 9999.
-               1500 deja el botón sobre el header y el contenido, pero
-               por debajo de los modales y de la transición entre páginas. */
-            z-index: var(--wa-z-index);
- 
-            /* Círculo con el icono centrado */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width:  var(--wa-size);
-            height: var(--wa-size);
-            border-radius: 50%;
-            background: var(--wa-color);
-            color: #fff;
-            text-decoration: none;
- 
-            /* Sombra base + transición suave para el hover */
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.30);
-            transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
-            -webkit-tap-highlight-color: transparent;
-        }
- 
-        /* Icono SVG (hereda el color blanco con currentColor) */
-        .wa-float svg {
-            width: 56%;
-            height: 56%;
-            fill: currentColor;
-            display: block;
-        }
- 
-        /* ---------- Efecto hover / foco por teclado ---------- */
-        .wa-float:hover,
-        .wa-float:focus-visible {
-            background: var(--wa-color-hover);
-            transform: scale(1.1);                          /* Ligero escalado */
-            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.40);     /* Sombra más profunda */
-        }
-        .wa-float:active { transform: scale(0.96); }        /* Feedback al pulsar */
-        .wa-float:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
- 
-        /* ---------- Anillo pulsante (llama la atención sin ser molesto) ---------- */
-        .wa-float::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            border-radius: 50%;
-            background: var(--wa-color);
-            z-index: -1;                 /* Queda detrás del círculo */
-            animation: wa-pulse 2.4s ease-out infinite;
-        }
-        @keyframes wa-pulse {
-            0%   { transform: scale(1);   opacity: 0.55; }
-            70%  { transform: scale(1.6); opacity: 0; }
-            100% { transform: scale(1.6); opacity: 0; }
-        }
- 
-        /* ---------- Etiqueta "¿Necesitas ayuda?" (solo en dispositivos con cursor) ---------- */
-        .wa-float__label {
-            position: absolute;
-            right: calc(100% + 12px);    /* A la izquierda del botón */
-            top: 50%;
-            transform: translateY(-50%) translateX(8px);
-            padding: 8px 14px;
-            border-radius: 8px;
-            background: #fff;
-            color: #1b1b1b;
-            font: 600 0.85rem/1 'Montserrat', system-ui, sans-serif;
-            white-space: nowrap;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.20);
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.25s ease, transform 0.25s ease;
-        }
-        @media (hover: hover) {
-            .wa-float:hover .wa-float__label,
-            .wa-float:focus-visible .wa-float__label {
-                opacity: 1;
-                transform: translateY(-50%) translateX(0);
-            }
-        }
- 
-        /* ---------- Responsive ---------- */
-        /* Tablets */
-        @media (max-width: 1024px) {
-            :root { --wa-size: 56px; --wa-offset: 20px; }
-        }
-        /* Móviles: más pequeño y más cerca del borde para no tapar contenido */
-        @media (max-width: 600px) {
-            :root { --wa-size: 52px; --wa-offset: 16px; }
-            .wa-float__label { display: none; }
-        }
- 
-        /* Respeta a quien tiene desactivadas las animaciones en su sistema */
-        @media (prefers-reduced-motion: reduce) {
-            .wa-float, .wa-float__label { transition: none; }
-            .wa-float::before { animation: none; display: none; }
-        }
- 
-        /* No imprimir el botón */
-        @media print { .wa-float { display: none; } }
+    
 
         /* =========================================================
            HEADER RESPONSIVO — MISMO DISEÑO QUE SERVICIOS
@@ -981,6 +871,127 @@
                 font-size: clamp(.75rem, 3.2vw, .9rem);
             }
         }
+
+        /* ---------- Variables del botón (ajusta aquí sin tocar el resto) ---------- */
+        :root {
+            --wa-color:        #25D366;  /* Verde oficial de WhatsApp */
+            --wa-color-hover:  #1EBE5A;  /* Verde un poco más oscuro al pasar el cursor */
+            --wa-size:         60px;     /* Diámetro del botón en escritorio */
+            --wa-offset:       24px;     /* Margen respecto al borde inferior y derecho */
+            --wa-z-index:      1500;     /* Ver nota de capas más abajo */
+        }
+ 
+        /* ---------- Botón flotante ---------- */
+        .wa-float {
+            /* Posición fija en la esquina inferior derecha.
+               env(safe-area-inset-*) evita que lo tape la barra del
+               sistema en iPhone / móviles con "notch" o gestos. */
+            position: fixed;
+            right:  calc(var(--wa-offset) + env(safe-area-inset-right, 0px));
+            bottom: calc(var(--wa-offset) + env(safe-area-inset-bottom, 0px));
+ 
+            /* Capas del sitio: header = 1000, modal de login = 2000,
+               modal de servicios = 3000, transición de página = 9999.
+               1500 deja el botón sobre el header y el contenido, pero
+               por debajo de los modales y de la transición entre páginas. */
+            z-index: var(--wa-z-index);
+ 
+            /* Círculo con el icono centrado */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width:  var(--wa-size);
+            height: var(--wa-size);
+            border-radius: 50%;
+            background: var(--wa-color);
+            color: #fff;
+            text-decoration: none;
+ 
+            /* Sombra base + transición suave para el hover */
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.30);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+ 
+        /* Icono SVG (hereda el color blanco con currentColor) */
+        .wa-float svg {
+            width: 56%;
+            height: 56%;
+            fill: currentColor;
+            display: block;
+        }
+ 
+        /* ---------- Efecto hover / foco por teclado ---------- */
+        .wa-float:hover,
+        .wa-float:focus-visible {
+            background: var(--wa-color-hover);
+            transform: scale(1.1);                          /* Ligero escalado */
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.40);     /* Sombra más profunda */
+        }
+        .wa-float:active { transform: scale(0.96); }        /* Feedback al pulsar */
+        .wa-float:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+ 
+        /* ---------- Anillo pulsante (llama la atención sin ser molesto) ---------- */
+        .wa-float::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: var(--wa-color);
+            z-index: -1;                 /* Queda detrás del círculo */
+            animation: wa-pulse 2.4s ease-out infinite;
+        }
+        @keyframes wa-pulse {
+            0%   { transform: scale(1);   opacity: 0.55; }
+            70%  { transform: scale(1.6); opacity: 0; }
+            100% { transform: scale(1.6); opacity: 0; }
+        }
+ 
+        /* ---------- Etiqueta "¿Necesitas ayuda?" (solo en dispositivos con cursor) ---------- */
+        .wa-float__label {
+            position: absolute;
+            right: calc(100% + 12px);    /* A la izquierda del botón */
+            top: 50%;
+            transform: translateY(-50%) translateX(8px);
+            padding: 8px 14px;
+            border-radius: 8px;
+            background: #fff;
+            color: #1b1b1b;
+            font: 600 0.85rem/1 'Montserrat', system-ui, sans-serif;
+            white-space: nowrap;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.20);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease, transform 0.25s ease;
+        }
+        @media (hover: hover) {
+            .wa-float:hover .wa-float__label,
+            .wa-float:focus-visible .wa-float__label {
+                opacity: 1;
+                transform: translateY(-50%) translateX(0);
+            }
+        }
+ 
+        /* ---------- Responsive ---------- */
+        /* Tablets */
+        @media (max-width: 1024px) {
+            :root { --wa-size: 56px; --wa-offset: 20px; }
+        }
+        /* Móviles: más pequeño y más cerca del borde para no tapar contenido */
+        @media (max-width: 600px) {
+            :root { --wa-size: 52px; --wa-offset: 16px; }
+            .wa-float__label { display: none; }
+        }
+ 
+        /* Respeta a quien tiene desactivadas las animaciones en su sistema */
+        @media (prefers-reduced-motion: reduce) {
+            .wa-float, .wa-float__label { transition: none; }
+            .wa-float::before { animation: none; display: none; }
+        }
+ 
+        /* No imprimir el botón */
+        @media print { .wa-float { display: none; } }
+
 
     </style>
 </head>
@@ -1446,7 +1457,8 @@ document.addEventListener('DOMContentLoaded', () => {
         window.PrismaIdioma = { get lang() { return lang; }, aplicar: aplicar };
         aplicar();
     })();
-            const WHATSAPP_CONFIG = {
+
+        const WHATSAPP_CONFIG = {
             // Número en formato internacional: código de país + número,
             // SIN "+", espacios, guiones ni paréntesis.
             // Ejemplo Colombia (+57 300 123 4567)  →  "573126100760"
@@ -1470,6 +1482,7 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.href = "https://wa.me/" + phone +
                        (text ? "?text=" + encodeURIComponent(text) : "");
         })();
+
     </script>
 </body>
 </html>
