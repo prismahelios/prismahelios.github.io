@@ -64,7 +64,7 @@
     font-weight: 900;
     font-style: normal;
     font-display: swap;
-}         
+}
 
         /* =========================================================
            ESTILOS GLOBALES
@@ -1835,7 +1835,8 @@
             }
         }
 
-:root {
+        /* ---------- Variables del botón (ajusta aquí sin tocar el resto) ---------- */
+        :root {
             --wa-color:        #25D366;  /* Verde oficial de WhatsApp */
             --wa-color-hover:  #1EBE5A;  /* Verde un poco más oscuro al pasar el cursor */
             --wa-size:         60px;     /* Diámetro del botón en escritorio */
@@ -1954,6 +1955,422 @@
         /* No imprimir el botón */
         @media print { .wa-float { display: none; } }
 
+
+
+        /* =========================================================
+           SECCIÓN DE COSTOS DE SERVICIOS
+           (usa las mismas variables, radios, sombras y espaciados
+           que la sección de servicios)
+        ========================================================= */
+
+        .pricing {
+            margin-top: 6rem;
+        }
+
+        .pricing-header {
+            /* Sobrescribe los estilos globales de header para que este
+               encabezado permanezca dentro de la sección de tarifas,
+               debajo de las tarjetas de Diseño gráfico y Branding. */
+            position: static;
+            top: auto;
+            left: auto;
+            width: auto;
+            z-index: auto;
+            padding: 0 1rem;
+            border: 0;
+            backdrop-filter: none;
+            background: transparent;
+            text-align: center;
+            margin: 0 auto 4.5rem;
+        }
+
+        /* El mockup muestra únicamente el título principal, centrado y en mayúsculas. */
+        .pricing-eyebrow,
+        .pricing-subtitle,
+        .pricing-header .divider {
+            display: none;
+        }
+
+        .pricing-header h2 {
+            margin: 0;
+            color: #fff;
+            font-family: 'Playfair Display', sans-serif;
+            font-size: clamp(2rem, 5.4vw, 3.35rem);
+            font-weight: 800;
+            letter-spacing: 0;
+            line-height: 1.12;
+            text-align: center;
+            text-transform: uppercase;
+            text-shadow: 0 3px 12px rgba(0, 0, 0, 0.16);
+        }
+
+
+        /* ---------- Grid de tarjetas ---------- */
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .price-card {
+            position: relative;
+            overflow: hidden;
+
+            display: flex;
+            align-items: flex-end;
+
+            width: 100%;
+            aspect-ratio: 5 / 7;          /* proporción del mockup */
+            padding: 0;
+
+            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.03);
+
+            color: var(--color-text-main);
+            font: inherit;
+            text-align: left;
+            cursor: pointer;
+
+            transition:
+                transform 0.5s cubic-bezier(0.23, 1, 0.32, 1),
+                box-shadow 0.5s cubic-bezier(0.23, 1, 0.32, 1),
+                border-color 0.5s ease;
+
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .price-card:hover,
+        .price-card:focus-visible {
+            border-color: rgba(0,210,255,0.4);
+            box-shadow:
+                0 20px 50px rgba(0,0,0,0.4),
+                0 0 30px rgba(0,210,255,0.15);
+        }
+
+        .price-card:focus-visible {
+            outline: 2px solid var(--color-accent);
+            outline-offset: 4px;
+        }
+
+        .price-card img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.7s ease;
+        }
+
+        .price-card:hover img,
+        .price-card:focus-visible img {
+            transform: scale(1.08);
+        }
+
+        .price-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to top,
+                var(--color-bg-dark) 6%,
+                rgba(25,30,90,0.55) 38%,
+                transparent 68%
+            );
+        }
+
+        .price-card-content {
+            position: relative;
+            z-index: 2;
+
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+
+            width: 100%;
+            padding: 1.5rem;
+        }
+
+        .price-card-title {
+            font-family: var(--font-headings);
+            font-size: 1.35rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .price-card-from {
+            font-size: 0.85rem;
+            font-weight: 300;
+            color: var(--color-text-muted);
+        }
+
+        .price-card-from strong {
+            font-weight: 600;
+            color: var(--color-text-main);
+        }
+
+        .price-card-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.4rem;
+
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--color-accent);
+
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .price-card:hover .price-card-more,
+        .price-card:focus-visible .price-card-more {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* En pantallas táctiles no existe hover: se muestra siempre */
+        @media (hover: none) {
+            .price-card-more {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .pricing-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .pricing {
+                margin-top: 4rem;
+            }
+
+            .pricing-header {
+                margin-bottom: 2.75rem;
+            }
+
+            .pricing-header h2 {
+                font-size: clamp(1.8rem, 7vw, 2.5rem);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .price-card {
+                aspect-ratio: 16 / 11;
+            }
+        }
+
+
+        /* ---------- Modal de costos (reutiliza .service-modal-*) ---------- */
+
+        body.price-modal-open {
+            overflow: hidden;
+        }
+
+        .price-modal {
+            width: min(640px, 100%);
+            max-height: min(820px, 90vh);
+            max-height: min(820px, 90dvh);
+            overscroll-behavior: contain;
+        }
+
+        .price-modal:focus {
+            outline: none;
+        }
+
+        .price-steps {
+            display: grid;
+            gap: 0.8rem;
+            margin: 0 0 1.8rem;
+            padding: 0;
+            list-style: none;
+            counter-reset: price-step;
+        }
+
+        .price-steps li {
+            counter-increment: price-step;
+
+            display: grid;
+            grid-template-columns: 36px 1fr;
+            gap: 0.9rem;
+            align-items: start;
+
+            padding: 0.85rem 1rem;
+
+            border: 1px solid rgba(255,255,255,0.10);
+            border-radius: 16px;
+            background: rgba(255,255,255,0.04);
+        }
+
+        .price-steps li::before {
+            content: counter(price-step);
+
+            width: 36px;
+            height: 36px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 12px;
+            border: 1px solid rgba(0,210,255,0.25);
+            background: linear-gradient(
+                135deg,
+                rgba(0,210,255,0.18),
+                rgba(112,48,160,0.28)
+            );
+
+            color: var(--color-accent);
+            font-weight: 600;
+        }
+
+        .price-steps strong {
+            display: block;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--color-text-main);
+        }
+
+        .price-steps span {
+            display: block;
+            font-size: 0.88rem;
+            font-weight: 300;
+            color: var(--color-text-muted);
+        }
+
+        .price-modal-footer {
+            display: grid;
+            gap: 1.25rem;
+
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.10);
+        }
+
+        .price-box {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .price-box-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--color-accent);
+        }
+
+        .price-box-amount {
+            font-family: var(--font-headings);
+            font-size: clamp(1.8rem, 5vw, 2.4rem);
+            line-height: 1.1;
+            color: var(--color-text-main);
+        }
+
+        .price-box-note {
+            margin: 0.25rem 0 0;
+            font-size: 0.82rem;
+        }
+
+        .price-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .price-cta,
+        .price-cta-secondary {
+            flex: 1 1 200px;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+
+            padding: 12px 24px;
+
+            border-radius: 25px;
+
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+
+            transition: var(--transition-smooth);
+        }
+
+        .price-cta {
+            background: var(--color-accent);
+            color: var(--color-bg-dark);
+            border: 1px solid var(--color-accent);
+        }
+
+        .price-cta:hover,
+        .price-cta:focus-visible {
+            color: var(--color-bg-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 22px rgba(0,210,255,0.35);
+            outline: none;
+        }
+
+        .price-cta-secondary {
+            background: transparent;
+            color: var(--color-accent);
+            border: 1px solid var(--color-accent);
+        }
+
+        .price-cta-secondary:hover,
+        .price-cta-secondary:focus-visible {
+            color: var(--color-accent);
+            background: rgba(0,210,255,0.12);
+            outline: none;
+        }
+
+        @media (max-width: 480px) {
+            .price-modal {
+                padding: 1.25rem;
+            }
+
+            .price-steps li {
+                padding: 0.75rem;
+                gap: 0.75rem;
+            }
+
+            .price-actions {
+                flex-direction: column;
+            }
+
+            .price-cta,
+            .price-cta-secondary {
+                flex: 0 0 auto;
+                width: 100%;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .price-card,
+            .price-card img,
+            .price-card-more,
+            .service-modal-overlay.price-modal-overlay,
+            .price-modal {
+                transition: none;
+            }
+        }
+
     </style>
 </head>
 
@@ -1963,6 +2380,7 @@
 <!-- =========================================================
      TRANSICIÓN ANIMADA
 ========================================================= -->
+
 <div id="page-transition" class="page-transition-overlay">
 
     <div class="transition-content">
@@ -1977,6 +2395,7 @@
     </div>
 
 </div>
+
 
 <!-- =========================================================
      HEADER
@@ -2200,6 +2619,149 @@
 
 
 <!-- =========================================================
+     MODAL DE COSTOS
+========================================================= -->
+
+<div
+    class="service-modal-overlay price-modal-overlay"
+    id="price-modal"
+    aria-hidden="true">
+
+    <div
+        class="service-modal price-modal"
+        id="price-modal-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="price-modal-title"
+        tabindex="-1">
+
+        <button
+            type="button"
+            class="service-modal-close"
+            id="price-modal-close"
+            aria-label="Cerrar ventana"
+            data-i18n-aria-label="svc.closeModal">
+
+            <i class="fa-solid fa-xmark"></i>
+
+        </button>
+
+
+        <header class="service-modal-header">
+
+            <span
+                class="service-modal-kicker"
+                data-i18n="price.modalKicker">
+
+                Costos Prisma Helios
+
+            </span>
+
+            <div class="service-modal-title-row">
+
+                <h2 id="price-modal-title">
+                    Servicio
+                </h2>
+
+                <span
+                    class="service-modal-icon"
+                    id="price-modal-icon"
+                    aria-hidden="true">
+                </span>
+
+            </div>
+
+        </header>
+
+
+        <p
+            class="service-modal-description"
+            id="price-modal-description">
+        </p>
+
+
+        <h3
+            class="service-gallery-title"
+            data-i18n="price.processTitle">
+
+            Cómo trabajamos
+
+        </h3>
+
+        <ol
+            class="price-steps"
+            id="price-modal-steps">
+        </ol>
+
+
+        <footer class="price-modal-footer">
+
+            <div class="price-box">
+
+                <span
+                    class="price-box-label"
+                    data-i18n="price.from">
+
+                    Desde
+
+                </span>
+
+                <strong
+                    class="price-box-amount"
+                    id="price-modal-amount">
+                </strong>
+
+                <p
+                    class="price-box-note"
+                    data-i18n="price.note">
+
+                    Valor mínimo estimado: el costo final depende del alcance de tu proyecto. Abono inicial del 50 % y 50 % contra entrega final.
+
+                </p>
+
+            </div>
+
+
+            <div class="price-actions">
+
+                <a
+                    class="price-cta"
+                    id="price-modal-cta"
+                    href="Contacto.html">
+
+                    <i class="fa-solid fa-file-invoice-dollar"></i>
+
+                    <span data-i18n="price.cta">
+                        Cotizar este paquete
+                    </span>
+
+                </a>
+
+                <a
+                    class="price-cta-secondary"
+                    id="price-modal-advisor"
+                    href="https://wa.me/"
+                    target="_blank"
+                    rel="noopener noreferrer">
+
+                    <i class="fa-regular fa-comments"></i>
+
+                    <span data-i18n="price.advisor">
+                        Hablar con un asesor
+                    </span>
+
+                </a>
+
+            </div>
+
+        </footer>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
      CONTENIDO PRINCIPAL
 ========================================================= -->
 
@@ -2254,7 +2816,7 @@
                 data-service="audio">
 
                 <img
-                    src="imagenes/servicios/producción audiovisual.jpg"
+                    src="Imagenes/servicios/producción audiovisual.jpg"
                     alt="Set de producción audiovisual profesional"
                     data-i18n-alt="svc.audioAlt">
 
@@ -2285,7 +2847,7 @@
                 data-service="photo">
 
                 <img
-                    src="imagenes/servicios/fotografia.avif"
+                    src="Imagenes/servicios/Fotografia.avif"
                     alt="">
 
                 <div class="service-card-content">
@@ -2315,7 +2877,7 @@
                 data-service="design">
 
                 <img
-                    src="imagenes/servicios/diseñografico.avif"
+                    src="Imagenes/servicios/diseño grafico.avif"
                     alt="Equipo de diseñadores gráficos trabajando"
                     data-i18n-alt="svc.designAlt">
 
@@ -2346,7 +2908,7 @@
                 data-service="branding">
 
                 <img
-                    src="imagenes/servicios/branding.jpg"
+                    src="Imagenes/servicios/branding.jpg"
                     alt="Proceso creativo y desarrollo de branding"
                     data-i18n-alt="svc.brandAlt">
 
@@ -2365,6 +2927,180 @@
             </div>
 
         </div>
+
+
+        <!-- =====================================================
+             COSTOS DE SERVICIOS
+        ===================================================== -->
+
+        <section
+            class="pricing"
+            id="costos"
+            aria-labelledby="pricing-title">
+
+            <header class="pricing-header">
+
+                <p
+                    class="pricing-eyebrow"
+                    data-i18n="price.eyebrow">
+
+                    Inversión transparente
+
+                </p>
+
+                <h2
+                    id="pricing-title"
+                    data-i18n="price.title">
+
+                    Costos de servicios
+
+                </h2>
+
+                <p
+                    class="pricing-subtitle"
+                    data-i18n="price.subtitle">
+
+                    Elige un servicio para ver su costo estimado y cómo trabajamos.
+
+                </p>
+
+                <div class="divider"></div>
+
+            </header>
+
+
+            <ul class="pricing-grid">
+
+                <!-- PRODUCCIÓN AUDIOVISUAL -->
+                <li>
+                    <button
+                        type="button"
+                        class="price-card"
+                        data-price-service="audio"
+                        aria-haspopup="dialog"
+                        aria-controls="price-modal"
+                        aria-label="Ver costos de Producción audiovisual"
+                        data-i18n-aria-label="price.cardAudio">
+
+                        <img
+                            src="Imagenes/servicios/costos/audiovisual.jpg"
+                            alt=""
+                            loading="lazy">
+
+                        <span class="price-card-content">
+                            <span class="price-card-title" data-i18n="svc.audioH2">Producción audiovisual</span>
+                            <span class="price-card-from">
+                                <span data-i18n="price.from">Desde</span>
+                                <strong data-price="audio"></strong>
+                            </span>
+                            <span class="price-card-more">
+                                <span data-i18n="price.viewCosts">Ver costos</span>
+                                <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                            </span>
+                        </span>
+
+                    </button>
+                </li>
+
+
+                <!-- FOTOGRAFÍA -->
+                <li>
+                    <button
+                        type="button"
+                        class="price-card"
+                        data-price-service="photo"
+                        aria-haspopup="dialog"
+                        aria-controls="price-modal"
+                        aria-label="Ver costos de Fotografía profesional"
+                        data-i18n-aria-label="price.cardPhoto">
+
+                        <img
+                            src="Imagenes/servicios/costos/fotografia.jpg"
+                            alt=""
+                            loading="lazy">
+
+                        <span class="price-card-content">
+                            <span class="price-card-title" data-i18n="svc.photoH2">Fotografía profesional</span>
+                            <span class="price-card-from">
+                                <span data-i18n="price.from">Desde</span>
+                                <strong data-price="photo"></strong>
+                            </span>
+                            <span class="price-card-more">
+                                <span data-i18n="price.viewCosts">Ver costos</span>
+                                <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                            </span>
+                        </span>
+
+                    </button>
+                </li>
+
+
+                <!-- BRANDING -->
+                <li>
+                    <button
+                        type="button"
+                        class="price-card"
+                        data-price-service="branding"
+                        aria-haspopup="dialog"
+                        aria-controls="price-modal"
+                        aria-label="Ver costos de Branding"
+                        data-i18n-aria-label="price.cardBranding">
+
+                        <img
+                            src="Imagenes/servicios/costos/branding.jpg"
+                            alt=""
+                            loading="lazy">
+
+                        <span class="price-card-content">
+                            <span class="price-card-title">Branding</span>
+                            <span class="price-card-from">
+                                <span data-i18n="price.from">Desde</span>
+                                <strong data-price="branding"></strong>
+                            </span>
+                            <span class="price-card-more">
+                                <span data-i18n="price.viewCosts">Ver costos</span>
+                                <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                            </span>
+                        </span>
+
+                    </button>
+                </li>
+
+
+                <!-- DISEÑO GRÁFICO -->
+                <li>
+                    <button
+                        type="button"
+                        class="price-card"
+                        data-price-service="design"
+                        aria-haspopup="dialog"
+                        aria-controls="price-modal"
+                        aria-label="Ver costos de Diseño gráfico"
+                        data-i18n-aria-label="price.cardDesign">
+
+                        <img
+                            src="Imagenes/servicios/costos/diseño.jpg"
+                            alt=""
+                            loading="lazy">
+
+                        <span class="price-card-content">
+                            <span class="price-card-title" data-i18n="svc.designH2">Diseño gráfico</span>
+                            <span class="price-card-from">
+                                <span data-i18n="price.from">Desde</span>
+                                <strong data-price="design"></strong>
+                            </span>
+                            <span class="price-card-more">
+                                <span data-i18n="price.viewCosts">Ver costos</span>
+                                <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                            </span>
+                        </span>
+
+                    </button>
+                </li>
+
+            </ul>
+
+        </section>
 
 
         <!-- =====================================================
@@ -2411,7 +3147,7 @@
             <div class="footer-logo">
 
                 <img
-                    src="logos/Logo-sin-fondo.png"
+                    src="Imagenes/Logo-sin-fondo.png"
                     alt=""
                     style="width:auto;height:90px;">
 
@@ -2630,7 +3366,7 @@
 
 </div>
 
-        <a id="wa-float"
+    <a id="wa-float"
        class="wa-float"
        href="https://wa.me/"
        target="_blank"
@@ -2802,7 +3538,7 @@ const serviceData = {
 
             {
                 src:
-                    'video/video1.mp4',
+                    'Imagenes/servicios/audiovisual/diadelasmatematicas.mp4',
 
                 title:
                     'Día de las Matemáticas'
@@ -2810,7 +3546,7 @@ const serviceData = {
 
             {
                 src:
-                    'video/video2.mp4',
+                    'Imagenes/servicios/audiovisual/video2.mp4',
 
                 title:
                     'Especialidades Tecnicas'
@@ -2834,19 +3570,19 @@ photo: {
 
         images: [
         {
-        src: 'imagenes/servicios/fotografia/foto2.JPG',
+        src: 'Imagenes/servicios/fotografia/foto2.jpg',
 
         alt:
             'Muestra de contenido fotográfico'
         },
         {
-        src: 'imagenes/servicios/fotografia/foto3.JPG',
+        src: 'Imagenes/servicios/fotografia/foto3.jpg',
 
         alt:
             'Muestra de contenido fotográfico'
         },
         {
-            src: 'imagenes/servicios/fotografia/foto1.JPG',
+            src: 'Imagenes/servicios/fotografia/foto1.jpg',
             alt: ''
         }
     ]
@@ -2866,7 +3602,7 @@ photo: {
             'fa-solid fa-pen-nib',
 
         image:
-            'imagenes/servicios/diseño/afiche.jpg',
+            'Imagenes/servicios/diseño/afiche.jpg',
 
         alt:
             'Muestra de diseño gráfico'
@@ -2887,12 +3623,12 @@ photo: {
 
         images: [
         {
-            src: 'imagenes/servicios/branding/angelica.jpg',
+            src: 'Angelica Macrame.jpg',
 
             alt: ''
         },
         {
-            src: 'imagenes/servicios/branding/tarjeta.png',
+            src: 'Tarjeta de presentación (2).png',
 
             alt: ''
         },
@@ -4135,7 +4871,49 @@ document.addEventListener(
             "We blend advanced technique with impeccable aesthetics to create experiences that define the future of the creative industry.",
 
         "svc.ctaLink":
-            "Start a project"
+            "Start a project",
+
+        "price.eyebrow":
+            "Transparent investment",
+
+        "price.title":
+            "Service Pricing",
+
+        "price.subtitle":
+            "Choose a service to see its estimated cost and how we work.",
+
+        "price.from":
+            "From",
+
+        "price.viewCosts":
+            "View pricing",
+
+        "price.cardAudio":
+            "View pricing for Audiovisual Production",
+
+        "price.cardPhoto":
+            "View pricing for Professional Photography",
+
+        "price.cardBranding":
+            "View pricing for Branding",
+
+        "price.cardDesign":
+            "View pricing for Graphic Design",
+
+        "price.modalKicker":
+            "Prisma Helios Pricing",
+
+        "price.processTitle":
+            "How we work",
+
+        "price.note":
+            "Estimated minimum price: the final cost depends on the scope of your project. 50% initial deposit and 50% upon final delivery.",
+
+        "price.cta":
+            "Request a quote for this package",
+
+        "price.advisor":
+            "Talk to an advisor"
 
     };
 
@@ -4376,6 +5154,7 @@ document.addEventListener(
 
 
 })();
+
         const WHATSAPP_CONFIG = {
             // Número en formato internacional: código de país + número,
             // SIN "+", espacios, guiones ni paréntesis.
@@ -4400,6 +5179,452 @@ document.addEventListener(
             btn.href = "https://wa.me/" + phone +
                        (text ? "?text=" + encodeURIComponent(text) : "");
         })();
+
+</script>
+
+
+
+<!-- =========================================================
+     COSTOS DE SERVICIOS: MODALES
+========================================================= -->
+
+<script>
+
+(function () {
+
+    'use strict';
+
+
+    /* =====================================================
+       DATOS DE COSTOS
+       -----------------------------------------------------
+       ⚠ priceFrom: valores de EJEMPLO (COP). Reemplázalos
+       por tus tarifas mínimas reales.
+    ===================================================== */
+
+    const PRICING = {
+
+        audio: {
+            icon: 'fa-solid fa-video',
+            priceFrom: 1500000,
+
+            es: {
+                title: 'Producción audiovisual',
+                description: 'Acompañamos tu proyecto desde la idea hasta la pieza final, cuidando el mensaje, la imagen y el sonido para que tu marca se vea profesional en cada formato.',
+                steps: [
+                    ['Brief y concepto', 'Definimos objetivo, público y mensaje de tu pieza.'],
+                    ['Preproducción', 'Guion, planificación de rodaje y locaciones.'],
+                    ['Producción', 'Grabación con equipo profesional de imagen y sonido.'],
+                    ['Posproducción y entrega', 'Edición, color, audio y exportación para tus canales.']
+                ]
+            },
+
+            en: {
+                title: 'Audiovisual production',
+                description: 'We guide your project from the idea to the final piece, taking care of message, image and sound so your brand looks professional in every format.',
+                steps: [
+                    ['Brief and concept', 'We define the goal, audience and message of your piece.'],
+                    ['Pre-production', 'Script, shooting plan and locations.'],
+                    ['Production', 'Filming with professional image and sound equipment.'],
+                    ['Post-production and delivery', 'Editing, color, audio and export for your channels.']
+                ]
+            }
+        },
+
+        photo: {
+            icon: 'fa-solid fa-camera',
+            priceFrom: 600000,
+
+            es: {
+                title: 'Fotografía profesional',
+                description: 'Producimos fotografías de alta calidad para mostrar tus productos, servicios y experiencias con una presentación visual cuidada.',
+                steps: [
+                    ['Brief y referencias', 'Conocemos tu marca y el uso que le darás a las imágenes.'],
+                    ['Planeación', 'Moodboard, preparación del set y del producto.'],
+                    ['Sesión fotográfica', 'Captura con iluminación y equipo profesional.'],
+                    ['Selección y entrega', 'Curaduría, retoque y entrega en alta resolución.']
+                ]
+            },
+
+            en: {
+                title: 'Professional photography',
+                description: 'We produce high-quality photographs to showcase your products, services and experiences with a polished visual presentation.',
+                steps: [
+                    ['Brief and references', 'We get to know your brand and how you will use the images.'],
+                    ['Planning', 'Moodboard, set and product preparation.'],
+                    ['Photo session', 'Shooting with professional lighting and equipment.'],
+                    ['Selection and delivery', 'Curation, retouching and high-resolution delivery.']
+                ]
+            }
+        },
+
+        branding: {
+            icon: 'fa-solid fa-fingerprint',
+            priceFrom: 900000,
+
+            es: {
+                title: 'Branding',
+                description: 'Construimos identidades visuales con personalidad, propósito y coherencia para que tu marca sea reconocible y memorable.',
+                steps: [
+                    ['Descubrimiento', 'Investigamos tu marca, tu público y tu competencia.'],
+                    ['Estrategia e identidad', 'Concepto, paleta de color y tipografía.'],
+                    ['Sistema visual', 'Logotipo y aplicaciones en tus piezas.'],
+                    ['Entrega', 'Archivos finales y guía de uso de la identidad.']
+                ]
+            },
+
+            en: {
+                title: 'Branding',
+                description: 'We build visual identities with personality, purpose and consistency so your brand is recognizable and memorable.',
+                steps: [
+                    ['Discovery', 'We research your brand, your audience and your competitors.'],
+                    ['Strategy and identity', 'Concept, color palette and typography.'],
+                    ['Visual system', 'Logo and applications across your pieces.'],
+                    ['Delivery', 'Final files and an identity usage guide.']
+                ]
+            }
+        },
+
+        design: {
+            icon: 'fa-solid fa-pen-nib',
+            priceFrom: 300000,
+
+            es: {
+                title: 'Diseño gráfico',
+                description: 'Diseñamos piezas visuales coherentes y funcionales que comunican tu mensaje y fortalecen la presencia de tu marca.',
+                steps: [
+                    ['Brief', 'Entendemos qué quieres comunicar y dónde se usará la pieza.'],
+                    ['Propuesta creativa', 'Bocetos y primeras ideas de diseño.'],
+                    ['Diseño y ajustes', 'Desarrollo de la pieza y revisión contigo.'],
+                    ['Entrega', 'Archivos finales listos para redes e impresión.']
+                ]
+            },
+
+            en: {
+                title: 'Graphic design',
+                description: 'We design consistent, functional visual pieces that communicate your message and strengthen your brand presence.',
+                steps: [
+                    ['Brief', 'We understand what you want to communicate and where the piece will be used.'],
+                    ['Creative proposal', 'Sketches and first design ideas.'],
+                    ['Design and adjustments', 'Development of the piece and review with you.'],
+                    ['Delivery', 'Final files ready for social media and print.']
+                ]
+            }
+        }
+
+    };
+
+
+    /* =====================================================
+       REFERENCIAS
+    ===================================================== */
+
+    const overlay   = document.getElementById('price-modal');
+    const dialog    = document.getElementById('price-modal-dialog');
+    const closeBtn  = document.getElementById('price-modal-close');
+    const titleEl   = document.getElementById('price-modal-title');
+    const iconEl    = document.getElementById('price-modal-icon');
+    const descEl    = document.getElementById('price-modal-description');
+    const stepsEl   = document.getElementById('price-modal-steps');
+    const amountEl  = document.getElementById('price-modal-amount');
+    const ctaEl     = document.getElementById('price-modal-cta');
+    const advisorEl = document.getElementById('price-modal-advisor');
+    const cards     = document.querySelectorAll('.price-card');
+
+    if (!overlay || !dialog) return;
+
+    let currentKey = null;
+    let lastTrigger = null;
+    let pressStartedOnOverlay = false;
+
+
+    /* =====================================================
+       UTILIDADES
+    ===================================================== */
+
+    function getLang() {
+
+        const l =
+            (window.PrismaIdioma && window.PrismaIdioma.lang) ||
+            document.documentElement.lang;
+
+        return l === 'en' ? 'en' : 'es';
+
+    }
+
+    function formatPrice(value, lang) {
+
+        const locale = lang === 'en' ? 'en-US' : 'es-CO';
+
+        return '$' + new Intl.NumberFormat(locale).format(value) + ' COP';
+
+    }
+
+    function renderCardPrices() {
+
+        const lang = getLang();
+
+        document.querySelectorAll('[data-price]').forEach(el => {
+
+            const item = PRICING[el.dataset.price];
+
+            if (item) el.textContent = formatPrice(item.priceFrom, lang);
+
+        });
+
+    }
+
+    function buildAdvisorLink(title, lang) {
+
+        const hasConfig = typeof WHATSAPP_CONFIG !== 'undefined';
+
+        const phone = hasConfig
+            ? String(WHATSAPP_CONFIG.phone).replace(/\D/g, '')
+            : '';
+
+        const text = lang === 'en'
+            ? 'Hello! I would like to talk to an advisor about the ' + title + ' package.'
+            : '¡Hola! Quisiera hablar con un asesor sobre el paquete de ' + title + '.';
+
+        return 'https://wa.me/' + phone + '?text=' + encodeURIComponent(text);
+
+    }
+
+
+    /* =====================================================
+       RENDER DEL MODAL
+    ===================================================== */
+
+    function renderModal(key) {
+
+        const item = PRICING[key];
+
+        if (!item) return;
+
+        const lang = getLang();
+        const t = item[lang];
+
+        titleEl.textContent = t.title;
+        descEl.textContent = t.description;
+        amountEl.textContent = formatPrice(item.priceFrom, lang);
+
+        iconEl.innerHTML = '<i class="' + item.icon + '"></i>';
+
+        stepsEl.innerHTML = '';
+
+        t.steps.forEach(([name, detail]) => {
+
+            const li = document.createElement('li');
+            const wrap = document.createElement('div');
+            const strong = document.createElement('strong');
+            const span = document.createElement('span');
+
+            strong.textContent = name;
+            span.textContent = detail;
+
+            wrap.append(strong, span);
+            li.append(wrap);
+            stepsEl.append(li);
+
+        });
+
+        ctaEl.href = 'Contacto.html?paquete=' + encodeURIComponent(key);
+        advisorEl.href = buildAdvisorLink(t.title, lang);
+
+    }
+
+
+    /* =====================================================
+       ABRIR / CERRAR
+    ===================================================== */
+
+    function openPriceModal(key, trigger) {
+
+        if (!PRICING[key]) return;
+
+        currentKey = key;
+        lastTrigger = trigger || null;
+
+        renderModal(key);
+
+        dialog.scrollTop = 0;
+
+        overlay.classList.add('active');
+        overlay.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('price-modal-open');
+
+        closeBtn.focus();
+
+    }
+
+    function closePriceModal() {
+
+        if (!overlay.classList.contains('active')) return;
+
+        overlay.classList.remove('active');
+        overlay.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('price-modal-open');
+
+        currentKey = null;
+
+        if (lastTrigger) {
+
+            lastTrigger.focus();
+            lastTrigger = null;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       EVENTOS: TARJETAS
+       (al ser <button>, Enter y Espacio ya disparan "click")
+    ===================================================== */
+
+    cards.forEach(card => {
+
+        card.addEventListener('click', () => {
+
+            openPriceModal(card.dataset.priceService, card);
+
+        });
+
+    });
+
+
+    /* Efecto 3D, igual que en las tarjetas de servicios
+       (solo con puntero fino y sin "reducir movimiento") */
+
+    const canTilt =
+        window.matchMedia('(hover: hover) and (pointer: fine)').matches &&
+        !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (canTilt) {
+
+        cards.forEach(card => {
+
+            card.addEventListener('mousemove', e => {
+
+                const rect = card.getBoundingClientRect();
+
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const rotateX = (y - rect.height / 2) / 25;
+                const rotateY = (rect.width / 2 - x) / 25;
+
+                card.style.transform =
+                    'perspective(1000px) rotateX(' + rotateX + 'deg) rotateY(' +
+                    rotateY + 'deg) translateY(-6px)';
+
+            });
+
+            card.addEventListener('mouseleave', () => {
+
+                card.style.transform =
+                    'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
+
+            });
+
+        });
+
+    }
+
+
+    /* =====================================================
+       EVENTOS: CIERRE (X, overlay y Escape)
+    ===================================================== */
+
+    closeBtn.addEventListener('click', closePriceModal);
+
+    overlay.addEventListener('mousedown', e => {
+
+        pressStartedOnOverlay = e.target === overlay;
+
+    });
+
+    overlay.addEventListener('click', e => {
+
+        if (pressStartedOnOverlay && e.target === overlay) {
+
+            closePriceModal();
+
+        }
+
+        pressStartedOnOverlay = false;
+
+    });
+
+    document.addEventListener('keydown', e => {
+
+        if (e.key === 'Escape' && overlay.classList.contains('active')) {
+
+            closePriceModal();
+
+        }
+
+    });
+
+
+    /* Mantiene el foco dentro del modal mientras está abierto */
+
+    overlay.addEventListener('keydown', e => {
+
+        if (e.key !== 'Tab') return;
+
+        const focusable = Array.from(
+            dialog.querySelectorAll('a[href], button:not([disabled])')
+        ).filter(el => el.offsetParent !== null);
+
+        if (!focusable.length) return;
+
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (e.shiftKey && document.activeElement === first) {
+
+            e.preventDefault();
+            last.focus();
+
+        } else if (!e.shiftKey && document.activeElement === last) {
+
+            e.preventDefault();
+            first.focus();
+
+        }
+
+    });
+
+
+    /* =====================================================
+       IDIOMA: vuelve a pintar precios y modal al cambiar ES/EN
+    ===================================================== */
+
+    const langToggle = document.getElementById('lang-toggle');
+
+    if (langToggle) {
+
+        langToggle.addEventListener('click', () => {
+
+            /* setTimeout: espera a que el selector de idioma
+               termine de aplicar sus textos */
+            setTimeout(() => {
+
+                renderCardPrices();
+
+                if (currentKey) renderModal(currentKey);
+
+            }, 0);
+
+        });
+
+    }
+
+
+    renderCardPrices();
+
+})();
 
 </script>
 
